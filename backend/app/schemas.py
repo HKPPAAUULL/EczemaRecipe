@@ -81,7 +81,7 @@ class IngredientDetail(BaseModel):
     nutrients: list[NutrientItem]
     needs_senior_review: bool | None = None
     draft: bool
-    disclaimer: str
+    disclaimer: str = DISCLAIMER
     updated_at: datetime | None
 
 

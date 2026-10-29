@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - API: list/search queries crashed (`IndexError`) because `str.format` consumed the SQL literal `'{}'`; escaped as `'{{}}'` (found by CI integration tests; v0.2.0 list/search endpoints were broken).
+- API: ingredient detail response omitted the required `disclaimer` field (500); it now defaults to the standard disclaimer string.
 
 ## [0.2.0] - 2026-10-29
 
