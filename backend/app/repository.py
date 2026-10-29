@@ -24,7 +24,7 @@ _LIST_SELECT = """
                FROM ingredient_allergen ia
                JOIN allergen a ON a.id = ia.allergen_id
               WHERE ia.ingredient_id = i.id
-           ), '{}') AS allergens
+           ), '{{}}') AS allergens
       FROM {rel} AS i
       LEFT JOIN food_category c ON c.id = i.category_id
 """
