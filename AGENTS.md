@@ -1,0 +1,46 @@
+# AGENTS.md — 濕疹食譜網站
+
+## 專案概述
+一站式濕疹食譜網站（繁體中文）：食材適合度查詢、按手上食材配對食譜並提示致敏、食材分類庫。含爬蟲資料管線。免登入版本優先。
+
+## 最高原則
+1. **一律按 `docs/PLAN.md`（方案書）開發。** 開工前先讀方案書；不得偏離。
+2. **方案有變更時，必須同步更新 `docs/PLAN.md`**：修改相關章節、更新階段狀態（§9）、並在 §13 變更記錄加一行（日期、版本、內容）。重大方向改變先詢問用戶。
+3. UI 設計初稿來自 Google Stitch（提示詞在 `docs/STITCH_PROMPTS.md`）；以設計 token 與元件重寫，不直接照搬輸出。
+4. 與用戶溝通使用繁體中文（香港用語習慣）。
+
+## 版本控制與發佈（強制）
+- 開始實際製作網站後，**每完成一個版本（可運作的里程碑）必須自動 commit 並 push 到 GitHub**，不需再逐次詢問。
+- 每個版本須：
+  1. 更新 `CHANGELOG.md`（Keep a Changelog 格式：版本、日期、Added/Changed/Fixed）。
+  2. 以 Conventional Commits 撰寫 commit 訊息（`feat:`、`fix:`、`docs:`、`chore:`），內文簡述更新內容。
+  3. 打語意化版本 tag（如 `v0.2.0`）並 push tag。
+  4. 如 PLAN.md 階段狀態有變，一併更新。
+- 絕不 commit 密鑰（`.env`、API key、Cloudflare token）；確保 `.gitignore` 涵蓋。
+- 不 force-push、不改寫歷史。若 remote 尚未設定，先詢問用戶 GitHub repo 網址。
+- 目前（規劃階段）只有文件，尚未開始建站；在用戶說「開始製作」前不要建立程式碼專案。
+
+## 技術棧（摘要，詳見方案書）
+- 前端：Next.js + TypeScript + Tailwind（Mobile-first 響應式）
+- 後端：Python FastAPI
+- 資料庫：PostgreSQL
+- 爬蟲：Scrapy + Playwright + extruct；LLM 輔助用 Google Gemini API
+- 部署：Docker Compose，跑在用戶自有 Windows 常駐電腦，經 Cloudflare Tunnel 對外
+- 預算：免費優先，不引入付費服務
+
+## 安全與合規規則
+- 健康內容保守表達：評級為 🟢/🟡/🔴，必附原因與來源；不作診斷；每頁有免責聲明。
+- LLM 生成的醫療相關內容必須標為待審核，人工確認後才發佈。
+- 爬蟲：遵守 robots.txt 與服務條款，限速，設 User-Agent；只存標題、食材、簡短摘要與原文連結，不全文複製。
+- 食譜配對與致敏警示邏輯屬安全關鍵，必須有單元測試。
+
+## 開發慣例
+- 完成後驗證（lint、typecheck、測試、必要時實際啟動）再 commit。
+- 優先沿用既有檔案與模式；不寫多餘文件（本檔、PLAN.md、CHANGELOG.md、STITCH_PROMPTS.md 除外）。
+- 驗證指令在建立專案後補充於此處：
+  - （待補）
+
+## 文件索引
+- `docs/PLAN.md` — 方案書（開發依據）
+- `docs/STITCH_PROMPTS.md` — Google Stitch 提示詞
+- `CHANGELOG.md` — 版本更新記錄（開始建站時建立）
