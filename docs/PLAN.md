@@ -161,7 +161,13 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 ## 10. 待辦與未決事項
 
-- [~] 逐個檢查候選香港／台灣食譜站（初步評估已完成，見 `docs/SOURCES.md`；各來源 ToS 與 AI 生成抽查待完成後定案）
+- [x] 來源條款第一輪核實完成（`docs/SOURCES.md`）：台灣政府開放資料與 TFDA 可用；Cookpad／iCook／香港政府網站需授權；CookWhatHK 不可用
+- [ ] 寫信徵詢授權：衞生署長者健康服務（ehsenq@dh.gov.hk）／衞生防護中心（可否擷取食材清單並附原文連結）、Cookpad（info-tw@cookpad.com）、愛料理、國民健康署
+- [ ] 補查未核實項目：國民健康署與 fae.moa.gov.tw 的 robots／條款、USDA 與 Open Food Facts 條款、醫院管理局食譜頁
+- [ ] 食譜庫起步內容決定：自建原創食譜為主（客家委員會資料集多為重油傳統菜，不適合作濕疹飲食主力）
+- [ ] 人工審核 `data/seed/ingredients_draft.csv`（163 項草稿，71 項標 needs_senior_review，22 項 unrated）
+- [ ] 以真實 Postgres 16 驗證 `docs/db/schema.sql`（目前只用 pglast 驗證語法）
+- [ ] 若日後有商業用途（廣告、會員），須重新檢視所有「非商業限定」來源
 - [ ] 完成 Stitch 設計稿並匯出 design token
 - [ ] 決定繁中全文搜尋方案（別名表 + pg_trgm 是否足夠）
 - [ ] 決定審核介面形式（簡易後台頁 vs 直接改資料庫）
@@ -187,4 +193,5 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 |---|---|---|
 | 2026-10-29 | v0.1 | 初版：整合預算、自架部署、Gemini、香港/台灣食譜來源、免登入版本 |
 | 2026-10-29 | v0.1.1 | 新增 §4.4 來源可信度規則（排除 AI 生成網站）；設定 GitHub repo |
+| 2026-10-29 | v0.1.3 | 新增 `docs/RATING_CRITERIA.md` 評級準則、`docs/db/` schema 草稿、`data/seed/` 食材種子草稿、`data/reference/` 過敏原關鍵字與同義詞表；`docs/SOURCES.md` 完成條款核實 |
 | 2026-10-29 | v0.1.2 | 新增 `docs/SOURCES.md` 來源初步評估；食譜策略改為「政府開放資料＋自建原創食譜」優先，社群平台後置 |

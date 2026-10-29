@@ -1,0 +1,164 @@
+﻿category_zh,name_zh,name_en,aliases,eczema_rating,rating_reason,allergens,source_urls,needs_senior_review,notes
+肉類,雞胸肉,chicken breast,雞胸;雞柳;雞胸肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,雞腿肉,chicken thigh,雞髀;雞腿;雞扒,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,雞翼,chicken wing,雞翅;雞中翼,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,豬瘦肉,lean pork,瘦肉;豬柳;梅頭;里肌肉;豬里脊,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,豬五花腩,pork belly,五花肉;五花腩;腩肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,脂肪較高
+肉類,豬肝,pork liver,豬潤;豬肝,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,內臟；膽固醇及維他命A含量高，宜適量
+肉類,豬骨,pork bones,排骨;豬脊骨;豬骨,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,牛腩,beef brisket,牛腩;牛肋條,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,牛柳,beef tenderloin,牛里脊;牛排;牛肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,羊肉,lamb / mutton,羊肉;羔羊,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,鴨肉,duck,鴨;鴨肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,鵝肉,goose,鵝;燒鵝肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,火腿,ham,火腿;火腿片,caution,加工肉類添加劑及鹽分較高，建議少量（依據：組織胺／加工食品；適用：對加工食品敏感或已知組織胺不耐受者；來源：美國營養與飲食學會期刊綜述（JAND））,高組織胺,https://www.jandonline.org/article/S2212-2672(14)01454-3/fulltext,true,來源指加工肉類屬低組織胺飲食常見限制；各資料不一致，僅作留意
+肉類,臘腸,Chinese sausage,臘腸;香腸;臘味,caution,加工肉類添加劑及鹽分較高，建議少量（依據：組織胺／加工食品；適用：對加工食品敏感或已知組織胺不耐受者；來源：美國營養與飲食學會期刊綜述（JAND））,高組織胺,https://www.jandonline.org/article/S2212-2672(14)01454-3/fulltext,true,來源指加工肉類屬低組織胺飲食常見限制；各資料不一致，僅作留意
+肉類,午餐肉,luncheon meat,餐肉;豬肉罐頭;spam,caution,加工肉類添加劑及鹽分較高，建議少量（依據：組織胺／加工食品；適用：對加工食品敏感或已知組織胺不耐受者；來源：美國營養與飲食學會期刊綜述（JAND））,高組織胺,https://www.jandonline.org/article/S2212-2672(14)01454-3/fulltext,true,來源指加工肉類屬低組織胺飲食常見限制；各資料不一致，僅作留意
+海鮮,鯇魚,grass carp,草魚;鯇魚;混子,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,鱸魚,sea bass,鱸魚;海鱸;七星鱸,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,三文魚,salmon,鮭魚;三文魚;salmon,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,鯽魚,crucian carp,鯽魚;鮒魚,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,石斑,grouper,石斑;斑魚,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,鱈魚,cod,鱈魚;銀鱈魚;大西洋鱈,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,吞拿魚,tuna,鮪魚;吞拿魚;金槍魚,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,鯖魚,mackerel,鯖魚;青花魚;花鯖;鮫魚,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,龍脷柳,sole fillet,龍脷;比目魚;巴沙魚片,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,黃花魚,yellow croaker,黃魚;黃花魚;黃花,caution,為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,蝦,shrimp / prawn,蝦;蝦仁;大蝦;明蝦,caution,為常見食物過敏原之一；已確診甲殼類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,甲殼類,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,蟹,crab,蟹;螃蟹;花蟹;大閘蟹,caution,為常見食物過敏原之一；已確診甲殼類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,甲殼類,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,龍蝦,lobster,龍蝦;小龍蝦,caution,為常見食物過敏原之一；已確診甲殼類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,甲殼類,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,蝦米,dried shrimp,蝦米;蝦乾;開洋,caution,為常見食物過敏原之一；已確診甲殼類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,甲殼類,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+海鮮,帶子,scallop,帶子;干貝;扇貝,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,九大過敏原清單不含軟體類，但食安中心列為常見過敏原；與蝦蟹交叉反應未有已查證來源，不寫入
+海鮮,蠔,oyster,生蠔;蠔;牡蠣;蚵仔,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,九大過敏原清單不含軟體類，但食安中心列為常見過敏原；與蝦蟹交叉反應未有已查證來源，不寫入
+海鮮,蜆,clam,蜆;蛤蜊;蛤仔;花蛤,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,九大過敏原清單不含軟體類，但食安中心列為常見過敏原；與蝦蟹交叉反應未有已查證來源，不寫入
+海鮮,魷魚,squid,魷魚;花枝;透抽,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,九大過敏原清單不含軟體類，但食安中心列為常見過敏原；與蝦蟹交叉反應未有已查證來源，不寫入
+海鮮,墨魚,cuttlefish,墨魚;烏賊;墨斗,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,九大過敏原清單不含軟體類，但食安中心列為常見過敏原；與蝦蟹交叉反應未有已查證來源，不寫入
+海鮮,鮑魚,abalone,鮑魚;鮑,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,九大過敏原清單不含軟體類，但食安中心列為常見過敏原；與蝦蟹交叉反應未有已查證來源，不寫入
+蔬菜,菜心,choy sum,菜心;菜薹;油菜心,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,小白菜,bok choy,白菜;小棠菜;青江菜;小白菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,津白,napa cabbage,大白菜;天津白菜;黃芽白;津白,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,芥蘭,Chinese broccoli,芥蘭;芥藍;格藍菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,西蘭花,broccoli,西蘭花;花椰菜(綠);青花菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,生菜,lettuce,生菜;萵苣;A菜;大陸妹,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,通菜,water spinach,通菜;空心菜;蕹菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,白蘿蔔,white radish / daikon,白蘿蔔;蘿蔔;菜頭,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,冬瓜,winter melon,冬瓜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,南瓜,pumpkin,南瓜;金瓜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,節瓜,hairy gourd,節瓜;毛瓜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,青瓜,cucumber,青瓜;黃瓜;小黃瓜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,絲瓜,luffa,絲瓜;菜瓜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,苦瓜,bitter melon,苦瓜;涼瓜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,洋蔥,onion,洋蔥;洋葱,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,薑,ginger,薑;生薑;老薑,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,蒜頭,garlic,蒜頭;大蒜;蒜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,青椒,green bell pepper,青椒;青甜椒;燈籠椒,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,粟米,sweet corn,粟米;玉米;玉蜀黍,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,番薯,sweet potato,番薯;地瓜;蕃薯,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,馬鈴薯,potato,薯仔;馬鈴薯;洋芋;土豆,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,蓮藕,lotus root,蓮藕;藕,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,椰菜,cabbage,椰菜;高麗菜;包菜;捲心菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,椰菜花,cauliflower,椰菜花;白花菜;花椰菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,西洋菜,watercress,西洋菜;水田芥,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,蘆筍,asparagus,蘆筍;龍鬚菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,韭菜,Chinese chives,韭菜;韭黃,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,蔥,spring onion,蔥;青蔥;大蔥,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+蔬菜,豆芽,bean sprouts,芽菜;豆芽;銀芽;綠豆芽,unrated,資料不足：豆芽來源（綠豆／黃豆）不同，過敏原歸類未有已查證來源,,,true,
+蔬菜,菠菜,spinach,菠菜;波菜;菠薐菜,caution,因人而異；部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,綜述指超過60%低組織胺飲食排除菠菜；各資料不一致
+蔬菜,番茄,tomato,番茄;蕃茄;西紅柿,caution,因人而異；部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,同菠菜；各資料不一致
+蔬菜,茄子,eggplant,茄子;矮瓜;茄瓜,caution,因人而異；部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,綜述指約20-60%低組織胺飲食排除茄子；證據較弱
+蔬菜,西芹,celery,西芹;芹菜;洋芹,caution,與部分花粉有交叉過敏可能（依據：花粉交叉；適用：已確診花粉相關食物過敏（花粉-食物症候群）者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,花粉交叉,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext,false,來源表列芹菜（Api g 1/4）為交叉過敏原
+蔬菜,紅蘿蔔,carrot,紅蘿蔔;胡蘿蔔;甘荀,caution,與部分花粉有交叉過敏可能（多見於生食）（依據：花粉交叉；適用：已確診花粉相關食物過敏者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,花粉交叉,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext,true,來源表列紅蘿蔔（Dau c 4）；煮熟後反應較少的說法未逐項查證，不寫入
+蔬菜,淮山,Chinese yam,淮山;山藥;薯蕷,unrated,資料不足：未找到可靠來源評估,,,true,
+蔬菜,芋頭,taro,芋頭;芋;芋艿,unrated,資料不足：未找到可靠來源,,,true,
+蔬菜,冬菇,shiitake mushroom,冬菇;香菇;花菇;椎茸,unrated,資料不足：蕈菇於少數（<20%）低組織胺飲食被排除，無明確來源,,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,
+蔬菜,雲耳,wood ear fungus,雲耳;黑木耳;木耳,unrated,資料不足：未找到可靠來源,,,true,
+蔬菜,金針菇,enoki mushroom,金針菇;金菇,unrated,資料不足：同蕈菇，無明確來源,,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,
+蔬菜,紫菜,nori / laver,紫菜;海苔;海紫菜,unrated,資料不足：未找到可靠來源,,,true,
+水果,檸檬,lemon,檸檬;黃檸,caution,因人而異；柑橘類部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,綜述指超過60%低組織胺飲食排除柑橘類；各資料不一致
+水果,西柚,grapefruit,西柚;葡萄柚,caution,因人而異；柑橘類部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,綜述指超過60%低組織胺飲食排除柑橘類；各資料不一致
+水果,橙,orange,橙;甜橙;柳丁,caution,因人而異；柑橘類部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,綜述指超過60%低組織胺飲食排除柑橘類；各資料不一致
+水果,柑橘,mandarin / tangerine,柑;蜜柑;橘子;砂糖橘;柑桔,caution,因人而異；柑橘類部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,綜述指超過60%低組織胺飲食排除柑橘類；各資料不一致
+水果,士多啤梨,strawberry,士多啤梨;草莓,caution,因人而異；莓果含水楊酸，部分低組織胺飲食亦列為須留意（依據：水楊酸／組織胺；適用：對水楊酸或組織胺敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed）；組織胺綜述（PMC7463562））,高水楊酸;高組織胺,https://pubmed.ncbi.nlm.nih.gov/4019987;https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,
+水果,藍莓,blueberry,藍莓;藍梅,caution,因人而異；莓果類含水楊酸，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,來源指莓果類為顯著水楊酸來源；藍莓個別數值未逐項核對
+水果,提子乾,raisin,提子乾;葡萄乾;乾葡萄,caution,乾果水楊酸含量較高，只作留意；乾果亦可能含亞硫酸鹽（依據：水楊酸；適用：對水楊酸或亞硫酸鹽敏感者；來源：Swain 1985（PubMed）；食安中心）,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987;https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,
+水果,蘋果,apple,蘋果;林檎,caution,與部分花粉有交叉過敏可能（口腔過敏症候群）（依據：花粉交叉；適用：已確診花粉-食物過敏症候群者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,花粉交叉,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext,false,
+水果,香蕉,banana,香蕉;芭蕉,caution,與部分花粉有交叉過敏可能（口腔過敏症候群）（依據：花粉交叉；適用：已確診花粉-食物過敏症候群者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,花粉交叉;高組織胺,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext;https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,部分低組織胺飲食亦排除（20-60%），高組織胺標籤證據弱
+水果,奇異果,kiwi fruit,奇異果;獼猴桃;奇異果(KIWI),caution,與部分花粉有交叉過敏可能（口腔過敏症候群）（依據：花粉交叉；適用：已確診花粉-食物過敏症候群者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,花粉交叉;高組織胺,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext;https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,部分低組織胺飲食亦排除（20-60%），高組織胺標籤證據弱
+水果,菠蘿,pineapple,菠蘿;鳳梨;黃梨,caution,與部分花粉有交叉過敏可能（口腔過敏症候群）（依據：花粉交叉；適用：已確診花粉-食物過敏症候群者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,花粉交叉;高組織胺,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext;https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,部分低組織胺飲食亦排除（20-60%），高組織胺標籤證據弱
+水果,水蜜桃,peach,水蜜桃;桃;桃子,caution,與部分花粉有交叉過敏可能（口腔過敏症候群）（依據：花粉交叉；適用：已確診花粉-食物過敏症候群者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,花粉交叉,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext,false,
+水果,哈密瓜,cantaloupe / honeydew,哈密瓜;蜜瓜;甜瓜,caution,與豚草花粉有交叉過敏報告（豚草-瓜-香蕉）（依據：花粉交叉；適用：已確診相關花粉過敏者；來源：食物與吸入性過敏原交叉反應綜述（PMC4482820））,花粉交叉,https://pmc.ncbi.nlm.nih.gov/articles/PMC4482820/,true,香港／台灣豚草花粉並不常見，臨床相關性待審核
+水果,牛油果,avocado,牛油果;酪梨;鱷梨,caution,因人而異；部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限）；來源：組織胺不耐受綜述（PMC7463562））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,綜述指約20-60%低組織胺飲食排除牛油果
+水果,西瓜,watermelon,西瓜,unrated,資料不足：未找到可靠來源作評級,,,true,
+水果,芒果,mango,芒果;檬果,unrated,資料不足：未找到可靠來源作評級,,,true,
+水果,車厘子,cherry,車厘子;櫻桃,unrated,資料不足：未找到可靠來源作評級,,,true,
+水果,梨,pear,梨;雪梨;水晶梨,unrated,資料不足：未找到可靠來源作評級,,,true,
+水果,木瓜,papaya,木瓜;番木瓜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+水果,提子,grape,提子;葡萄,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+水果,荔枝,lychee,荔枝,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+水果,龍眼,longan,龍眼;桂圓(鮮),suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+水果,柿,persimmon,柿;柿子;甜柿,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+水果,火龍果,dragon fruit,火龍果;紅龍果;仙人果,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+水果,番石榴,guava,番石榴;芭樂;拔仔,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,白米,white rice,白飯;白米;米;大米,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,糙米,brown rice,糙米;玄米;胚芽米,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,白粥,plain congee,粥;白粥;稀飯,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,糯米,glutinous rice,糯米;江米,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,米粉,rice vermicelli,米粉;炊粉;米線,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,河粉,flat rice noodles,河粉;粿條;沙河粉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,小米,millet,小米;粟,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+穀物主食,小麥麵條,wheat noodles,麵條;麵;麵線;意粉;烏冬,caution,為常見食物過敏原之一；已確診小麥／麩質過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,小麥,https://www.cfs.gov.hk/english/food_leg/food_leg_lgfa.html,,食安中心列含麩質穀物為須標示過敏原
+穀物主食,白麵包,white bread,麵包;包;toast;多士,caution,為常見食物過敏原之一；已確診小麥／麩質過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,小麥,https://www.cfs.gov.hk/english/food_leg/food_leg_lgfa.html,,常含奶、蛋，須看成分表
+穀物主食,麵粉,wheat flour,麵粉;中筋麵粉;低筋麵粉,caution,為常見食物過敏原之一；已確診小麥／麩質過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,小麥,https://www.cfs.gov.hk/english/food_leg/food_leg_lgfa.html,false,
+穀物主食,燕麥,oats,燕麥;麥片;即食燕麥,caution,含麩質穀物須標示過敏原；燕麥亦屬高鎳食物，只作留意（依據：過敏原／鎳；適用：已確診麩質穀物過敏者；鎳過敏者（證據有限）；來源：食安中心；鎳食物含量綜述（PubMed 6395539））,高鎳,https://www.cfs.gov.hk/english/food_leg/food_leg_lgfa.html;https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,
+穀物主食,薏米,Job's tears,薏米;薏仁;苡仁,unrated,資料不足：未找到可靠來源,,,true,
+穀物主食,蕎麥,buckwheat,蕎麥;蕎麥麵;蕎麥粉,unrated,資料不足：蕎麥為已知過敏原之一但未有已查證來源；不在本地九大清單內,,,true,
+穀物主食,藜麥,quinoa,藜麥;quinoa,unrated,資料不足：未找到可靠來源,,,true,
+穀物主食,粉絲,glass noodles (mung bean),粉絲;冬粉;粉絲(綠豆),unrated,資料不足：常見綠豆澱粉製，豆類歸類未查證,,,true,
+蛋奶,雞蛋,chicken egg,蛋;雞蛋;雞春;雞子,caution,為常見食物過敏原之一；已確診蛋過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）；生蛋、熟蛋、含蛋加工品分開評估,蛋,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://www.allergyparameters.org/uploads/documents/Dietary_elimination_-_JTF_AD_Guideline_Supplement.pdf,true,兒童濕疹與蛋過敏關係為研究最多的食物之一；審核時留意不應寫成戒口建議。JTF指引不建議未確診者盲目戒口
+蛋奶,鵪鶉蛋,quail egg,鵪鶉蛋;鵪鶉卵,caution,為常見食物過敏原之一；已確診蛋過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,蛋,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,,與雞蛋交叉過敏程度未查證
+蛋奶,鹹蛋,salted duck egg,鹹蛋;鹹鴨蛋;鹹蛋黃,caution,為常見食物過敏原之一；已確診蛋過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）；加工食品鹽分高,蛋,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+蛋奶,牛奶,cow's milk,牛奶;鮮奶;奶;乳,caution,為常見食物過敏原之一；已確診牛奶過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,奶,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://www.allergyparameters.org/uploads/documents/Dietary_elimination_-_JTF_AD_Guideline_Supplement.pdf,true,乳糖不耐不等於牛奶過敏（食安中心）；不應建議未確診者戒口
+蛋奶,羊奶,goat milk,羊奶;山羊奶,caution,為常見食物過敏原之一；已確診牛奶過敏者（羊奶與牛奶蛋白可能交叉，未查證）須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,奶,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+蛋奶,酸奶,yogurt,乳酪;優酪乳;乳酸飲品;yogurt,caution,為奶製品，屬常見食物過敏原；發酵乳亦見於部分低組織胺飲食須留意（依據：過敏原／組織胺；適用：已確診牛奶過敏者；來源：食安中心、JAND）,奶;高組織胺,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://www.jandonline.org/article/S2212-2672(14)01454-3/fulltext,true,
+蛋奶,芝士,cheese,芝士;乳酪;起司;奶酪,caution,為奶製品，屬常見食物過敏原；熟成芝士亦見於低組織胺飲食須留意（依據：過敏原／組織胺；適用：已確診牛奶過敏者；來源：食安中心、PMC7463562）,奶;高組織胺,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,
+蛋奶,牛油,butter,牛油;奶油;黃油,caution,為常見食物過敏原之一；已確診牛奶過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,奶,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+豆類及豆製品,豆腐,tofu,豆腐;豆付;豆乾(軟),caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,大豆;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,大豆屬高鎳食物（Flyvholm）；鎳標籤只作留意
+豆類及豆製品,豆漿,soy milk,豆漿;豆奶;豆乳,caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,大豆;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,大豆屬高鎳食物（Flyvholm）；鎳標籤只作留意
+豆類及豆製品,腐竹,dried tofu skin,腐竹;豆腐皮;枝竹,caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,大豆;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,大豆屬高鎳食物（Flyvholm）；鎳標籤只作留意
+豆類及豆製品,毛豆,edamame,毛豆;枝豆,caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,大豆;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,大豆屬高鎳食物（Flyvholm）；鎳標籤只作留意
+豆類及豆製品,黃豆,soybean,黃豆;大豆,caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,大豆;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,大豆屬高鎳食物（Flyvholm）；鎳標籤只作留意
+豆類及豆製品,黑豆,black soybean,黑豆;烏豆,caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,大豆;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,大豆屬高鎳食物（Flyvholm）；鎳標籤只作留意
+豆類及豆製品,豆豉,fermented black soybeans,豆豉;黑豆豉;鼓,caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）；發酵豆製品亦見於部分低組織胺飲食須留意,大豆;高組織胺,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,發酵豆製品組織胺各資料不一致
+豆類及豆製品,腐乳,fermented tofu,腐乳;豆腐乳;南乳;糟乳,caution,為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）；發酵豆製品亦見於部分低組織胺飲食須留意；鹽分高,大豆;高組織胺,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,
+豆類及豆製品,紅豆,adzuki / red bean,紅豆;赤小豆;紅小豆,caution,豆類屬高鎳食物，只作留意（依據：鎳；適用：已確診鎳過敏（系統性接觸性皮炎）者；證據有限；來源：鎳食物含量綜述（PubMed 6395539）；SNAS 綜述）,高鎳,https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,來源指新鮮及乾豆類鎳含量高；紅豆／綠豆未逐項核對
+豆類及豆製品,綠豆,mung bean,綠豆;青小豆,caution,豆類屬高鎳食物，只作留意（依據：鎳；適用：已確診鎳過敏（系統性接觸性皮炎）者；證據有限；來源：鎳食物含量綜述（PubMed 6395539）；SNAS 綜述）,高鎳,https://pubmed.ncbi.nlm.nih.gov/6395539/;https://doi.org/10.29011/2577-2228.100225,true,來源指新鮮及乾豆類鎳含量高；紅豆／綠豆未逐項核對
+堅果種子,花生,peanut,花生;落花生;長生果,caution,為常見食物過敏原之一；已確診花生過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）；花生亦被列為高鎳食物,花生;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://doi.org/10.29011/2577-2228.100225,true,花生為兒童常見食物過敏原
+堅果種子,杏仁,almond,杏仁;甜杏仁;扁桃仁,caution,為常見食物過敏原之一；已確診堅果過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,堅果;高鎳,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html;https://pubmed.ncbi.nlm.nih.gov/6395539/,,南杏／北杏（中藥用）與美式杏仁不同，未評估
+堅果種子,核桃,walnut,核桃;合桃;胡桃,caution,為常見食物過敏原之一；已確診堅果過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,堅果,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+堅果種子,腰果,cashew,腰果,caution,為常見食物過敏原之一；已確診堅果過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,堅果,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+堅果種子,芝麻,sesame,芝麻;白芝麻;黑芝麻;胡麻,caution,為常見食物過敏原之一；已確診芝麻過敏者須避免（依據：過敏原；來源：本計劃九大過敏原清單，尚待補查證來源）,芝麻,,true,芝麻不在香港食安中心必須標示清單；未有已開啟的可靠來源，須人工補來源
+堅果種子,栗子,chestnut,栗子;板栗;甘栗,unrated,資料不足：是否歸類為堅果過敏原及交叉反應，未有已查證來源,,,true,
+堅果種子,南瓜籽,pumpkin seeds,南瓜籽;南瓜子;瓜子仁,unrated,資料不足：未找到可靠來源,,,true,
+堅果種子,蓮子,lotus seed,蓮子;蓮實,unrated,資料不足：未找到可靠來源,,,true,
+調味料,豉油,soy sauce,豉油;醬油;生抽;老抽,caution,以大豆及小麥釀製，為過敏原食品（依據：過敏原；適用：已確診大豆或小麥過敏者；來源：食安中心）,大豆;小麥,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,部分豉油含防腐劑；無麥豉油另計
+調味料,蠔油,oyster sauce,蠔油;蚵油;耗油,caution,含軟體類（蠔）；常含大豆／小麥，屬加工調味料（依據：過敏原；適用：已確診貝類過敏者；來源：食安中心）,大豆;小麥,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,食安中心列蠔油含軟體類；成分因品牌而異
+調味料,魚露,fish sauce,魚露;魚醬油,caution,含魚，屬常見食物過敏原（依據：過敏原；適用：已確診魚類過敏者；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,發酵魚製品；組織胺未查證
+調味料,蝦醬,shrimp paste,蝦醬;蝦膏;蝦糕醬,caution,含甲殼類，屬常見食物過敏原（依據：過敏原；適用：已確診甲殼類過敏者；來源：食安中心）,甲殼類,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,
+調味料,咖哩粉,curry powder,咖哩粉;咖喱粉,caution,香料水楊酸含量高，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,來源列咖哩粉為高水楊酸香料
+調味料,蜂蜜,honey,蜂蜜;蜜糖;蜂糖,caution,部分蜂蜜含水楊酸；花粉過敏者或需留意（依據：水楊酸／花粉交叉；適用：對水楊酸敏感或花粉過敏者；來源：Swain 1985（PubMed）；PMC4482820）,高水楊酸;花粉交叉,https://pubmed.ncbi.nlm.nih.gov/4019987;https://pmc.ncbi.nlm.nih.gov/articles/PMC4482820/,true,一歲以下嬰兒不宜食蜂蜜屬一般食安常識，未查證本表來源
+調味料,鹽,salt,鹽;食鹽;幼鹽,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,鈉攝取宜適量
+調味料,白砂糖,white sugar,糖;砂糖;白糖,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+調味料,冰糖,rock sugar,冰糖;黃冰糖,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+調味料,白醋,white vinegar,白醋;米醋,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+調味料,味精,MSG,味精;味素;MSG,unrated,食安中心指未有證據顯示味精與食物過敏有因果關係；與濕疹關係資料不足，不予評級,,https://www.cfs.gov.hk/english/multimedia/multimedia_pub/multimedia_pub_fsf_123_02.html,true,食安中心「常見迷思」頁
+調味料,白胡椒粉,white pepper,胡椒粉;白胡椒;胡椒,unrated,資料不足：未找到可靠來源（香料水楊酸資料只涵蓋部分香料）,,,true,
+油脂,麻油,sesame oil,麻油;芝麻油;香油,caution,由芝麻製，芝麻為常見過敏原（依據：過敏原；適用：已確診芝麻過敏者；來源：本計劃九大過敏原清單（待補來源））,芝麻,,true,未有已開啟的可靠來源
+油脂,花生油,peanut oil,花生油;落花生油,caution,食安中心列花生油為含花生過敏原食品（依據：過敏原；適用：已確診花生過敏者；來源：食安中心）,花生,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,true,精煉程度不同，致敏性有爭議，須人工審核
+油脂,橄欖油,olive oil,橄欖油;初榨橄欖油;olive oil,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+油脂,芥花籽油,canola oil,芥花籽油;菜籽油;芥籽油;canola,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+油脂,粟米油,corn oil,粟米油;玉米油,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+飲品,清水,water,水;飲用水;開水;白滾水,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+飲品,綠茶,green tea,綠茶;清茶;龍井,caution,茶含水楊酸，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,來源指茶為顯著水楊酸來源
+飲品,紅茶,black tea,紅茶;奶茶底,caution,茶含水楊酸，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,港式奶茶另含奶，須分開評估
+飲品,咖啡,coffee,咖啡;coffee,unrated,資料不足：未找到可靠來源,,,true,
+飲品,菊花茶,chrysanthemum tea,菊花茶;菊花;杭菊,unrated,資料不足：菊科交叉過敏可能但未有已查證來源,,,true,
