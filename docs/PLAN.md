@@ -161,7 +161,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 ## 10. 待辦與未決事項
 
-- [ ] 逐個檢查候選香港／台灣食譜站（robots.txt、條款、JSON-LD）並定案名單
+- [~] 逐個檢查候選香港／台灣食譜站（初步評估已完成，見 `docs/SOURCES.md`；各來源 ToS 與 AI 生成抽查待完成後定案）
 - [ ] 完成 Stitch 設計稿並匯出 design token
 - [ ] 決定繁中全文搜尋方案（別名表 + pg_trgm 是否足夠）
 - [ ] 決定審核介面形式（簡易後台頁 vs 直接改資料庫）
@@ -187,3 +187,4 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 |---|---|---|
 | 2026-10-29 | v0.1 | 初版：整合預算、自架部署、Gemini、香港/台灣食譜來源、免登入版本 |
 | 2026-10-29 | v0.1.1 | 新增 §4.4 來源可信度規則（排除 AI 生成網站）；設定 GitHub repo |
+| 2026-10-29 | v0.1.2 | 新增 `docs/SOURCES.md` 來源初步評估；食譜策略改為「政府開放資料＋自建原創食譜」優先，社群平台後置 |
