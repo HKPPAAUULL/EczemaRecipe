@@ -127,7 +127,182 @@ def test_health_endpoint(fresh_db, monkeypatch):
     from app.main import app
     from fastapi.testclient import TestClient
 
-    client = TestClient(app)
-    resp = client.get("/health")
+    with TestClient(app) as client:
+        resp = client.get("/health")
     assert resp.status_code == 200
     assert resp.json() == {"status": "ok", "db": True}
+
+
+# --------------------------------------------------------------------------
+# Read API (v0.2.0) — TestClient with per-test settings
+# --------------------------------------------------------------------------
+
+
+@pytest.fixture()
+def imported_db(fresh_db, seed_rows):
+    rows, unmatched = seed_rows
+    _import(fresh_db, rows, unmatched)
+    return fresh_db
+
+
+def _client(db_url, drafts=False):
+    """Context-managed TestClient bound to db_url with the given visibility."""
+    from app.config import load_settings
+    from app.main import create_app
+    from fastapi.testclient import TestClient
+
+    settings = load_settings(
+        {
+            "DATABASE_URL": db_url,
+            "APP_ENV": "test",
+            "INCLUDE_DRAFTS": "true" if drafts else "false",
+        }
+    )
+    return TestClient(create_app(settings))
+
+
+def _ingredient_id(db_url, name):
+    with psycopg.connect(db_url) as conn:
+        return conn.execute(
+            "SELECT id FROM ingredient WHERE name_zh = %s", (name,)
+        ).fetchone()[0]
+
+
+def _mark_reviewed(db_url, names):
+    with psycopg.connect(db_url) as conn:
+        conn.execute(
+            "UPDATE ingredient SET reviewed = true, reviewed_at = now() "
+            "WHERE name_zh = ANY(%s)",
+            (list(names),),
+        )
+
+
+def test_drafts_hidden_by_default(imported_db):
+    with _client(imported_db) as client:
+        r = client.get("/api/ingredients/search", params={"q": "雞蛋"})
+        assert r.status_code == 200
+        assert r.json()["count"] == 0
+        # an existing-but-unreviewed id is a 404, never a 200
+        iid = _ingredient_id(imported_db, "雞蛋")
+        assert client.get(f"/api/ingredients/{iid}").status_code == 404
+        cats = client.get("/api/categories").json()
+        assert all(c["ingredient_count"] == 0 for c in cats)
+
+
+def test_reviewed_ingredients_visible(imported_db):
+    _mark_reviewed(imported_db, ["雞蛋", "菜心", "西瓜"])
+    with _client(imported_db) as client:
+        r = client.get("/api/ingredients/search", params={"q": "雞蛋"})
+        items = r.json()["items"]
+        assert [i["name_zh"] for i in items] == ["雞蛋"]
+        assert items[0]["draft"] is False
+        assert items[0]["rating_label"] == "因人而異"
+
+        iid = _ingredient_id(imported_db, "雞蛋")
+        d = client.get(f"/api/ingredients/{iid}").json()
+        assert d["draft"] is False
+        assert d["rating_reason"]
+        assert d["allergens"] and d["disclaimer"]
+        assert d["needs_senior_review"] is None  # hidden when drafts are off
+
+        # unrated + reviewed → draft reason nulled, label 資料不足
+        wid = _ingredient_id(imported_db, "西瓜")
+        d2 = client.get(f"/api/ingredients/{wid}").json()
+        assert d2["eczema_rating"] == "unrated"
+        assert d2["rating_reason"] is None
+        assert d2["rating_label"] == "資料不足"
+
+        # unreviewed stays hidden even though the row exists
+        hid = _ingredient_id(imported_db, "芋頭")
+        assert client.get(f"/api/ingredients/{hid}").status_code == 404
+
+        cats = {
+            c["name_zh"]: c["ingredient_count"]
+            for c in client.get("/api/categories").json()
+        }
+        assert cats["蛋奶"] == 1
+        assert cats["蔬菜"] == 1
+        assert cats["水果"] == 1
+
+
+def test_include_drafts_shows_everything(imported_db):
+    with _client(imported_db, drafts=True) as client:
+        r = client.get("/api/ingredients/search", params={"q": "雞蛋"})
+        item = r.json()["items"][0]
+        assert item["draft"] is True
+        iid = _ingredient_id(imported_db, "雞蛋")
+        d = client.get(f"/api/ingredients/{iid}").json()
+        assert d["draft"] is True
+        assert d["needs_senior_review"] is True  # 雞蛋 flagged in the CSV
+        cats_total = sum(
+            c["ingredient_count"] for c in client.get("/api/categories").json()
+        )
+        assert cats_total == 163
+
+
+def test_search_ranking_and_aliases(imported_db):
+    with _client(imported_db, drafts=True) as client:
+        items = client.get(
+            "/api/ingredients/search", params={"q": "雞蛋"}
+        ).json()["items"]
+        assert items[0]["name_zh"] == "雞蛋"  # exact name match first
+        # alias hit: 番茄 carries the alias 蕃茄
+        res = client.get("/api/ingredients/search", params={"q": "蕃茄"}).json()
+        assert any(i["name_zh"] == "番茄" for i in res["items"])
+
+
+@pytest.mark.parametrize("q", ["%", "_", "%%", "100%"])
+def test_search_escapes_like_metachars(imported_db, q):
+    with _client(imported_db, drafts=True) as client:
+        res = client.get("/api/ingredients/search", params={"q": q}).json()
+        assert res["count"] == 0
+
+
+@pytest.mark.parametrize("q", ["", "   ", "x" * 51])
+def test_search_q_validation(imported_db, q):
+    with _client(imported_db, drafts=True) as client:
+        r = client.get("/api/ingredients/search", params={"q": q})
+        assert r.status_code == 422
+
+
+def test_category_ingredients_filter_and_pagination(imported_db):
+    with _client(imported_db, drafts=True) as client:
+        cats = {c["name_zh"]: c["id"] for c in client.get("/api/categories").json()}
+        cid = cats["蔬菜"]
+        r = client.get(
+            f"/api/categories/{cid}/ingredients",
+            params={"rating": "caution", "limit": 5, "offset": 0},
+        )
+        assert r.status_code == 200
+        body = r.json()
+        assert body["category"]["id"] == cid
+        assert len(body["items"]) <= 5
+        assert all(i["eczema_rating"] == "caution" for i in body["items"])
+        with psycopg.connect(imported_db) as conn:
+            expected = conn.execute(
+                "SELECT count(*) FROM ingredient "
+                "WHERE category_id = %s AND eczema_rating = 'caution'",
+                (cid,),
+            ).fetchone()[0]
+        assert body["total"] == expected
+        if expected > 1:
+            r2 = client.get(
+                f"/api/categories/{cid}/ingredients",
+                params={"rating": "caution", "limit": 5, "offset": 1},
+            ).json()
+            assert r2["items"][0]["id"] != body["items"][0]["id"]
+        assert (
+            client.get(
+                f"/api/categories/{cid}/ingredients", params={"rating": "bogus"}
+            ).status_code
+            == 422
+        )
+        assert client.get("/api/categories/999999/ingredients").status_code == 404
+
+
+def test_allergens_endpoint(imported_db):
+    with _client(imported_db) as client:
+        r = client.get("/api/allergens")
+        assert r.status_code == 200
+        assert len(r.json()) == 13
+        assert {a["name_zh"] for a in r.json()} >= {"蛋", "奶", "花粉交叉"}

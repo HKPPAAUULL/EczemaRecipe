@@ -46,6 +46,7 @@
   - 種子驗證（免 DB）：`cd backend && python -m app.cli import-seed --validate-only`
   - 起 DB：`docker compose up -d db`（首次自動執行 `docs/db/*.sql`）；停：`docker compose down`（保留 volume）
   - 匯入種子：`cd backend && python -m app.cli import-seed`（先設 `DATABASE_URL` 指向 `127.0.0.1`；`--dry-run` 試跑）
+  - 啟動 API：`cd backend && uvicorn app.main:app --reload`（env：`DATABASE_URL` 必需；`APP_ENV`、`INCLUDE_DRAFTS`、`CORS_ORIGINS` 見 `.env.example`；production 下 `INCLUDE_DRAFTS` 必須為 false）
 
 ## 文件索引
 - `docs/PLAN.md` — 方案書（開發依據）

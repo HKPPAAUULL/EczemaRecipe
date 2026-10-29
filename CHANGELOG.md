@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-10-29
+
+### Added
+
+- **Read API** (PLAN.md §6, ingredient + category parts): `GET /api/ingredients/search` (name/alias ILIKE via `aliases_text` trigram index, ranked exact > exact-alias > prefix > substring), `GET /api/ingredients/{id}` (rating, allergens, evidence, nutrients, disclaimer; `unrated` never leaks draft reasons), `GET /api/categories` (ingredient counts over visible rows only), `GET /api/categories/{id}/ingredients` (rating filter + pagination), `GET /api/allergens`. All read-only, pydantic response models, auto OpenAPI.
+- **Draft visibility switch**: `INCLUDE_DRAFTS` env — when false every ingredient query reads the `published_ingredient` view only (unreviewed ids are 404); when true the `ingredient` table is used and payloads carry `draft` + `needs_senior_review`.
+- **App config** (`app/config.py`): `APP_ENV` (development|production|test) and `CORS_ORIGINS` env vars; startup refuses `APP_ENV=production` + `INCLUDE_DRAFTS=true`; CORS middleware (GET only) added only when origins are configured.
+- **DB pool**: `psycopg-pool` ConnectionPool (min 1 / max 5, dict_row) created in the FastAPI lifespan; `/health` checks through the pool.
+
 ## [0.1.1] - 2026-10-29
 
 ### Fixed
