@@ -93,7 +93,11 @@ CREATE INDEX ingredient_name_zh_trgm_idx ON ingredient USING gin (name_zh gin_tr
 -- 別名精確包含搜尋（aliases @> ARRAY[...]）
 CREATE INDEX ingredient_aliases_gin_idx ON ingredient USING gin (aliases);
 -- 別名模糊搜尋（ILIKE '%...%' 跨陣列元素）
-CREATE INDEX ingredient_aliases_trgm_idx ON ingredient USING gin ((array_to_string(aliases, ' ')) gin_trgm_ops);
+CREATE FUNCTION aliases_text(text[]) RETURNS text
+    LANGUAGE sql IMMUTABLE PARALLEL SAFE
+    AS $$ SELECT array_to_string($1, ' ') $$;
+COMMENT ON FUNCTION aliases_text(text[]) IS 'array_to_string 為 STABLE 不能用於索引；此 IMMUTABLE 包裝供別名 trigram 索引與搜尋查詢共用（text[] 元素為 text 時結果穩定）';
+CREATE INDEX ingredient_aliases_trgm_idx ON ingredient USING gin ((aliases_text(aliases)) gin_trgm_ops);
 CREATE INDEX ingredient_category_idx ON ingredient (category_id);
 CREATE INDEX ingredient_rating_idx ON ingredient (eczema_rating);
 CREATE INDEX ingredient_reviewed_idx ON ingredient (reviewed) WHERE reviewed;
