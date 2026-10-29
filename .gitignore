@@ -1,0 +1,20 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node / frontend (future)
+node_modules/
+.next/
+
+# Runtime data
+pgdata/
+backups/
+*.log

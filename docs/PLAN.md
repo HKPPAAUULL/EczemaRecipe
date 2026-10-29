@@ -151,8 +151,8 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 | 階段 | 內容 | 狀態 |
 |---|---|---|
-| 0. 準備 | 方案書、agents.md、Stitch 設計稿、確定來源站點合規清單 | 進行中 |
-| 1. 資料基礎 | DB schema、營養資料匯入、約 150 種常見食材人工評級種子資料 | 未開始 |
+| 0. 準備 | 方案書、agents.md、Stitch 設計稿、確定來源站點合規清單 | 完成（授權徵詢信待寄） |
+| 1. 資料基礎 | DB schema、營養資料匯入、約 150 種常見食材人工評級種子資料 | 進行中（v0.1.0：專案骨架、Docker Compose、種子匯入器、CI；營養資料匯入待做） |
 | 2. 後端 API | 搜尋、詳情、分類、食譜配對 | 未開始 |
 | 3. 前端 MVP | 首頁、食材查詢、分類庫（功能 1、3） | 未開始 |
 | 4. 食譜 | 爬蟲＋標準化＋配對＋警示（功能 2） | 未開始 |
@@ -194,6 +194,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 |---|---|---|
 | 2026-10-29 | v0.1 | 初版：整合預算、自架部署、Gemini、香港/台灣食譜來源、免登入版本 |
 | 2026-10-29 | v0.1.1 | 新增 §4.4 來源可信度規則（排除 AI 生成網站）；設定 GitHub repo |
+| 2026-10-29 | v0.1.5 | 進入開發階段；v0.1.0 完成專案骨架（FastAPI、Postgres Docker Compose、種子匯入器、GitHub Actions CI）；schema 新增 needs_senior_review、evidence 唯一約束、data_source.kind='web'、allergen『花粉交叉』 |
 | 2026-10-29 | v0.1.4 | 收到 Stitch 設計稿；新增 `docs/DESIGN_REVIEW.md`。品牌定名「濕疹食堂 Eczema Kitchen」；中醫內容以「傳統說法」獨立標示且不影響評級；第一版只做核心功能；記錄設計稿須修正項目（捏造文獻、療效宣稱、Level 分級等） |
 | 2026-10-29 | v0.1.3 | 新增 `docs/RATING_CRITERIA.md` 評級準則、`docs/db/` schema 草稿、`data/seed/` 食材種子草稿、`data/reference/` 過敏原關鍵字與同義詞表；`docs/SOURCES.md` 完成條款核實 |
 | 2026-10-29 | v0.1.2 | 新增 `docs/SOURCES.md` 來源初步評估；食譜策略改為「政府開放資料＋自建原創食譜」優先，社群平台後置 |

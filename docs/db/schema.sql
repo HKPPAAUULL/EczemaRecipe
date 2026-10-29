@@ -41,12 +41,12 @@ CREATE TABLE data_source (
     name        text NOT NULL UNIQUE,
     url         text,
     license     text,
-    kind        text NOT NULL CHECK (kind IN ('nutrition', 'recipe', 'evidence', 'allergen', 'manual')),
+    kind        text NOT NULL CHECK (kind IN ('nutrition', 'recipe', 'evidence', 'allergen', 'manual', 'web')),
     created_at  timestamptz NOT NULL DEFAULT now(),
     updated_at  timestamptz NOT NULL DEFAULT now()
 );
 COMMENT ON TABLE data_source IS '外部資料來源登記（USDA、TFDA、食安中心、Open Food Facts、食譜站、人工輸入等）；license 記錄授權條款，配合 SOURCES.md 使用';
-COMMENT ON COLUMN data_source.kind IS 'nutrition=營養資料、recipe=食譜來源、evidence=文獻/證據、allergen=過敏原資料、manual=人工輸入/原創';
+COMMENT ON COLUMN data_source.kind IS 'nutrition=營養資料、recipe=食譜來源、evidence=文獻/證據、allergen=過敏原資料、manual=人工輸入/原創、web=一般網頁來源（匯入器按網域自動建立）';
 
 -- ---------------------------------------------------------------------------
 -- food_category — 食材分類（§5）
@@ -74,6 +74,7 @@ CREATE TABLE ingredient (
     rating_reason   text,
     reviewed        boolean NOT NULL DEFAULT false,
     reviewed_at     timestamptz,
+    needs_senior_review boolean NOT NULL DEFAULT false,
     created_at      timestamptz NOT NULL DEFAULT now(),
     updated_at      timestamptz NOT NULL DEFAULT now(),
     CONSTRAINT ingredient_rating_requires_reason CHECK (
@@ -85,6 +86,7 @@ COMMENT ON COLUMN ingredient.aliases IS '港/台/英文同義名陣列，供模�
 COMMENT ON COLUMN ingredient.eczema_rating IS 'suitable/caution/trigger 必須填 rating_reason（CHECK 約束）；unrated=未評級';
 COMMENT ON COLUMN ingredient.reviewed IS '人工審核通過才可發佈；LLM 生成內容一律 reviewed=false 先入審核佇列';
 COMMENT ON COLUMN ingredient.reviewed_at IS '人工審核通過時間';
+COMMENT ON COLUMN ingredient.needs_senior_review IS '草稿中標記需資深審核（如證據弱或措辭需謹慎），見 docs/RATING_CRITERIA.md';
 
 -- 名稱模糊搜尋（pg_trgm）
 CREATE INDEX ingredient_name_zh_trgm_idx ON ingredient USING gin (name_zh gin_trgm_ops);
@@ -158,7 +160,8 @@ CREATE TABLE evidence (
     source_type     text NOT NULL DEFAULT 'other' CHECK (length(btrim(source_type)) > 0),
     year            integer CHECK (year IS NULL OR (year >= 1800 AND year <= 2100)),
     created_at      timestamptz NOT NULL DEFAULT now(),
-    updated_at      timestamptz NOT NULL DEFAULT now()
+    updated_at      timestamptz NOT NULL DEFAULT now(),
+    UNIQUE (ingredient_id, url)
 );
 COMMENT ON TABLE evidence IS '食材評級的參考證據：PubMed 文獻、官方資料庫條目等；只存標題、摘要與連結';
 COMMENT ON COLUMN evidence.source_type IS '建議值：pubmed、usda、cfs、tfda、open_food_facts、guideline、other';

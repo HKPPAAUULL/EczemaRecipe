@@ -18,7 +18,8 @@
   4. 如 PLAN.md 階段狀態有變，一併更新。
 - 絕不 commit 密鑰（`.env`、API key、Cloudflare token）；確保 `.gitignore` 涵蓋。
 - 不 force-push、不改寫歷史。若 remote 尚未設定，先詢問用戶 GitHub repo 網址。
-- 目前（規劃階段）只有文件，尚未開始建站；在用戶說「開始製作」前不要建立程式碼專案。
+- 2026-10-29 用戶已確認「開始製作」：進入開發階段，按方案書 §9 階段推進；每個版本完成並驗證後自動 commit、更新 CHANGELOG、打 tag 並 push。
+- 範圍：第一版只做核心功能（見 `docs/DESIGN_REVIEW.md`）；中醫內容只可作「傳統說法」，不影響評級。
 
 ## 技術棧（摘要，詳見方案書）
 - 前端：Next.js + TypeScript + Tailwind（Mobile-first 響應式）
@@ -40,7 +41,11 @@
 - 完成後驗證（lint、typecheck、測試、必要時實際啟動）再 commit。
 - 優先沿用既有檔案與模式；不寫多餘文件（本檔、PLAN.md、CHANGELOG.md、STITCH_PROMPTS.md 除外）。
 - 驗證指令在建立專案後補充於此處：
-  - （待補）
+  - Lint：`ruff check backend`
+  - 單元測試：`python -m pytest backend/tests -q`（整合測試需設 `TEST_DATABASE_URL`，見 `.env.example`）
+  - 種子驗證（免 DB）：`cd backend && python -m app.cli import-seed --validate-only`
+  - 起 DB：`docker compose up -d db`（首次自動執行 `docs/db/*.sql`）；停：`docker compose down`（保留 volume）
+  - 匯入種子：`cd backend && python -m app.cli import-seed`（先設 `DATABASE_URL` 指向 `127.0.0.1`；`--dry-run` 試跑）
 
 ## 文件索引
 - `docs/PLAN.md` — 方案書（開發依據）

@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: eczema
+          POSTGRES_PASSWORD: ci_test_password
+          POSTGRES_DB: eczema_recipe
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U eczema -d eczema_recipe"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements-dev.txt
+
+      - name: Lint (ruff)
+        run: ruff check backend
+
+      - name: Apply schema and seed
+        env:
+          PGPASSWORD: ci_test_password
+        run: |
+          psql -h 127.0.0.1 -U eczema -d eczema_recipe -f docs/db/schema.sql
+          psql -h 127.0.0.1 -U eczema -d eczema_recipe -f docs/db/seed_categories_allergens.sql
+
+      - name: Validate seed CSV (no DB objects needed beyond this runner)
+        run: |
+          cd backend && python -m app.cli import-seed \
+            --csv ../data/seed/ingredients_draft.csv \
+            --synonyms ../data/reference/ingredient_synonyms.csv \
+            --seed-sql ../docs/db/seed_categories_allergens.sql \
+            --validate-only
+
+      - name: Tests
+        env:
+          TEST_DATABASE_URL: postgresql://eczema:ci_test_password@127.0.0.1:5432/eczema_recipe
+        run: python -m pytest backend/tests -q

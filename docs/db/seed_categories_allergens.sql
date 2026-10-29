@@ -33,7 +33,8 @@ INSERT INTO allergen (name_zh, name_en, type) VALUES
     ('芝麻',         'sesame',       'major_allergen'),
     ('組織胺',       'histamine',    'histamine'),
     ('水楊酸',       'salicylate',   'salicylate'),
-    ('鎳',           'nickel',       'nickel')
+    ('鎳',           'nickel',       'nickel'),
+    ('花粉交叉',     'pollen cross-reactivity', 'other')
 ON CONFLICT (name_zh) DO NOTHING;
 
 COMMIT;
