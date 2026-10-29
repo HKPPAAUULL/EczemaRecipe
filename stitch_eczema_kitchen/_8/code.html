@@ -1,0 +1,492 @@
+<!DOCTYPE html><html class="h-full" lang="zh-HK"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>濕疹食光 - 食材庫</title>
+<!-- Google Fonts: Newsreader & Noto Sans TC -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=Noto+Sans+TC:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#c1c8c3",
+            "tertiary-fixed": "#ffdcc2",
+            "surface-container-high": "#dfebe4",
+            "on-primary-container": "#f7fff9",
+            "on-background": "#131e19",
+            "outline": "#727974",
+            "primary-fixed-dim": "#aacfbd",
+            "on-primary": "#ffffff",
+            "surface": "#f0fcf5",
+            "primary": "#426355",
+            "tertiary-fixed-dim": "#ffb77a",
+            "surface-tint": "#446557",
+            "tertiary": "#8c4c00",
+            "on-primary-fixed-variant": "#2c4d40",
+            "error": "#ba1a1a",
+            "surface-bright": "#f0fcf5",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "on-secondary-fixed": "#101e18",
+            "inverse-primary": "#aacfbd",
+            "surface-container-low": "#eaf7ef",
+            "on-error": "#ffffff",
+            "on-surface-variant": "#414844",
+            "inverse-on-surface": "#e7f4ec",
+            "surface-container-lowest": "#ffffff",
+            "secondary": "#526259",
+            "on-primary-fixed": "#002116",
+            "surface-variant": "#d9e5de",
+            "on-tertiary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-dim": "#d1ddd6",
+            "secondary-container": "#d5e7dc",
+            "tertiary-container": "#af6102",
+            "surface-container": "#e5f1e9",
+            "secondary-fixed-dim": "#bacbc0",
+            "background": "#f0fcf5",
+            "on-tertiary-fixed": "#2e1500",
+            "on-secondary-fixed-variant": "#3b4a42",
+            "on-surface": "#131e19",
+            "on-tertiary-container": "#fffcff",
+            "primary-container": "#5a7c6d",
+            "surface-container-highest": "#d9e5de",
+            "on-secondary-container": "#58685f",
+            "secondary-fixed": "#d5e7dc",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#28332e",
+            "primary-fixed": "#c6ebd9"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "margin": "2.5rem",
+            "margin-mobile": "1.25rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "1rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Newsreader", "serif"],
+            "title-editorial": ["Newsreader", "serif"],
+            "display-hero-mobile": ["Newsreader", "serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "label-md": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "headline-sm": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "disclaimer": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "label-lg": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "body-md": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "body-lg": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "body-sm": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "display-hero": ["Newsreader", "serif"],
+            "label-caps": ["Noto Sans TC", "Noto Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["26px", { "lineHeight": "36px", "fontWeight": "400" }],
+            "title-editorial": ["20px", { "lineHeight": "30px", "fontWeight": "600" }],
+            "display-hero-mobile": ["34px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-lg": ["36px", { "lineHeight": "48px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-sm": ["22px", { "lineHeight": "32px", "fontWeight": "500" }],
+            "headline-md": ["28px", { "lineHeight": "38px", "fontWeight": "500" }],
+            "disclaimer": ["12px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "label-lg": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "body-md": ["16px", { "lineHeight": "28px", "letterSpacing": "0.015em", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "display-hero": ["48px", { "lineHeight": "60px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top App Container (Sticky Mobile Frame) -->
+<div class="w-full max-w-md mx-auto min-h-screen flex flex-col relative pb-28">
+<!-- TopAppBar (Shared Component Implementation) -->
+<header class="sticky top-0 z-40 bg-surface/95 backdrop-blur-md px-margin-mobile py-space-sm flex justify-between items-center max-w-md mx-auto w-full transition-all">
+<div class="flex items-center gap-2">
+
+<h1 class="text-title-editorial font-title-editorial text-primary tracking-tight font-bold">食材庫</h1>
+</div>
+<div class="flex items-center gap-1">
+<button aria-label="收藏食材" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container active:scale-95 transition-all text-secondary">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+</button>
+<button aria-label="篩選偏好" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container active:scale-95 transition-all text-secondary">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+</div>
+</header>
+<!-- Search Bar & Editorial Intro -->
+<div class="px-margin-mobile pt-space-xs pb-space-sm">
+<div class="relative flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</div>
+<input class="w-full pl-10 pr-10 py-3 bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-xl border border-outline-variant/60 placeholder:text-outline/70 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-[0_2px_12px_-2px_rgba(47,58,53,0.04)]" placeholder="搜尋食材，例如：節瓜、三文魚..." type="search">
+<button aria-label="語音辨識" class="absolute right-3 text-outline hover:text-primary p-1 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="mic">mic</span>
+</button>
+</div>
+</div>
+<!-- Category Tabs (Horizontal Scrollable) -->
+<div class="w-full overflow-hidden mb-space-sm">
+<div aria-label="食材分類" class="flex gap-2 px-margin-mobile overflow-x-auto no-scrollbar scroll-smooth py-1" role="tablist">
+<!-- 蔬菜 (Selected) -->
+<button aria-selected="true" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🥬</span>
+<span class="font-medium">蔬菜</span>
+</button>
+<!-- 肉類 -->
+<button aria-selected="false" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/50 font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🥩</span>
+<span class="">肉類</span>
+</button>
+<!-- 海鮮 -->
+<button aria-selected="false" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/50 font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🐟</span>
+<span class="">海鮮</span>
+</button>
+<!-- 水果 -->
+<button aria-selected="false" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/50 font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🍎</span>
+<span class="">水果</span>
+</button>
+<!-- 穀物主食 -->
+<button aria-selected="false" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/50 font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🌾</span>
+<span class="">穀物主食</span>
+</button>
+<!-- 蛋奶 -->
+<button aria-selected="false" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/50 font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🥚</span>
+<span class="">蛋奶</span>
+</button>
+<!-- 豆類豆製品 -->
+<button aria-selected="false" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/50 font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🫘</span>
+<span class="">豆類豆品</span>
+</button>
+<!-- 調味料 -->
+<button aria-selected="false" class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/50 font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" role="tab">
+<span class="text-base leading-none">🧂</span>
+<span class="">調味料</span>
+</button>
+</div>
+</div>
+<!-- Rating Filters & Total Count Bar -->
+<div class="px-margin-mobile flex items-center justify-between gap-2 mb-space-sm">
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+<!-- 全部 Filter -->
+<button class="px-2.5 py-1 rounded-full bg-primary/10 text-primary font-label-caps text-label-caps font-semibold whitespace-nowrap active:scale-95 transition-transform">
+          全部
+        </button>
+<!-- 適合 Filter -->
+<button class="px-2.5 py-1 rounded-full bg-[#E8F5E9] text-[#4E8752] border border-[#D4EAD6] font-label-caps text-label-caps whitespace-nowrap active:scale-95 transition-transform flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
+<span class="">適合</span>
+</button>
+<!-- 因人而異 Filter -->
+<button class="px-2.5 py-1 rounded-full bg-[#FEF3E2] text-[#D9822B] border border-[#FADDBB] font-label-caps text-label-caps whitespace-nowrap active:scale-95 transition-transform flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#D9822B]"></span>
+<span class="">因人而異</span>
+</button>
+<!-- 常見誘發 Filter -->
+<button class="px-2.5 py-1 rounded-full bg-[#FCE8E6] text-[#C85A54] border border-[#F5C7C3] font-label-caps text-label-caps whitespace-nowrap active:scale-95 transition-transform flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#C85A54]"></span>
+<span class="">常見誘發</span>
+</button>
+</div>
+<div class="text-outline font-label-caps text-label-caps whitespace-nowrap shrink-0">
+        共 42 種
+      </div>
+</div>
+<!-- Main Content Grid (2-Column Bento Grid of Ingredient Tiles) -->
+<main class="px-margin-mobile flex-1">
+<div class="grid grid-cols-2 gap-3.5">
+<!-- Card 1: 節瓜 -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-primary/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Close up photography of fresh sliced fuzzy melon hairy gourd on a rustic linen cloth with soft morning kitchen lighting. Minimalist organic pantry composition with gentle sage green and beige undertones, creating a clean, calm, dietary healing mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv9A-m3pML65Bv-zHEUEM3LIuMu_oZ3hPceZRQ53Z7F_YlyX6MQz_LVd5CNS9D0oAHBs96_0ISg3SZXYZOhferMm5EdtvOVUjL2GL4J3IPP3IHIekk0Vp8E_hn9co1g75LCctEt_GuL2iXdojaFCi1cSZmZCsSzlQzRsq8snl1ksrDbRPJh3DSmwTMTgYITmWLjoNx3VoKcU7LLCM6C7r5siPKNPhYI9mJHhold11L">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#E8F5E9]/90 text-[#4E8752] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
+                適合
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">節瓜 / 櫛瓜</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">極低組織胺，甘平清熱解暑，適合敏感肌常食。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-primary/80 font-medium">清熱 · 健脾</span>
+<button aria-label="加入清單 節瓜" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary hover:text-on-primary text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+<!-- Card 2: 淮山 / 山藥 -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-primary/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Earthy fresh Chinese wild yam slices arranged neatly on a stone cutting board in an artisan kitchen studio. Delicate natural lighting casting soft gentle shadows, quiet herbal editorial aesthetic with earthy oatmeal tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFgnjStRhoSl-l9I6euqqNeacKwIZF9bmAPHwua9TxoZQl7W4ywCRZbHmpMd6fWykljp9IuwaDi4rHERE1_lXs7iLYxplQXBVFXWSyXcglSy5y1-GRzAG-PCTYWzBzJf1KwEpBoDsXb0DDDEMwcF8ajI951wIH0Plz7rqu5jyWoQZwfN2qtwpFSu4m_4ITTcY27m9DjXIsgRaaelBeS_c7e145ygNeZV7ZKtbDsYCC">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#E8F5E9]/90 text-[#4E8752] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
+                適合
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">淮山 / 山藥</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">健脾養陰補氣，益氣生津，幫助皮膚屏障修復。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-primary/80 font-medium">健脾 · 滋陰</span>
+<button aria-label="加入清單 淮山" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary hover:text-on-primary text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+<!-- Card 3: 去皮雞胸肉 -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-primary/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Clean fresh organic lean skinless chicken breast placed on a white ceramic plate with gentle green sprigs. Bright airy natural day-lit food photography, soothing editorial medical wellness kitchen aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8aUKs-Ap7K1CiNomHgi71PmZThnZ_PxswA8Hh1356vB9K69vHwrvb-NrZ7AzitI8Z1rF5iVC9raiT9508dyxRPoY9nS6Qttrg5r6DOIhyqwPWTTxQSP8jjpEIiCruhjjbleadc5z5KJPJ1F_zhvC_59LTXKPLKmhyJdp9gLITYvEPYXVp2mTHfZMwF3c6W81RuINDB-Yjj8x3rBLkjCAAFodRPgrq4UroUylhsGdi">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#E8F5E9]/90 text-[#4E8752] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
+                適合
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">去皮雞胸肉</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">優質低脂蛋白，低敏感性，修復皮損組織基石。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-primary/80 font-medium">優質蛋白</span>
+<button aria-label="加入清單 去皮雞胸肉" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary hover:text-on-primary text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+<!-- Card 4: 娃娃菜 -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-primary/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Crisp baby Napa cabbage halves showing delicate pale yellow interior leaves on a warm textured wooden surface. Soft diffused window light, serene and calm green tones fitting an atopic dermatitis recipe visual identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe-DmEPwe5gEkxYArGrPb2QWhe6Sd_6M7KD924RabFbe3WNCAJZmchaKJmPqgLJduZpKB2qleFqpBMjs75kiU2DzsfCaHb8jr0SOlk9U1FvbKDW49_T43cNzhIKxkr3uktKthr_L-mvxMQlbA8po_v2-Y2ewvwEbsWowuVYyRiKoQlARoqn28L68v_NR2xmjvreibEu9kQyZcsk0u00EQLj3mEJIb1qTLtv-XMpDQ0">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#E8F5E9]/90 text-[#4E8752] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
+                適合
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">娃娃菜</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">清甜平溫不寒涼，富含纖維，敏感期溫和良蔬。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-primary/80 font-medium">溫和 · 低敏</span>
+<button aria-label="加入清單 娃娃菜" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary hover:text-on-primary text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+<!-- Card 5: 菠菜 (因人而異) -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-[#D9822B]/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Vibrant fresh green spinach leaves washed with water drops on a neutral beige ceramic dish. High aesthetic food styling with quiet mood, natural warm daylight highlighting vegetable textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjOJc_ES8KTSFsZ83ZKGXemsDUGnjNnVBBrZ87ZJyz-Rd8fu2TlVQ524iO3Fwz4ZASo9sT2xyD9neJjYEkyHLsPGE9X6asrCrKsYpIvLL3PP3WT-s06iTRB7rvd2Bi0NX9pBKbT35-p6qzKCExXBLLPcyljcKNaau2ECl2obUt7taHrMNzwpVLusF13U73rvqO72izDVHxn5raupJeBOkgP1t_Q8YCZFQC-Yn0v-UF">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#FEF3E2]/90 text-[#D9822B] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#FADDBB]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#D9822B]"></span>
+                因人而異
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">菠菜</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">含較高草酸與組織胺釋放物，烹調建議徹底燙熟。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-[#D9822B] font-medium">需徹底汆燙</span>
+<button aria-label="加入清單 菠菜" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-[#D9822B] hover:text-white text-secondary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+<!-- Card 6: 番茄 (因人而異) -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-[#D9822B]/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Heirloom ripe tomatoes resting on a linen kitchen mat, soft afternoon sunlight from a nearby window. Serene clinical dietary setting emphasizing mindful food choices with warm muted earthen tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDarvw0qPJsy1Y0NqvVN3IpqZQ-xrTkjjs0q5JVnA46inupF2LtAYBNIBwYtETEWkovP2xEo1KCjezyj_fT5Aw19KCcGoBb829n77w7KjK5pn3aiLwnLdknvElzFGVcL5Qawvh3491UO5CJRCZluXh28kyYTL2TSzTGg6T52HzoysPSw0fqB15Us5GpN3WMw5kKOWfZvdCRGFposkBe6iohmdYfWcN7zNBqvuHOIKsa">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#FEF3E2]/90 text-[#D9822B] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#FADDBB]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#D9822B]"></span>
+                因人而異
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">番茄</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">屬茄科且釋放組織胺，部分人發作期進食或致痕癢。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-[#D9822B] font-medium">組織胺釋放</span>
+<button aria-label="加入清單 番茄" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-[#D9822B] hover:text-white text-secondary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+<!-- Card 7: 帶殼鮮蝦 (常見誘發) -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-[#C85A54]/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Raw fresh whole prawns with shells in a shallow ceramic dish on an unbleached linen towel. Subtle low contrast lighting, delicate culinary photography with soft sage and muted terracotta highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1vXglGNKoe_n1U2TRY6AcUaAjUKCBsM2ckrggeR4tNLY4rMdleI5mm4KPuxsxi1wzTfFYusCg-SGD60raiC-9vBSnXtEEy-QalsHxerimJjGS0PeabhdX64r5EtusTgtrMMkMBoMtHvFyLk9IzZzMTc4dYrZ9iWYik9lG6jIKDbxawcnn_sZqWUl6C81oSiWh1aVb6PejQiBQEr-LLu9y4-3U0eOZ-cfy4aK-Xr3s">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#FCE8E6]/90 text-[#C85A54] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#F5C7C3]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#C85A54]"></span>
+                常見誘發
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">帶殼鮮蝦</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">甲殼原肌球蛋白致敏性高，中醫視為發物，發作期避忌。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-[#C85A54] font-medium">常見致敏源</span>
+<button aria-label="加入清單 帶殼鮮蝦" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-[#C85A54] hover:text-white text-secondary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+<!-- Card 8: 秋葵 (適合) -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-3 flex flex-col justify-between shadow-[0_4px_20px_-2px_rgba(47,58,53,0.05)] hover:border-primary/40 transition-all group">
+<div>
+<div class="w-full h-24 rounded-lg overflow-hidden bg-surface-container-low mb-2.5 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Fresh sliced green okra pods revealing beautiful star patterns on clean unglazed pottery. Natural soft daylight, serene culinary aesthetics with herbal moss green and creamy paper tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdFbokGlfxn05aepzdA1vLoOTQS32D9PJhL7_6p80NyQLXWBdGAX5TC1XttB3L7JxGfGjraBS0zbUEL_LQ_7zpKkb5OBbAhKjB6tbeH8LQVwEJKxGRzSqT0ldJIhfTsbOWN9XzzDivqnhTNdTByaGl1DzFbEbqZAyIl2IvqhaE4TzeH5TLU1-zP-k9QNg3MCsKt5XIatN80nXklOvdUtncGT30ZDILtQWJKrtjwlJG">
+<span class="absolute top-1.5 left-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-[#E8F5E9]/90 text-[#4E8752] text-[10px] font-semibold tracking-tight backdrop-blur-xs border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
+                適合
+              </span>
+</div>
+<h2 class="text-title-editorial font-title-editorial text-on-surface font-semibold leading-snug">秋葵</h2>
+<p class="font-disclaimer text-disclaimer text-secondary line-clamp-2 mt-0.5">富含果膠黏液與水溶性膳食纖維，抗炎助腸道健康。</p>
+</div>
+<div class="mt-3 flex items-center justify-between pt-1">
+<span class="text-[11px] font-label-caps text-primary/80 font-medium">護胃 · 抗炎</span>
+<button aria-label="加入清單 秋葵" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary hover:text-on-primary text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Quick Guidance Banner: 街市超市買餸溫馨錦囊 -->
+<div class="mt-5 p-4 rounded-xl bg-surface-container-low border border-outline-variant/50">
+<div class="flex items-start gap-2.5">
+<div class="p-1.5 rounded-lg bg-primary-fixed text-on-primary-fixed mt-0.5 shrink-0">
+<span class="material-symbols-outlined text-[18px]" data-icon="local_florist">local_florist</span>
+</div>
+<div>
+<h3 class="font-title-editorial text-title-editorial text-primary font-semibold text-base leading-snug">街市買餸安心提示</h3>
+<p class="font-disclaimer text-disclaimer text-secondary mt-1">選購時請優先挑選當造、未經多重加工之新鮮食材。海鮮以白肉淡水魚或急凍銀鱈魚為宜，若皮膚正處急性紅腫滲水期，請遵醫囑先避食發物與高組織胺食材。</p>
+</div>
+</div>
+</div>
+<!-- Disclaimer Footer (Design System Mandate) -->
+<footer class="mt-6 mb-4 pt-4 border-t border-outline-variant/60 text-center">
+<p class="font-disclaimer text-disclaimer text-outline">
+          「本站資訊僅供參考，不能取代醫生或營養師意見。」
+        </p>
+</footer>
+</main>
+<!-- Floating Shopping List Capsule Button (買餸清單 FAB) -->
+<aside class="fixed bottom-20 right-4 z-40 max-w-md">
+<button class="flex items-center gap-2 pl-4 pr-3.5 py-3 rounded-full bg-primary-container text-on-primary-container shadow-[0_8px_25px_-4px_rgba(47,58,53,0.35)] hover:bg-primary active:scale-95 transition-all border border-primary-fixed-dim/30 focus:outline-none">
+<span class="material-symbols-outlined text-[20px]" data-icon="shopping_basket">shopping_basket</span>
+<span class="font-label-lg text-label-lg font-medium tracking-tight">買餸清單</span>
+<span class="flex items-center justify-center min-w-[22px] h-[22px] px-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-bold text-xs">
+          3
+        </span>
+</button>
+</aside>
+<!-- BottomNavBar (Shared Component Implementation) -->
+<!-- Active State Logic: Current page is "食材庫" (index 3). Exact match gets style_active_navigation. -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter-mobile py-space-xs bg-surface dark:bg-surface shadow-[0_-4px_20px_-2px_rgba(47,58,53,0.06)]">
+<!-- 0: 首頁 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="spa">spa</span>
+<span class="text-label-caps font-label-caps mt-0.5">首頁</span>
+</a>
+<!-- 1: 查食材 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="search">search</span>
+<span class="text-label-caps font-label-caps mt-0.5">查食材</span>
+</a>
+<!-- 2: 配食譜 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="menu_book">menu_book</span>
+<span class="text-label-caps font-label-caps mt-0.5">配食譜</span>
+</a>
+<!-- 3: 食材庫 (Active - Matched Target Destination) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed min-h-[44px] min-w-[44px] py-space-xs hover:text-primary active:scale-95 transition-all font-semibold relative" href="#">
+<span class="material-symbols-outlined text-[24px] material-symbols-filled" data-icon="inventory_2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="text-label-caps font-label-caps mt-0.5">食材庫</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary absolute -bottom-1"></span>
+</a>
+</nav>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle plus buttons animation
+      const addButtons = document.querySelectorAll('button[aria-label^="加入清單"]');
+      const badgeCount = document.querySelector('aside button span.min-w-\\[22px\\]');
+      let currentCount = 3;
+
+      addButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon.textContent === 'add') {
+            icon.textContent = 'check';
+            btn.classList.add('bg-primary', 'text-on-primary');
+            btn.classList.remove('bg-surface-container', 'text-primary', 'text-secondary');
+            currentCount++;
+            badgeCount.textContent = currentCount;
+            // Bump badge
+            badgeCount.classList.add('scale-125');
+            setTimeout(() => badgeCount.classList.remove('scale-125'), 200);
+          } else {
+            icon.textContent = 'add';
+            btn.classList.remove('bg-primary', 'text-on-primary');
+            btn.classList.add('bg-surface-container', 'text-primary');
+            currentCount = Math.max(0, currentCount - 1);
+            badgeCount.textContent = currentCount;
+          }
+        });
+      });
+    });
+  </script>
+
+
+</body></html>

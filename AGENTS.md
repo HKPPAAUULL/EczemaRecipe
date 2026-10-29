@@ -45,6 +45,8 @@
 ## 文件索引
 - `docs/PLAN.md` — 方案書（開發依據）
 - `docs/STITCH_PROMPTS.md` — Google Stitch 提示詞
+- `docs/DESIGN_REVIEW.md` — Stitch 設計稿審查：可用部分、必須修正項、用戶決定（品牌名「濕疹食堂」、第一版範圍）
+- `stitch_eczema_kitchen/` — Stitch 匯出（參考用；其中示意文獻、療效宣稱與 Level 分級不得直接採用）
 - `docs/SOURCES.md` — 食譜／資料來源與條款核實
 - `docs/RATING_CRITERIA.md` — 食材濕疹評級準則（評級唯一標準）
 - `docs/db/` — PostgreSQL schema 與初始資料

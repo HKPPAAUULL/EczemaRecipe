@@ -1,0 +1,625 @@
+<!DOCTYPE html><html class="light" lang="zh-TW"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>雞蛋 (Egg) - 食材查詢詳情 | 濕疹食堂 Eczema Kitchen</title>
+<!-- Google Fonts: Newsreader (Editorial Serif) & Noto Sans TC (Clear Sans) -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&amp;family=Noto+Sans+TC:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined (Exact link & weights) -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#dfebe4",
+            "surface-container-highest": "#d9e5de",
+            "tertiary-fixed": "#ffdcc2",
+            "on-surface": "#131e19",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "on-secondary-fixed-variant": "#3b4a42",
+            "on-secondary-fixed": "#101e18",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#af6102",
+            "surface": "#f0fcf5",
+            "error-container": "#ffdad6",
+            "inverse-surface": "#28332e",
+            "on-secondary": "#ffffff",
+            "on-primary-fixed-variant": "#2c4d40",
+            "on-surface-variant": "#414844",
+            "surface-container-low": "#eaf7ef",
+            "surface-container": "#e5f1e9",
+            "on-primary-container": "#f7fff9",
+            "surface-variant": "#d9e5de",
+            "secondary-fixed": "#d5e7dc",
+            "secondary-fixed-dim": "#bacbc0",
+            "primary-container": "#5a7c6d",
+            "primary-fixed-dim": "#aacfbd",
+            "on-primary-fixed": "#002116",
+            "inverse-primary": "#aacfbd",
+            "on-secondary-container": "#58685f",
+            "inverse-on-surface": "#e7f4ec",
+            "primary": "#426355",
+            "error": "#ba1a1a",
+            "outline": "#727974",
+            "on-tertiary-container": "#fffcff",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#8c4c00",
+            "on-background": "#131e19",
+            "on-error": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#c6ebd9",
+            "surface-tint": "#446557",
+            "surface-dim": "#d1ddd6",
+            "secondary-container": "#d5e7dc",
+            "surface-bright": "#f0fcf5",
+            "on-tertiary-fixed": "#2e1500",
+            "secondary": "#526259",
+            "outline-variant": "#c1c8c3",
+            "tertiary-fixed-dim": "#ffb77a",
+            "background": "#f0fcf5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "gutter": "1.5rem",
+            "margin": "2.5rem"
+          },
+          "fontFamily": {
+            "display-hero": ["Newsreader", "serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "headline-sm": ["Newsreader", "serif"],
+            "title-editorial": ["Newsreader", "serif"],
+            "body-lg": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "body-md": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "body-sm": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "label-lg": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "label-md": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "label-caps": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "disclaimer": ["Noto Sans TC", "Noto Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "display-hero": ["48px", { "lineHeight": "60px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-lg": ["36px", { "lineHeight": "48px", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "38px", "fontWeight": "500" }],
+            "headline-sm": ["22px", { "lineHeight": "32px", "fontWeight": "500" }],
+            "title-editorial": ["20px", { "lineHeight": "30px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "body-md": ["16px", { "lineHeight": "28px", "letterSpacing": "0.015em", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "label-lg": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "disclaimer": ["12px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+    body {
+      background-color: #F8F5EF;
+      color: #2F3A35;
+    }
+    .paper-card {
+      background-color: #FFFFFF;
+      border: 1px solid #E3DDD3;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px -2px rgba(47, 58, 53, 0.05);
+      transition: all 0.2s ease-in-out;
+    }
+    .paper-card-subtle {
+      background-color: #F7FAF8;
+      border: 1px solid #E3DDD3;
+      border-radius: 0.75rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-on-surface antialiased bg-[#F8F5EF]">
+<!-- TopNavBar (Shared Component JSON Anchor) -->
+<header class="w-full bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20 w-full">
+<!-- Brand Logo -->
+<a class="flex items-center gap-3 group" href="#">
+<span class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]">spa</span>
+</span>
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight">濕疹食堂 Eczema Kitchen</span>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-secondary hover:text-primary transition-colors duration-200 text-label-md font-label-md" href="#">首頁</a>
+<!-- Active Tab: 查食材 -->
+<a class="text-primary border-b-2 border-primary pb-1 font-semibold text-label-md font-label-md" href="#">查食材</a>
+<a class="text-secondary hover:text-primary transition-colors duration-200 text-label-md font-label-md" href="#">配食譜</a>
+<a class="text-secondary hover:text-primary transition-colors duration-200 text-label-md font-label-md" href="#">食材庫</a>
+</nav>
+<!-- Trailing Actions & Search -->
+<div class="flex items-center gap-4">
+<!-- Search bar on right -->
+<div class="hidden lg:flex items-center relative">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-[18px]">search</span>
+<input class="w-52 pl-9 pr-3 py-1.5 text-body-sm font-body-sm bg-surface-container-low border border-outline-variant rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-on-surface placeholder:text-secondary" placeholder="搜尋致敏成分或食材..." type="text">
+</div>
+<button class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-on-primary text-label-md font-label-md hover:bg-primary-container transition-all duration-200 active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">security</span>
+          過敏原檔案
+        </button>
+
+</div>
+</div>
+</header>
+<!-- Main Canvas Container: 1200px Max Desktop Centered -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-6 lg:px-8 py-6">
+<!-- Breadcrumb: 首頁 > 查食材 > 禽蛋與肉類 > 雞蛋 -->
+<nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-label-md font-label-md text-secondary mb-6">
+<a class="hover:text-primary transition-colors" href="#">首頁</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">查食材</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">禽蛋與肉類</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">雞蛋</span>
+</nav>
+<!-- Top Banner / Header Card -->
+<section class="paper-card p-6 lg:p-8 mb-8">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+<!-- Left: Image & Name Cluster -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<div class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-surface-container border border-outline-variant flex-shrink-0 shadow-inner">
+<img class="w-full h-full object-cover" data-alt="A clean, calm editorial culinary composition of two fresh organic brown-shelled eggs resting gently in a handcrafted ceramic bowl with unbleached oatmeal linen backdrop, illuminated by soft diffuse morning sunlight, evoking a gentle botanical and clinical sanctuary aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5_B4R5mXrxv2rJwlWKqyAVW9gjQ13KRVva76CPGBPiKXyXEG9B1RikofvBLML4LZXDVymxJCIM_u8_C8SH3P1n0pGJKUwm1F_lG6-UuOl9CdHGrbJN0BnF8l-K49ju47bDfortBl_Lwt6PzfrqGgdS4kOQ8ECpvIJrY5SBzWFYmHRYG0dF6_F5e9Z52eI71BSScIy9K9Tx4kMF78cHtyYwx2EVW4O1kYqD4uUg2g4">
+<div class="absolute bottom-1 right-1 bg-surface-container-lowest/90 px-1.5 py-0.5 rounded text-[10px] text-secondary font-label-caps">
+              禽蛋食品
+            </div>
+</div>
+<div>
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">雞蛋</h1>
+<span class="font-body-md text-body-md text-secondary">Egg (Whole)</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">
+              標準全蛋（含蛋白與蛋黃）· 普遍高營養密度蛋白質食材
+            </p>
+<!-- Triage Status Badge (因人而異: #FEF3E2, #D9822B, #FADDBB) -->
+<div class="mt-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FEF3E2] border border-[#FADDBB] text-[#D9822B]">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span class="font-label-lg text-label-lg font-semibold">因人而異 (Level 2)</span>
+<span class="text-secondary text-body-sm hidden md:inline">|</span>
+<span class="font-body-sm text-body-sm text-[#8c4c00] hidden md:inline">部分敏感體質可能誘發，建議確認耐受度後安心食用</span>
+</div>
+</div>
+</div>
+<!-- Right: Action Buttons Group -->
+<div class="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full lg:w-auto pt-2 lg:pt-0 border-t lg:border-t-0 border-outline-variant">
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all active:scale-95 shadow-sm" id="add-grocery-btn">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+            加入買餸清單
+          </button>
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface-container-lowest border border-outline-variant text-on-surface font-label-lg text-label-lg hover:bg-surface-container-low transition-all" id="bookmark-btn">
+<span class="material-symbols-outlined text-[20px] text-secondary">bookmark_border</span>
+            收藏食材
+          </button>
+</div>
+</div>
+<!-- Mobile Suitability Rationale text fallback -->
+<div class="mt-4 pt-3 border-t border-[#FADDBB]/40 md:hidden">
+<p class="text-body-sm font-body-sm text-[#8c4c00]">
+          🟡 <strong>因人而異 (Level 2)</strong>：部分敏感體質可能誘發，建議確認耐受度後安心食用。
+        </p>
+</div>
+</section>
+<!-- Two-Column Master Layout (Left: Info & Medical / Right: Nutrition & Alternatives) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- ================= LEFT COLUMN (Col 1-7) ================= -->
+<div class="lg:col-span-7 space-y-6">
+<!-- Card 1: 為什麼？評級深度分析 (Why? Medical & Clinical Rationale) -->
+<article class="paper-card p-6 lg:p-7">
+<div class="flex items-center gap-2.5 pb-4 border-b border-outline-variant">
+<span class="material-symbols-outlined text-primary text-[24px]">help_outline</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">為什麼？評級深度分析</h2>
+</div>
+<div class="mt-5 space-y-4 font-body-md text-body-md text-on-surface">
+<!-- Bullet 1 -->
+<div class="flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-primary text-body-sm font-bold flex-shrink-0 mt-0.5">1</span>
+<div>
+<strong class="font-semibold text-on-surface">常見食物過敏原之一：</strong>
+<p class="text-secondary text-body-md mt-0.5">
+                  雞蛋名列全球前八大過敏原。主要致敏蛋白集中於蛋清中的<strong>卵類黏蛋白 (Ovomucoid)</strong> 及<strong>卵白蛋白 (Ovalbumin)</strong>。其中卵類黏蛋白對高溫具高度熱穩定性，即便是全熟水煮蛋或烘烤狀態仍可能刺激敏感體質的 IgE 抗體釋放反應。
+                </p>
+</div>
+</div>
+<!-- Bullet 2 -->
+<div class="flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-primary text-body-sm font-bold flex-shrink-0 mt-0.5">2</span>
+<div>
+<strong class="font-semibold text-on-surface">濕疹患者臨床關聯性：</strong>
+<p class="text-secondary text-body-md mt-0.5">
+                  臨床研究顯示，幼兒與兒童特應性皮炎 (Atopic Eczema) 與蛋類過敏存在顯著重疊關聯；若皮膚當前正處於急性泛紅、結痂或發炎滲液期，建議先諮詢免疫科醫師或過敏專家，暫時實施 2 至 4 週的單一排除飲食測試。
+                </p>
+</div>
+</div>
+<!-- Bullet 3 -->
+<div class="flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-primary text-body-sm font-bold flex-shrink-0 mt-0.5">3</span>
+<div>
+<strong class="font-semibold text-on-surface">個體化攝取與屏障修復：</strong>
+<p class="text-secondary text-body-md mt-0.5">
+                  若您已完成特異性 IgE 檢測為陰性，或個人耐受測試無發癢起疹反應，雞蛋實為最高生物價 (Biological Value 100) 的極優質蛋白質，富含卵磷脂、鋅與維他命 D，對皮膚黏膜修補與角質層重建助益顯著，無須盲目過度忌口。
+                </p>
+</div>
+</div>
+</div>
+<!-- Dual Medical Lens: 港台中西醫雙重視角解讀卡片 -->
+<div class="mt-6 p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+<div class="flex items-center gap-2 mb-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">medical_services</span>
+<h3 class="font-title-editorial text-title-editorial text-primary">港台中西醫視角解讀</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              中醫典籍視雞蛋味甘、<strong>性平</strong>，具「滋陰潤燥、健脾補血」功效，能助血虛受風型乾癢皮損舒緩；惟<strong>烹調方式切忌高溫油炸與重辛香辣</strong>（如油煎荷包蛋、炸蛋），易助濕化熱。西醫臨床則建議以白烚蛋（全熟水煮）或蒸蛋羹為主，維持蛋白結構溫和易水解。
+            </p>
+</div>
+</article>
+<!-- Card 2: 致敏原標籤 (Allergen Tags) -->
+<article class="paper-card p-6 lg:p-7">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">label</span>
+<h2 class="font-title-editorial text-title-editorial text-on-surface">致敏原屬性與標籤</h2>
+</div>
+<span class="font-label-md text-label-md text-secondary">已檢索 8 大常態過敏原</span>
+</div>
+<div class="mt-4 flex flex-wrap gap-2.5">
+<!-- Major Allergen (Selected Warning Pill) -->
+<span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FEF3E2] border border-[#FADDBB] text-[#D9822B] text-label-md font-semibold">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+              蛋類 / 禽蛋 (主要致敏成分)
+            </span>
+<!-- Safe / Free-of Badges -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant text-secondary text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary">check</span>
+              高溫耐受性蛋白 (Ovomucoid)
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant text-secondary text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary">check</span>
+              無小麥 (Gluten-Free)
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant text-secondary text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary">check</span>
+              無奶製品 (Dairy-Free)
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant text-secondary text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary">check</span>
+              非甲殼類水產
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant text-secondary text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary">check</span>
+              無大豆 / 無堅果
+            </span>
+</div>
+</article>
+<!-- Card 3: 醫學與營養參考資料 (References) -->
+<article class="paper-card p-6 lg:p-7">
+<div class="flex items-center gap-2 pb-3 border-b border-outline-variant">
+<span class="material-symbols-outlined text-primary text-[22px]">menu_book</span>
+<h2 class="font-title-editorial text-title-editorial text-on-surface">醫學與營養文獻參考 (References)</h2>
+</div>
+<ul class="mt-4 space-y-3 font-body-sm text-body-sm text-secondary">
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-primary flex-shrink-0 mt-0.5">article</span>
+<div class="">
+<span class="font-semibold text-on-surface">WAO (世界過敏組織)</span>
+                — 《食物過敏與特應性皮炎管理臨床實踐指引》(World Allergy Organization Guidelines for Atopic Dermatitis, 2022)
+              </div>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-primary flex-shrink-0 mt-0.5">article</span>
+<div class="">
+<span class="font-semibold text-on-surface">台灣過敏氣喘暨臨床免疫醫學會</span>
+                — 《食物過敏原篩檢、雙盲激發與特應性濕疹飲食介入指引》(2021 年版)
+              </div>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-primary flex-shrink-0 mt-0.5">article</span>
+<div class="">
+<span class="font-semibold text-on-surface">香港過敏協會 (Hong Kong Allergy Association)</span>
+                — 《嶺南亞熱帶高濕氣候下成年與青少年濕疹患者常見誘發食譜大數據研調》(2023)
+              </div>
+</li>
+</ul>
+</article>
+</div>
+<!-- ================= RIGHT COLUMN (Col 8-12) ================= -->
+<div class="lg:col-span-5 space-y-6">
+<!-- Card 1: 營養成分可視化 (每 100 克) -->
+<article class="paper-card p-6 lg:p-7">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">營養成分</h2>
+<span class="font-label-md text-label-md text-secondary">每 100g 可食用部分</span>
+</div>
+<span class="px-2.5 py-1 rounded-lg bg-surface-container text-primary font-label-md font-medium">
+              143 kcal
+            </span>
+</div>
+<!-- Macros 4-Grid Snapshot -->
+<div class="grid grid-cols-3 gap-2.5 my-4">
+<div class="p-3 rounded-xl bg-surface-container-low text-center">
+<span class="block text-label-md text-secondary">蛋白質</span>
+<span class="block font-semibold text-body-lg text-primary mt-0.5">12.6g</span>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-low text-center">
+<span class="block text-label-md text-secondary">脂肪</span>
+<span class="block font-semibold text-body-lg text-on-surface mt-0.5">9.5g</span>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-low text-center">
+<span class="block text-label-md text-secondary">碳水化合物</span>
+<span class="block font-semibold text-body-lg text-on-surface mt-0.5">0.7g</span>
+</div>
+</div>
+<!-- Clean Horizontal Bar Visualizations -->
+<div class="space-y-4 pt-1">
+<!-- Protein Bar -->
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="font-medium text-on-surface">優質蛋白質 (Protein)</span>
+<span class="font-semibold text-primary">12.6g (65% 每日基礎參考)</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<!-- Fat Bar -->
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="font-medium text-on-surface">脂質 (Fat - 卵磷脂 &amp; 單不飽和)</span>
+<span class="font-semibold text-secondary">9.5g (48%)</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#8CA699] rounded-full" style="width: 48%;"></div>
+</div>
+</div>
+<!-- Carb Bar -->
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="font-medium text-on-surface">碳水化合物 (Carbohydrate)</span>
+<span class="font-semibold text-secondary">0.7g (5%)</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant rounded-full" style="width: 5%;"></div>
+</div>
+</div>
+</div>
+<!-- Skin Barrier Micronutrients Highlights -->
+<div class="mt-6 pt-5 border-t border-outline-variant">
+<h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider mb-3">
+              ✦ 肌膚屏障修復關鍵微量元素
+            </h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3 rounded-lg border border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-semibold text-body-sm">維他命 D · 2.0 µg</span>
+</div>
+<p class="text-[12px] text-secondary mt-1 leading-snug">調控角質細胞分化與天然抗微生物肽</p>
+</div>
+<div class="p-3 rounded-lg border border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-semibold text-body-sm">鋅 (Zinc) · 1.3 mg</span>
+</div>
+<p class="text-[12px] text-secondary mt-1 leading-snug">維持表皮癒合、輔助膠原蛋白健康生成</p>
+</div>
+<div class="p-3 rounded-lg border border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-semibold text-body-sm">膽鹼 · 250 mg</span>
+</div>
+<p class="text-[12px] text-secondary mt-1 leading-snug">穩定皮膚細胞膜結構與親水脂質層</p>
+</div>
+<div class="p-3 rounded-lg border border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-semibold text-body-sm">Omega-3 · 0.1g</span>
+</div>
+<p class="text-[12px] text-secondary mt-1 leading-snug">提供微量抗炎脂肪酸支持</p>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2: 相關建議替代食材 (Alternative Ingredients) -->
+<article class="paper-card p-6 lg:p-7">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">替代與互換食材</h2>
+<span class="font-label-md text-label-md text-secondary">敏感情境時的安心蛋白質替換選項</span>
+</div>
+</div>
+<div class="mt-4 space-y-3">
+<!-- Alternative 1: 嫩豆腐 / 板豆腐 (綠色安心) -->
+<a class="block p-3.5 rounded-xl border border-outline-variant hover:border-primary transition-all bg-surface-container-lowest hover:bg-surface-container-low group" href="#">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">nutrition</span>
+</div>
+<div>
+<h4 class="font-semibold text-body-md text-on-surface group-hover:text-primary transition-colors">板豆腐 / 嫩豆腐 (Tofu)</h4>
+<span class="text-body-sm text-secondary">優質植物蛋白 · 高鈣溫和</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#E8F5E9] text-[#4E8752] border border-[#D4EAD6] text-label-md font-semibold">
+                  🟢 一般適合
+                </span>
+</div>
+</a>
+<!-- Alternative 2: 去皮雞胸肉 (綠色安心) -->
+<a class="block p-3.5 rounded-xl border border-outline-variant hover:border-primary transition-all bg-surface-container-lowest hover:bg-surface-container-low group" href="#">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div>
+<h4 class="font-semibold text-body-md text-on-surface group-hover:text-primary transition-colors">去皮雞胸肉 (Skinless Chicken)</h4>
+<span class="text-body-sm text-secondary">極低脂純淨動物蛋白 · 罕見誘發</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#E8F5E9] text-[#4E8752] border border-[#D4EAD6] text-label-md font-semibold">
+                  🟢 一般適合
+                </span>
+</div>
+</a>
+<!-- Alternative 3: 鵪鶉蛋 (因人而異) -->
+<a class="block p-3.5 rounded-xl border border-outline-variant hover:border-[#D9822B] transition-all bg-surface-container-lowest hover:bg-surface-container-low group" href="#">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-[#FEF3E2] flex items-center justify-center text-[#D9822B] group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">egg</span>
+</div>
+<div>
+<h4 class="font-semibold text-body-md text-on-surface group-hover:text-[#D9822B] transition-colors">鵪鶉蛋 (Quail Egg)</h4>
+<span class="text-body-sm text-secondary">微量蛋白 · 少數雞蛋敏感者可部分耐受</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#FEF3E2] text-[#D9822B] border border-[#FADDBB] text-label-md font-semibold">
+                  🟡 因人而異
+                </span>
+</div>
+</a>
+<!-- Alternative 4: 鴨蛋 (因人而異) -->
+<a class="block p-3.5 rounded-xl border border-outline-variant hover:border-[#D9822B] transition-all bg-surface-container-lowest hover:bg-surface-container-low group" href="#">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-[#FEF3E2] flex items-center justify-center text-[#D9822B] group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">egg</span>
+</div>
+<div>
+<h4 class="font-semibold text-body-md text-on-surface group-hover:text-[#D9822B] transition-colors">鴨蛋 (Duck Egg)</h4>
+<span class="text-body-sm text-secondary">高蛋黃脂質 · 同源交叉反應機率高</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#FEF3E2] text-[#D9822B] border border-[#FADDBB] text-label-md font-semibold">
+                  🟡 因人而異
+                </span>
+</div>
+</a>
+</div>
+</article>
+<!-- Card 3: 個人耐受日記與買餸快捷卡片 -->
+<article class="p-6 rounded-2xl bg-surface-container border border-outline-variant shadow-sm space-y-4">
+<div class="flex items-center gap-2.5 text-primary">
+<span class="material-symbols-outlined">edit_note</span>
+<h3 class="font-title-editorial text-title-editorial text-on-surface">個人耐受飲食筆記</h3>
+</div>
+<p class="text-body-sm font-body-sm text-secondary leading-relaxed">
+            您是否曾食用雞蛋後出現皮膚搔癢、紅疹或消化不良？記錄您的耐受情況，食譜搜尋時系統將為您自動標記警告。
+          </p>
+<div class="flex items-center gap-3 pt-1">
+<button class="px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant text-on-surface text-label-md font-label-md hover:border-primary transition-all">
+              ＋ 記錄試吃反應
+            </button>
+<button class="px-4 py-2 rounded-xl bg-primary text-on-primary text-label-md font-label-md hover:bg-primary-container transition-all">
+              同步買餸清單 (1)
+            </button>
+</div>
+</article>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component JSON Anchor) -->
+<footer class="mt-16 bg-surface-container-low border-t border-outline-variant">
+<div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row justify-between items-center gap-6 w-full">
+<!-- Brand & Copyright -->
+<div class="text-center md:text-left">
+<div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+<span class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary text-xs">
+<span class="material-symbols-outlined text-[16px]">spa</span>
+</span>
+<span class="font-headline-sm text-headline-sm text-primary">濕疹食堂 Eczema Kitchen</span>
+</div>
+<p class="text-secondary text-disclaimer font-disclaimer max-w-xl">© 2025 濕疹食堂 Eczema Kitchen. 本站資訊僅供參考，不能取代醫生或營養師意見。</p>
+</div>
+<!-- Footer Policy Links -->
+<div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2">
+<a class="text-secondary hover:text-primary underline transition-colors text-label-md font-label-md" href="#">醫療免責聲明</a>
+<a class="text-secondary hover:text-primary underline transition-colors text-label-md font-label-md" href="#">敏感情況說明</a>
+<a class="text-secondary hover:text-primary underline transition-colors text-label-md font-label-md" href="#">食材審核準則</a>
+<a class="text-secondary hover:text-primary underline transition-colors text-label-md font-label-md" href="#">聯絡營養顧問</a>
+</div>
+</div>
+</footer>
+<!-- Micro-interactions JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Bookmark button toggle interaction
+      const bookmarkBtn = document.getElementById('bookmark-btn');
+      if (bookmarkBtn) {
+        bookmarkBtn.addEventListener('click', () => {
+          const icon = bookmarkBtn.querySelector('.material-symbols-outlined');
+          const isBookmarked = icon.innerText === 'bookmark';
+          if (isBookmarked) {
+            icon.innerText = 'bookmark_border';
+            icon.classList.remove('text-primary');
+            icon.classList.add('text-secondary');
+            bookmarkBtn.classList.remove('border-primary');
+          } else {
+            icon.innerText = 'bookmark';
+            icon.classList.remove('text-secondary');
+            icon.classList.add('text-primary');
+            bookmarkBtn.classList.add('border-primary');
+          }
+        });
+      }
+
+      // Add to grocery list button interaction
+      const groceryBtn = document.getElementById('add-grocery-btn');
+      if (groceryBtn) {
+        groceryBtn.addEventListener('click', () => {
+          const originalHtml = groceryBtn.innerHTML;
+          groceryBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span> 已加入買餸清單';
+          groceryBtn.classList.add('bg-primary-container');
+          setTimeout(() => {
+            groceryBtn.innerHTML = originalHtml;
+            groceryBtn.classList.remove('bg-primary-container');
+          }, 2200);
+        });
+      }
+    });
+  </script>
+
+
+
+
+</body></html>

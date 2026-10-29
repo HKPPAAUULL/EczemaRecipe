@@ -1,0 +1,840 @@
+<!DOCTYPE html><html class="light" lang="zh-TW" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>用手上食材配食譜 - 濕疹食光 Eczema Kitchen</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Newsreader & Noto Sans TC -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&amp;family=Noto+Sans+TC:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS with forms container-queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#fffcff",
+            "on-primary-fixed": "#002116",
+            "secondary-fixed-dim": "#bacbc0",
+            "on-primary-fixed-variant": "#2c4d40",
+            "surface-variant": "#d9e5de",
+            "surface-container": "#e5f1e9",
+            "tertiary-container": "#af6102",
+            "surface-container-highest": "#d9e5de",
+            "on-surface-variant": "#414844",
+            "primary-fixed-dim": "#aacfbd",
+            "inverse-primary": "#aacfbd",
+            "surface-bright": "#f0fcf5",
+            "tertiary": "#8c4c00",
+            "on-error-container": "#93000a",
+            "on-secondary-container": "#58685f",
+            "secondary": "#526259",
+            "on-tertiary-fixed": "#2e1500",
+            "on-background": "#131e19",
+            "on-surface": "#131e19",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "on-primary-container": "#f7fff9",
+            "secondary-container": "#d5e7dc",
+            "surface": "#f0fcf5",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#ffb77a",
+            "on-error": "#ffffff",
+            "inverse-surface": "#28332e",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#446557",
+            "outline-variant": "#c1c8c3",
+            "primary-fixed": "#c6ebd9",
+            "outline": "#727974",
+            "on-secondary-fixed-variant": "#3b4a42",
+            "primary-container": "#5a7c6d",
+            "inverse-on-surface": "#e7f4ec",
+            "tertiary-fixed": "#ffdcc2",
+            "on-secondary-fixed": "#101e18",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#d5e7dc",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#d1ddd6",
+            "primary": "#426355",
+            "error-container": "#ffdad6",
+            "background": "#f0fcf5",
+            "surface-container-low": "#eaf7ef",
+            "surface-container-high": "#dfebe4",
+            "surface-container-lowest": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "2.5rem",
+            "space-md": "1rem",
+            "gutter-mobile": "1rem",
+            "space-lg": "1.5rem",
+            "margin-mobile": "1.25rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "title-editorial": ["Newsreader", "serif"],
+            "disclaimer": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "body-sm": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "display-hero-mobile": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "label-caps": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "label-lg": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "body-lg": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "label-md": ["Noto Sans TC", "Noto Sans", "sans-serif"],
+            "headline-lg-mobile": ["Newsreader", "serif"],
+            "display-hero": ["Newsreader", "serif"],
+            "headline-sm": ["Newsreader", "serif"]
+          },
+          "fontSize": {
+            "body-md": ["16px", { "lineHeight": "28px", "letterSpacing": "0.015em", "fontWeight": "400" }],
+            "title-editorial": ["20px", { "lineHeight": "30px", "fontWeight": "600" }],
+            "disclaimer": ["12px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "display-hero-mobile": ["34px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "38px", "fontWeight": "500" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "label-lg": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "headline-lg": ["36px", { "lineHeight": "48px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "36px", "fontWeight": "400" }],
+            "display-hero": ["48px", { "lineHeight": "60px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "32px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TOP NAVIGATION BAR (Exact adherence to Shared Components JSON) -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline sticky top-0 z-40">
+<div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20 w-full">
+<!-- Brand Logo / Product Name -->
+<a class="font-headline-sm text-headline-sm text-primary dark:text-inverse-primary tracking-tight flex items-center gap-2 hover:opacity-90 transition-opacity" href="#">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">spa</span>
+<span class="">濕疹食光 Eczema Kitchen</span>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-secondary dark:text-secondary-fixed text-label-md font-label-md hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200" href="#">首頁</a>
+<a class="text-secondary dark:text-secondary-fixed text-label-md font-label-md hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200" href="#">查食材</a>
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary dark:border-inverse-primary pb-1 font-semibold text-label-md font-label-md" href="#">配食譜</a>
+<a class="text-secondary dark:text-secondary-fixed text-label-md font-label-md hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200" href="#">食材庫</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-3">
+<div class="relative hidden sm:block">
+<input class="pl-9 pr-4 py-1.5 text-body-sm font-body-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary w-48 transition-all outline-none" placeholder="查食材、食譜..." type="text">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-secondary text-lg">search</span>
+</div>
+
+<button class="p-2 text-primary dark:text-inverse-primary hover:text-primary transition-colors duration-200" title="會員帳戶">
+<span class="material-symbols-outlined text-2xl" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8 space-y-6">
+<!-- BREADCRUMB & INTRO HEADER -->
+<section class="space-y-3">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-secondary text-label-md font-label-md">
+<a class="hover:text-primary transition-colors" href="#">首頁</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">配食譜</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-on-surface font-medium">用手上食材配食譜</span>
+</nav>
+<!-- Editorial Title & Gentle Subheading -->
+<div class="border-b border-outline-variant pb-5">
+<div class="flex items-center gap-2.5 text-primary mb-1">
+<span class="material-symbols-outlined text-xl">psychiatry</span>
+<span class="text-label-caps font-label-caps uppercase tracking-wider text-secondary">Low-Histamine &amp; Eczema-Safe Recipe Finder</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">用手上食材配食譜</h1>
+<p class="text-body-md font-body-md text-secondary mt-1 max-w-3xl">
+          輸入或挑選家中現有食材，智能配對低敏安心家常食譜，避開個人誘發因子。溫和調理皮脂屏障，食得清心自在。
+        </p>
+</div>
+</section>
+<!-- WORKSPACE GRID: LEFT FILTER SIDEBAR + RIGHT RECIPES -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT SIDEBAR: INGREDIENT PICKER & ALLERGEN FILTERS -->
+<aside class="lg:col-span-4 space-y-5">
+<!-- Ingredient Picker Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 border border-outline-variant shadow-sm space-y-4">
+<div class="flex items-center justify-between border-b border-surface-container-high pb-3">
+<h2 class="text-headline-sm font-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">kitchen</span>
+<span class="">挑選現有食材</span>
+</h2>
+<span class="text-label-caps font-label-caps text-secondary bg-surface-container px-2 py-0.5 rounded-full">已選 4 項</span>
+</div>
+<!-- Search Input -->
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-secondary block">輸入食材名稱</label>
+<div class="relative">
+<input class="w-full pl-3.5 pr-11 py-2.5 text-body-sm font-body-sm rounded-xl border border-outline-variant bg-surface-bright focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-outline" placeholder="搜尋並加入食材，如：節瓜、去皮雞胸肉、淮山..." type="text">
+<button class="absolute right-2 top-2 p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="加入食材">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+<!-- Quick Select Recommendations -->
+<div class="space-y-2">
+<span class="text-label-caps font-label-caps text-secondary">推薦快選清單（低敏平性）：</span>
+<div class="flex flex-wrap gap-1.5">
+<button class="text-label-md font-label-md px-2.5 py-1 rounded-full bg-surface-container text-secondary hover:bg-secondary-container hover:text-on-secondary-container transition-all flex items-center gap-1 border border-transparent">
+<span class="">+ 南瓜</span>
+</button>
+<button class="text-label-md font-label-md px-2.5 py-1 rounded-full bg-surface-container text-secondary hover:bg-secondary-container hover:text-on-secondary-container transition-all flex items-center gap-1 border border-transparent">
+<span class="">+ 娃娃菜</span>
+</button>
+<button class="text-label-md font-label-md px-2.5 py-1 rounded-full bg-surface-container text-secondary hover:bg-secondary-container hover:text-on-secondary-container transition-all flex items-center gap-1 border border-transparent">
+<span class="">+ 茯苓</span>
+</button>
+<button class="text-label-md font-label-md px-2.5 py-1 rounded-full bg-surface-container text-secondary hover:bg-secondary-container hover:text-on-secondary-container transition-all flex items-center gap-1 border border-transparent">
+<span class="">+ 鮮百合</span>
+</button>
+</div>
+</div>
+<!-- Active Ingredients Chip Row -->
+<div class="space-y-2.5 pt-2 border-t border-surface-container-high">
+<span class="text-label-caps font-label-caps text-secondary">已加入的現有清單：</span>
+<div class="flex flex-wrap gap-2">
+<!-- Chip 1: 節瓜 -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-bright border border-outline-variant text-body-sm font-body-sm text-on-surface shadow-xs">
+<span class="w-2 h-2 rounded-full bg-primary" title="一般適合"></span>
+<span class="">節瓜 / 櫛瓜</span>
+<button class="text-secondary hover:text-error ml-0.5 transition-colors" title="移除食材">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</span>
+<!-- Chip 2: 去皮雞胸肉 -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-bright border border-outline-variant text-body-sm font-body-sm text-on-surface shadow-xs">
+<span class="w-2 h-2 rounded-full bg-primary" title="一般適合"></span>
+<span class="">去皮雞胸肉</span>
+<button class="text-secondary hover:text-error ml-0.5 transition-colors" title="移除食材">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</span>
+<!-- Chip 3: 淮山 / 山藥 -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-bright border border-outline-variant text-body-sm font-body-sm text-on-surface shadow-xs">
+<span class="w-2 h-2 rounded-full bg-primary" title="一般適合"></span>
+<span class="">淮山 / 山藥</span>
+<button class="text-secondary hover:text-error ml-0.5 transition-colors" title="移除食材">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</span>
+<!-- Chip 4: 雞蛋 (因人而異) -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-tertiary-fixed/40 border border-tertiary-fixed-dim text-body-sm font-body-sm text-tertiary shadow-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary" title="因人而異 (常見誘發)"></span>
+<span class="">雞蛋 (因人而異)</span>
+<button class="text-tertiary hover:text-error ml-0.5 transition-colors" title="移除食材">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</span>
+</div>
+</div>
+</div>
+<!-- Expandable "我的忌口與避敏" Filter Card -->
+<details class="group bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm transition-all overflow-hidden" open="">
+<summary class="flex items-center justify-between p-5 cursor-pointer select-none bg-surface-container-lowest hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">health_and_safety</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">我的忌口與避敏過濾</h2>
+</div>
+<span class="material-symbols-outlined text-secondary group-open:rotate-180 transition-transform duration-200">expand_more</span>
+</summary>
+<div class="p-5 pt-0 space-y-4 border-t border-surface-container-high">
+<p class="text-label-caps font-label-caps text-secondary">九大常見致敏原（自動替換或剔除）：</p>
+<!-- 9 Allergen Checkboxes -->
+<div class="grid grid-cols-3 gap-2.5 text-body-sm font-body-sm">
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input checked="" class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-on-surface font-medium">蛋</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-secondary">奶</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-secondary">花生</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-secondary">堅果</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-secondary">大豆</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-secondary">小麥</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-secondary">魚</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input checked="" class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-on-surface font-medium">甲殼類</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-bright p-2 rounded-xl border border-outline-variant/60 hover:border-primary transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4" type="checkbox">
+<span class="text-secondary">芝麻</span>
+</label>
+</div>
+<!-- Additional Medical / Dietary Filters -->
+<div class="space-y-2 pt-2 border-t border-surface-container-high">
+<span class="text-label-caps font-label-caps text-secondary">進階低刺激體質設定：</span>
+<label class="flex items-start gap-2.5 cursor-pointer text-body-sm font-body-sm bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4 mt-0.5" type="checkbox">
+<div>
+<span class="font-medium text-on-surface block">嚴格低組織胺飲食 (Low-Histamine)</span>
+<span class="text-disclaimer font-disclaimer text-secondary">排除番茄、菠菜、發酵品、陳年乳酪與高組織胺海鮮</span>
+</div>
+</label>
+<label class="flex items-start gap-2.5 cursor-pointer text-body-sm font-body-sm bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<input class="rounded text-primary focus:ring-primary border-outline-variant h-4 w-4 mt-0.5" type="checkbox">
+<div>
+<span class="font-medium text-on-surface block">避開中醫溫燥發物</span>
+<span class="text-disclaimer font-disclaimer text-secondary">排除鵝肉、羊肉、竹筍、芒果、辛辣熱補辛香料</span>
+</div>
+</label>
+</div>
+<!-- Action Buttons -->
+<div class="pt-3 flex items-center gap-3">
+<button class="flex-1 bg-primary text-on-primary py-2.5 px-4 rounded-xl text-label-md font-label-md hover:bg-primary-container transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-sm">bookmark</span>
+<span class="">Apply</span>
+</button>
+<button class="px-3 py-2.5 rounded-xl border border-outline-variant text-secondary hover:text-on-surface text-label-md font-label-md hover:bg-surface-bright transition-colors active:scale-95" title="清除所有篩選條件">
+                重設條件
+              </button>
+</div>
+</div>
+</details>
+<!-- Kitchen Wisdom Card (Complementary Editorial Content) -->
+<div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/60 text-secondary space-y-2">
+<div class="flex items-center gap-1.5 text-primary text-label-md font-label-md font-semibold">
+<span class="material-symbols-outlined text-lg">lightbulb</span>
+<span class="">配食譜小錦囊</span>
+</div>
+<p class="text-body-sm font-body-sm text-secondary leading-relaxed">
+            如處於皮膚紅腫發作期，建議烹調以「清蒸」、「慢燉」或「汆燙」為主，減少高溫煎炸與精製植物油氧化產物對肥大細胞的刺激。
+          </p>
+</div>
+</aside>
+<!-- RIGHT MAIN CONTENT: WARNING BANNER & 3-COLUMN RECIPE GRID -->
+<section class="lg:col-span-8 space-y-6">
+<!-- 1. WARNING BANNER (Gentle Amber Triage, avoiding harsh red) -->
+<div class="rounded-2xl p-4 sm:p-5 border border-tertiary-fixed-dim bg-tertiary-fixed/30 text-on-surface shadow-xs flex items-start gap-3.5 transition-all">
+<span class="material-symbols-outlined text-tertiary text-2xl shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div class="space-y-1 text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="inline-block px-2 py-0.5 rounded text-label-caps font-label-caps bg-tertiary text-on-primary font-semibold">溫和提示</span>
+<h3 class="font-semibold text-on-surface">你選擇的「雞蛋」為常見濕疹誘發食材（Level 2 因人而異）</h3>
+</div>
+<p class="text-secondary leading-relaxed">
+              部分蛋白中的卵類黏蛋白耐熱性高，易引發特異體質敏感。如您目前正處於皮膚急性紅腫或滲液期，請按個人耐受情況謹慎評估；如需食用，建議以熟透蛋黃或更換為豆腐泥為優先替代。
+            </p>
+</div>
+</div>
+<!-- 2. MATCHING RESULTS & SORT TOOLBAR -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-surface-container-lowest p-4 rounded-2xl border border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">auto_awesome</span>
+<span class="text-label-lg font-label-lg font-semibold text-on-surface">已為您配對 <span class="text-primary font-bold">6</span> 道安心食譜</span>
+<span class="text-disclaimer font-disclaimer text-secondary hidden md:inline">(依匹配度自動排序)</span>
+</div>
+<!-- Sort Select Pills -->
+<div class="flex items-center gap-1.5 self-end sm:self-auto overflow-x-auto max-w-full">
+<span class="text-label-caps font-label-caps text-secondary shrink-0 mr-1">排序依據：</span>
+<button class="px-3 py-1.5 rounded-full text-label-md font-label-md bg-primary text-on-primary font-medium transition-all shadow-xs">
+              最高符合度
+            </button>
+<button class="px-3 py-1.5 rounded-full text-label-md font-label-md bg-surface-container text-secondary hover:text-on-surface transition-all">
+              最低組織胺
+            </button>
+<button class="px-3 py-1.5 rounded-full text-label-md font-label-md bg-surface-container text-secondary hover:text-on-surface transition-all">
+              最短烹調時長
+            </button>
+</div>
+</div>
+<!-- 3. RECIPES 3-COLUMN GRID -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+<!-- RECIPE CARD 1: 清潤淮山節瓜燉去皮雞肉湯 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<!-- Image Section -->
+<div class="relative h-44 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A serene overhead shot of a clear Chinese healing soup in a ceramic bowl featuring sliced zucchini, Chinese yam, and tender skinless chicken breast. Warm diffuse morning light illuminates the delicate steam and the unbleached linen tabletop. Clean sage green ceramic spoon and fresh sprig of herbal garnish rest beside the bowl. Soft editorial styling with earthy neutral tones and high clinical purity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnfe_CUbbURed45m4GNloc3jey8O5H-x38l_90AMh_I0XHfZQB75Um4RacEQ1rNymh7Zl8fmW3Qqj3lm3BvsgPZyzXoKREJpJgHaUEocupnbP05djgQAqUIoHe-uowMBQZVd0b8-D4CRR9mo5gWJ1TkEjQ7GjZ6TxuwZ1zfuYazVEwfj_RghBDchKaplsd0_Gpmd5ZGAjeiAYsRfSjP6_H98vcmPpgyOswmdsA0ntK">
+<!-- Badges on Image -->
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-xs">timer</span> 25 分鐘
+                  </span>
+<span class="bg-surface-container-lowest/95 backdrop-blur text-secondary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs">
+                    簡易
+                  </span>
+</div>
+<div class="absolute top-2.5 right-2.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs flex items-center gap-1">
+<span class="text-xs">🍃🍃🍃🍃</span> 4.8 / 5 極度安心
+                  </span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-4 space-y-3">
+<!-- Title -->
+<div>
+<h3 class="text-title-editorial font-title-editorial text-on-surface group-hover:text-primary transition-colors line-clamp-1">
+                    清潤淮山節瓜燉去皮雞肉湯
+                  </h3>
+<p class="text-disclaimer font-disclaimer text-secondary line-clamp-1 mt-0.5">健脾化濕，清熱而不寒涼，適合初春敏感肌膚調理</p>
+</div>
+<!-- Match Progress Bar -->
+<div class="space-y-1.5 bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<div class="flex justify-between items-center text-label-md font-label-md">
+<span class="text-primary font-semibold">已有 4/5 項食材</span>
+<span class="text-primary font-bold">80% 吻合</span>
+</div>
+<div class="w-full bg-outline-variant/40 rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 80%"></div>
+</div>
+<!-- Missing Ingredients Indicator -->
+<div class="text-disclaimer font-disclaimer text-secondary flex items-center justify-between pt-1">
+<span class="">尚欠：枸杞少許</span>
+<button class="text-primary hover:underline font-medium">+加入備忘清單</button>
+</div>
+</div>
+<!-- Allergen Badges & Suitability Pill -->
+<div class="space-y-2">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無小麥</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無奶製品</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無甲殼類</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-caps font-label-caps bg-[#E8F5E9] text-[#4E8752] font-semibold border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span> 一般適合
+                    </span>
+<span class="text-disclaimer font-disclaimer text-secondary">低組織胺烹飪法</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="p-4 pt-0 flex items-center gap-2">
+<a class="flex-1 bg-surface-container hover:bg-secondary-container text-on-surface hover:text-on-secondary-container py-2 px-3 rounded-xl text-label-md font-label-md text-center transition-colors" href="#">
+                完整步驟與替代建議
+              </a>
+<button class="p-2 rounded-xl border border-outline-variant text-secondary hover:text-error hover:border-error transition-colors" title="收藏食譜">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+</article>
+<!-- RECIPE CARD 2: 南瓜淮山低敏滑雞炊飯 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<!-- Image Section -->
+<div class="relative h-44 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A delicate Japanese donabe pot with gently steamed fragrant low-allergen rice with diced pumpkin, tender skinless chicken fillet, and fresh Chinese yam cubes. Minimalist natural wood counter, warm linen runner, clean ceramic dish presentation. Warm peaceful morning light evoking natural wellness and eczema healing warmth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI5vy8AQNo9QTpRCmdruCDaU_NfxLKRVj5VecwDnDA3-F5GIAQLTRW-5i10l0j-X4lI6LuMaXG2Gw6M2aUVyNTsu4OhGqFutxxRJJjENSxcjIn6U65bOBhslcprXRo_Zn6dbIS9Zt7VvVMYgM6aKV9iqG6jZe53PWkhlW4ozERldY8PT2thOE7k4NYaIhggfWDqZyfdN5Gb-qyxrbRnqtwqm0Lv2y-ud1Siqa9h-gs">
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-xs">timer</span> 30 分鐘
+                  </span>
+<span class="bg-surface-container-lowest/95 backdrop-blur text-secondary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs">
+                    簡易
+                  </span>
+</div>
+<div class="absolute top-2.5 right-2.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs flex items-center gap-1">
+<span class="text-xs">🍃🍃🍃🍃</span> 4.7 / 5 高度安心
+                  </span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-4 space-y-3">
+<div>
+<h3 class="text-title-editorial font-title-editorial text-on-surface group-hover:text-primary transition-colors line-clamp-1">
+                    南瓜淮山低敏滑雞炊飯
+                  </h3>
+<p class="text-disclaimer font-disclaimer text-secondary line-clamp-1 mt-0.5">米氣和胃，南瓜溫潤滋養，全家皆可共享的一鍋料理</p>
+</div>
+<!-- Match Progress Bar -->
+<div class="space-y-1.5 bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<div class="flex justify-between items-center text-label-md font-label-md">
+<span class="text-primary font-semibold">已有 3/4 項食材</span>
+<span class="text-primary font-bold">75% 吻合</span>
+</div>
+<div class="w-full bg-outline-variant/40 rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 75%"></div>
+</div>
+<div class="text-disclaimer font-disclaimer text-secondary flex items-center justify-between pt-1">
+<span class="">尚欠：香米 / 白米</span>
+<button class="text-primary hover:underline font-medium">+加入備忘清單</button>
+</div>
+</div>
+<!-- Allergen Badges & Suitability Pill -->
+<div class="space-y-2">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無麩質</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無乳製品</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無蛋</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-caps font-label-caps bg-[#E8F5E9] text-[#4E8752] font-semibold border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span> 一般適合
+                    </span>
+<span class="text-disclaimer font-disclaimer text-secondary">平補健脾胃</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="p-4 pt-0 flex items-center gap-2">
+<a class="flex-1 bg-surface-container hover:bg-secondary-container text-on-surface hover:text-on-secondary-container py-2 px-3 rounded-xl text-label-md font-label-md text-center transition-colors" href="#">
+                完整步驟與替代建議
+              </a>
+<button class="p-2 rounded-xl border border-outline-variant text-secondary hover:text-error hover:border-error transition-colors" title="收藏食譜">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+</article>
+<!-- RECIPE CARD 3: 節瓜香草燜去皮雞柳配蒸蛋羹 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<!-- Image Section -->
+<div class="relative h-44 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A tranquil lifestyle dining composition with tender poached skinless chicken cutlets atop stir-steamed zucchini coins and a smooth herbal steamed egg custard. Soft natural lighting on unglazed matte stoneware with muted sage green napkins. High visual editorial aesthetics conveying gentle nourishment for sensitive skin." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYh76M_M-YhUg9L7C-TDMrPvv-4i00uM-N52P4MhgNlra2dc6ggdEQ7EBwlO4lE1LC0AwCFrDI92GbnEKx5HCDoL3WMgSug36JNDFQIe6elRozP0QJwNAQTH_Yw48LYJgOBX60CPBE-zlJ4XOdV7khXgf2iCHaqwbKfPn1ioFPiLWpkk2pZZlSyXbAdtndMeHlPXCel_hCcdzZ3NmzL4_i_6e8PzDhVmmJlPpw7FeR">
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-xs">timer</span> 20 分鐘
+                  </span>
+<span class="bg-surface-container-lowest/95 backdrop-blur text-secondary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs">
+                    超簡易
+                  </span>
+</div>
+<div class="absolute top-2.5 right-2.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-tertiary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs flex items-center gap-1">
+<span class="text-xs">🍃🍃🍃</span> 3.9 / 5 含受試成分
+                  </span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-4 space-y-3">
+<div>
+<h3 class="text-title-editorial font-title-editorial text-on-surface group-hover:text-primary transition-colors line-clamp-1">
+                    節瓜香草燜去皮雞柳配蛋羹
+                  </h3>
+<p class="text-disclaimer font-disclaimer text-secondary line-clamp-1 mt-0.5">利用節瓜清甜水分煨熟雞柳，溫潤適口</p>
+</div>
+<!-- Match Progress Bar -->
+<div class="space-y-1.5 bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<div class="flex justify-between items-center text-label-md font-label-md">
+<span class="text-primary font-semibold">已有 4/4 項食材</span>
+<span class="text-primary font-bold">100% 完全吻合</span>
+</div>
+<div class="w-full bg-outline-variant/40 rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 100%"></div>
+</div>
+<div class="text-disclaimer font-disclaimer text-primary flex items-center gap-1 pt-1 font-medium">
+<span class="material-symbols-outlined text-sm">check_circle</span> 手上現有食材可立即開火
+                  </div>
+</div>
+<!-- Allergen Badges & Suitability Pill -->
+<div class="space-y-2">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">含雞蛋</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無麩質</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無奶製品</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-caps font-label-caps bg-[#FEF3E2] text-[#D9822B] font-semibold border border-[#FADDBB]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#D9822B]"></span> 因人而異
+                    </span>
+<span class="text-disclaimer font-disclaimer text-secondary">可用嫩豆腐替代蛋</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="p-4 pt-0 flex items-center gap-2">
+<a class="flex-1 bg-surface-container hover:bg-secondary-container text-on-surface hover:text-on-secondary-container py-2 px-3 rounded-xl text-label-md font-label-md text-center transition-colors" href="#">
+                完整步驟與替代建議
+              </a>
+<button class="p-2 rounded-xl border border-outline-variant text-secondary hover:text-error hover:border-error transition-colors" title="收藏食譜">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+</article>
+<!-- RECIPE CARD 4: 彩椒香草蒸去皮三文魚配白飯 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<div class="relative h-44 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Steamed wild fresh salmon fillet with thin slices of mild yellow sweet bell pepper and fresh dill herbs served in a serene white ceramic dish. Warm natural sidelight highlighting moist fresh fish texture without oily reflection. Background has an earthy linen cloth and minimalist herbal seasoning jars. Pure clean nutrition for eczema relief." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuHr5ArdZPy068ChIY34VcEFTkmQyhYU67FdGJPpFJdeJLa5QsVibRqfqAX2dFjXyEmSJzVxKRCd_SYDPjaCiN5wkNe-uMmxRXxBWma_fjrTxxsQLnu7iuAKR7dLLFpB-nC07qQUz2-kQs3VWqo_zTkAwbW_dIoBe9__o7bLpkXsrR8NSvnNTxN5ZQujzkT2Op0JRPIwExYC1MEHlPsaDQFYN9kBVYPPDYNgaK-xxt">
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-xs">timer</span> 18 分鐘
+                  </span>
+<span class="bg-surface-container-lowest/95 backdrop-blur text-secondary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs">
+                    簡易
+                  </span>
+</div>
+<div class="absolute top-2.5 right-2.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs flex items-center gap-1">
+<span class="text-xs">🍃🍃🍃🍃</span> 4.6 / 5 富含 Omega-3
+                  </span>
+</div>
+</div>
+<div class="p-4 space-y-3">
+<div>
+<h3 class="text-title-editorial font-title-editorial text-on-surface group-hover:text-primary transition-colors line-clamp-1">
+                    彩椒香草蒸去皮三文魚配白飯
+                  </h3>
+<p class="text-disclaimer font-disclaimer text-secondary line-clamp-1 mt-0.5">抗炎 Omega-3 脂肪酸，有助修復表皮受損皮脂水脂膜</p>
+</div>
+<div class="space-y-1.5 bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<div class="flex justify-between items-center text-label-md font-label-md">
+<span class="text-primary font-semibold">已有 2/4 項食材</span>
+<span class="text-primary font-bold">50% 吻合</span>
+</div>
+<div class="w-full bg-outline-variant/40 rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 50%"></div>
+</div>
+<div class="text-disclaimer font-disclaimer text-secondary flex items-center justify-between pt-1">
+<span class="">尚欠：新鮮三文魚、甜椒</span>
+<button class="text-primary hover:underline font-medium">+加入備忘清單</button>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">含魚類</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無甲殼類</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無麩質</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-caps font-label-caps bg-[#E8F5E9] text-[#4E8752] font-semibold border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span> 一般適合
+                    </span>
+<span class="text-disclaimer font-disclaimer text-secondary">請確保三文魚極度新鮮</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 pt-0 flex items-center gap-2">
+<a class="flex-1 bg-surface-container hover:bg-secondary-container text-on-surface hover:text-on-secondary-container py-2 px-3 rounded-xl text-label-md font-label-md text-center transition-colors" href="#">
+                完整步驟與替代建議
+              </a>
+<button class="p-2 rounded-xl border border-outline-variant text-secondary hover:text-error hover:border-error transition-colors" title="收藏食譜">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+</article>
+<!-- RECIPE CARD 5: 鮮山藥芡實百合煨雞湯麵線 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<div class="relative h-44 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An artisanal bowl of gluten-free white noodle soup in soothing herbal chicken broth with fresh Chinese yam slices, lily bulbs, and poached chicken slices. A warm steam curl hovers over the rustic ceramic bowl. Earthy natural linen background with bamboo chopsticks. Quiet peaceful clinical aesthetic and culinary delicacy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHkJsduyzNaUHc41X5PufbNP9J_2mq4DWAeG5ohos3z-mAZ6QJ5kEg2cRvrpmg8G9iiHpZfidipj0pT-DBJic2bJMjOMOh9OupcppalPvH1j5ZnyPGJxsMKXehhw0CVVax4jB-1q4ik2u-vIKFIHWU5sUqTPW_dw-iyBQiU0Yjt6jjyjNmjP8Z0KXHx3HVf1DcHZ7uPc3hJsiDq6y4wcfpnRZGliJ-u70wUrRXyscz">
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-xs">timer</span> 22 分鐘
+                  </span>
+<span class="bg-surface-container-lowest/95 backdrop-blur text-secondary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs">
+                    簡易
+                  </span>
+</div>
+<div class="absolute top-2.5 right-2.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs flex items-center gap-1">
+<span class="text-xs">🍃🍃🍃🍃</span> 4.9 / 5 溫和止癢
+                  </span>
+</div>
+</div>
+<div class="p-4 space-y-3">
+<div>
+<h3 class="text-title-editorial font-title-editorial text-on-surface group-hover:text-primary transition-colors line-clamp-1">
+                    鮮山藥芡實百合煨雞湯麵線
+                  </h3>
+<p class="text-disclaimer font-disclaimer text-secondary line-clamp-1 mt-0.5">選用無小麥純米麵線，潤燥安神，特別適合夜間痕癢者</p>
+</div>
+<div class="space-y-1.5 bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<div class="flex justify-between items-center text-label-md font-label-md">
+<span class="text-primary font-semibold">已有 3/5 項食材</span>
+<span class="text-primary font-bold">60% 吻合</span>
+</div>
+<div class="w-full bg-outline-variant/40 rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 60%"></div>
+</div>
+<div class="text-disclaimer font-disclaimer text-secondary flex items-center justify-between pt-1">
+<span class="">尚欠：乾百合、米麵線</span>
+<button class="text-primary hover:underline font-medium">+加入備忘清單</button>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">純米無麥</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無蛋</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無奶</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-caps font-label-caps bg-[#E8F5E9] text-[#4E8752] font-semibold border border-[#D4EAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span> 一般適合
+                    </span>
+<span class="text-disclaimer font-disclaimer text-secondary">極低組織胺配方</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 pt-0 flex items-center gap-2">
+<a class="flex-1 bg-surface-container hover:bg-secondary-container text-on-surface hover:text-on-secondary-container py-2 px-3 rounded-xl text-label-md font-label-md text-center transition-colors" href="#">
+                完整步驟與替代建議
+              </a>
+<button class="p-2 rounded-xl border border-outline-variant text-secondary hover:text-error hover:border-error transition-colors" title="收藏食譜">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+</article>
+<!-- RECIPE CARD 6: 節瓜淮山嫩豆腐清甜素肉煲 -->
+<article class="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<div class="relative h-44 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A tranquil vegan ceramic casserole with gently braised round zucchini discs, silky organic firm tofu cubes, and Chinese yam in a clear kelp vegetable broth. Soft ambient kitchen studio lighting with earthy clay pots and unbleached muslin fabrics. Warm, comforting low-allergen healing meal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDE5mZldXXWvalj6HuuNf0Nbq_trdyTP9eR1R_meEwmKnDASn8Axc2BU0s2BbGIm4Hy2H22kllYIxxs6oEXO9iENp13ud4MHiBO5Vc36oyEdIYNSG-46HXwQkvkqylXV5oZXYDar3XkV27JYYddaTCr45z6hiuMQ0gCO_gwXUhf7FpWXJ7upXu0I19Z0KLgU-LwPUTMEgaLTou4yA4hy9enikPx-yOBFJnnRnHnYm_">
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-xs">timer</span> 15 分鐘
+                  </span>
+<span class="bg-surface-container-lowest/95 backdrop-blur text-secondary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs">
+                    快煮
+                  </span>
+</div>
+<div class="absolute top-2.5 right-2.5">
+<span class="bg-surface-container-lowest/95 backdrop-blur text-primary text-label-caps font-label-caps px-2 py-1 rounded-full shadow-xs flex items-center gap-1">
+<span class="text-xs">🍃🍃🍃🍃</span> 4.5 / 5 純素低負擔
+                  </span>
+</div>
+</div>
+<div class="p-4 space-y-3">
+<div>
+<h3 class="text-title-editorial font-title-editorial text-on-surface group-hover:text-primary transition-colors line-clamp-1">
+                    節瓜淮山嫩豆腐清甜素肉煲
+                  </h3>
+<p class="text-disclaimer font-disclaimer text-secondary line-clamp-1 mt-0.5">全素低嘌呤配方，清熱排毒，無任何紅肉油脂負擔</p>
+</div>
+<div class="space-y-1.5 bg-surface-container-low p-2.5 rounded-xl border border-secondary-container">
+<div class="flex justify-between items-center text-label-md font-label-md">
+<span class="text-primary font-semibold">已有 2/3 項食材</span>
+<span class="text-primary font-bold">66% 吻合</span>
+</div>
+<div class="w-full bg-outline-variant/40 rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 66%"></div>
+</div>
+<div class="text-disclaimer font-disclaimer text-secondary flex items-center justify-between pt-1">
+<span class="">尚欠：嫩豆腐一塊</span>
+<button class="text-primary hover:underline font-medium">+加入備忘清單</button>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">含大豆 (豆腐)</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">無麩質</span>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps bg-surface text-secondary border border-outline-variant">純素安心</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-caps font-label-caps bg-[#FEF3E2] text-[#D9822B] font-semibold border border-[#FADDBB]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#D9822B]"></span> 因人而異
+                    </span>
+<span class="text-disclaimer font-disclaimer text-secondary">對黃豆過敏者請略過</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 pt-0 flex items-center gap-2">
+<a class="flex-1 bg-surface-container hover:bg-secondary-container text-on-surface hover:text-on-secondary-container py-2 px-3 rounded-xl text-label-md font-label-md text-center transition-colors" href="#">
+                完整步驟與替代建議
+              </a>
+<button class="p-2 rounded-xl border border-outline-variant text-secondary hover:text-error hover:border-error transition-colors" title="收藏食譜">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+</article>
+</div>
+<!-- LOAD MORE / PAGINATION AREA -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-outline-variant">
+<p class="text-disclaimer font-disclaimer text-secondary">
+            顯示 1 至 6 項配對食譜（共 6 筆推薦）
+          </p>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded-xl border border-outline-variant bg-surface-bright text-secondary text-label-md font-label-md hover:text-on-surface hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+              上一頁
+            </button>
+<span class="px-3 py-1 text-label-md font-label-md bg-primary text-on-primary rounded-lg font-medium">1</span>
+<button class="px-4 py-2 rounded-xl border border-outline-variant bg-surface-bright text-secondary text-label-md font-label-md hover:text-on-surface hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+              下一頁
+            </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- FOOTER (Exact adherence to Shared Components JSON) -->
+<footer class="bg-surface-container-low dark:bg-surface-container border-t border-outline-variant dark:border-outline mt-16">
+<div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row justify-between items-center gap-6 w-full">
+<!-- Brand & Medical Disclaimer -->
+<div class="space-y-1.5 text-center md:text-left">
+<div class="font-headline-sm text-headline-sm text-primary dark:text-inverse-primary flex items-center justify-center md:justify-start gap-2">
+<span class="material-symbols-outlined text-xl">eco</span>
+<span class="">濕疹食光 Eczema Kitchen</span>
+</div>
+<p class="text-disclaimer font-disclaimer text-secondary dark:text-secondary-fixed max-w-xl">
+          © 2025 濕疹食光 Eczema Kitchen. 本站資訊僅供參考，不能取代醫生或營養師意見。
+        </p>
+</div>
+<!-- Legal & Advisory Navigation Links -->
+<div class="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">
+<a class="text-secondary dark:text-secondary-fixed text-disclaimer font-disclaimer hover:text-primary dark:hover:text-inverse-primary underline transition-colors" href="#">醫療免責聲明</a>
+<a class="text-secondary dark:text-secondary-fixed text-disclaimer font-disclaimer hover:text-primary dark:hover:text-inverse-primary underline transition-colors" href="#">敏感情況說明</a>
+<a class="text-secondary dark:text-secondary-fixed text-disclaimer font-disclaimer hover:text-primary dark:hover:text-inverse-primary underline transition-colors" href="#">食材審核準則</a>
+<a class="text-secondary dark:text-secondary-fixed text-disclaimer font-disclaimer hover:text-primary dark:hover:text-inverse-primary underline transition-colors" href="#">聯絡營養顧問</a>
+</div>
+</div>
+</footer>
+
+
+</body></html>

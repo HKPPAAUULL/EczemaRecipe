@@ -168,7 +168,8 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 - [ ] 人工審核 `data/seed/ingredients_draft.csv`（163 項草稿，71 項標 needs_senior_review，22 項 unrated）
 - [ ] 以真實 Postgres 16 驗證 `docs/db/schema.sql`（目前只用 pglast 驗證語法）
 - [ ] 若日後有商業用途（廣告、會員），須重新檢視所有「非商業限定」來源
-- [ ] 完成 Stitch 設計稿並匯出 design token
+- [x] Stitch 設計稿已匯出（`stitch_eczema_kitchen/`），審查結果見 `docs/DESIGN_REVIEW.md`；design token 於開始製作前端時抽取
+- [ ] 設計傳統說法（中醫）資料表與「資料不足」「傳統說法」元件設計
 - [ ] 決定繁中全文搜尋方案（別名表 + pg_trgm 是否足夠）
 - [ ] 決定審核介面形式（簡易後台頁 vs 直接改資料庫）
 
@@ -193,5 +194,6 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 |---|---|---|
 | 2026-10-29 | v0.1 | 初版：整合預算、自架部署、Gemini、香港/台灣食譜來源、免登入版本 |
 | 2026-10-29 | v0.1.1 | 新增 §4.4 來源可信度規則（排除 AI 生成網站）；設定 GitHub repo |
+| 2026-10-29 | v0.1.4 | 收到 Stitch 設計稿；新增 `docs/DESIGN_REVIEW.md`。品牌定名「濕疹食堂 Eczema Kitchen」；中醫內容以「傳統說法」獨立標示且不影響評級；第一版只做核心功能；記錄設計稿須修正項目（捏造文獻、療效宣稱、Level 分級等） |
 | 2026-10-29 | v0.1.3 | 新增 `docs/RATING_CRITERIA.md` 評級準則、`docs/db/` schema 草稿、`data/seed/` 食材種子草稿、`data/reference/` 過敏原關鍵字與同義詞表；`docs/SOURCES.md` 完成條款核實 |
 | 2026-10-29 | v0.1.2 | 新增 `docs/SOURCES.md` 來源初步評估；食譜策略改為「政府開放資料＋自建原創食譜」優先，社群平台後置 |

@@ -1,0 +1,504 @@
+<!DOCTYPE html><html class="light" lang="zh-HK"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>濕疹食堂 - 關於我們、評級機制與資料來源免責</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&amp;family=Noto+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed-dim": "#bacbc0",
+            "outline-variant": "#c1c8c3",
+            "on-secondary-fixed-variant": "#3b4a42",
+            "error-container": "#ffdad6",
+            "primary-fixed": "#c6ebd9",
+            "on-primary": "#ffffff",
+            "on-surface-variant": "#414844",
+            "on-error-container": "#93000a",
+            "surface-tint": "#446557",
+            "on-surface": "#131e19",
+            "on-background": "#131e19",
+            "surface-variant": "#d9e5de",
+            "outline": "#727974",
+            "tertiary": "#8c4c00",
+            "surface-container-high": "#dfebe4",
+            "tertiary-fixed-dim": "#ffb77a",
+            "surface-container": "#e5f1e9",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "primary-container": "#5a7c6d",
+            "background": "#f0fcf5",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "on-secondary": "#ffffff",
+            "inverse-on-surface": "#e7f4ec",
+            "primary": "#426355",
+            "on-primary-container": "#f7fff9",
+            "surface-bright": "#f0fcf5",
+            "secondary": "#526259",
+            "inverse-surface": "#28332e",
+            "surface-dim": "#d1ddd6",
+            "surface": "#f0fcf5",
+            "on-primary-fixed-variant": "#2c4d40",
+            "on-primary-fixed": "#002116",
+            "on-secondary-container": "#58685f",
+            "secondary-fixed": "#d5e7dc",
+            "primary-fixed-dim": "#aacfbd",
+            "tertiary-container": "#af6102",
+            "on-tertiary-container": "#fffcff",
+            "surface-container-low": "#eaf7ef",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#101e18",
+            "surface-container-highest": "#d9e5de",
+            "tertiary-fixed": "#ffdcc2",
+            "inverse-primary": "#aacfbd",
+            "on-tertiary-fixed": "#2e1500",
+            "on-tertiary": "#ffffff",
+            "secondary-container": "#d5e7dc"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "margin": "2.5rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "margin-mobile": "1.25rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Newsreader"],
+            "body-sm": ["Noto Sans"],
+            "disclaimer": ["Noto Sans"],
+            "label-caps": ["Noto Sans"],
+            "body-lg": ["Noto Sans"],
+            "headline-sm": ["Newsreader"],
+            "body-md": ["Noto Sans"],
+            "display-hero": ["Newsreader"],
+            "display-hero-mobile": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "label-lg": ["Noto Sans"],
+            "title-editorial": ["Newsreader"],
+            "label-md": ["Noto Sans"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["26px", { "lineHeight": "36px", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "disclaimer": ["12px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "32px", "fontWeight": "500" }],
+            "body-md": ["16px", { "lineHeight": "28px", "letterSpacing": "0.015em", "fontWeight": "400" }],
+            "display-hero": ["48px", { "lineHeight": "60px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "display-hero-mobile": ["34px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "38px", "fontWeight": "500" }],
+            "headline-lg": ["36px", { "lineHeight": "48px", "fontWeight": "400" }],
+            "label-lg": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "title-editorial": ["20px", { "lineHeight": "30px", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Hide scrollbar for gentle horizontal navigation */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TOP APP BAR (Shared Component Execution) -->
+<header class="sticky top-0 z-40 bg-surface dark:bg-surface border-b border-outline-variant shadow-none w-full">
+<div class="flex justify-between items-center w-full px-margin-mobile py-space-sm max-w-md mx-auto">
+<div class="flex items-center space-x-2">
+<button aria-label="返回上一頁" class="p-2 rounded-full hover:bg-surface-container active:scale-95 transition-all text-primary flex items-center justify-center" type="button">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<span class="text-title-editorial font-title-editorial text-primary tracking-tight">關於與資料聲明</span>
+</div>
+<div class="flex items-center space-x-1">
+<button aria-label="分享" class="p-2 rounded-full hover:bg-surface-container active:scale-95 transition-all text-secondary flex items-center justify-center" type="button">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+<button aria-label="搜尋食材" class="p-2 rounded-full hover:bg-surface-container active:scale-95 transition-all text-secondary flex items-center justify-center" type="button">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</div>
+</div>
+</header>
+<!-- MAIN SCROLLABLE MOBILE CONTENT CANVAS -->
+<main class="w-full max-w-md mx-auto px-margin-mobile pt-4 pb-28 flex-grow">
+<!-- Hero / Headline Section -->
+<section class="mb-6 pt-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-primary text-label-md font-label-md mb-3 border border-outline-variant/40">
+<span class="material-symbols-outlined text-sm fill-icon" data-icon="verified_user">verified_user</span>
+<span class="">透明度與實證承諾</span>
+</div>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface mb-2 font-medium">關於濕疹食堂</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+        以實證醫學與溫和食療，陪伴敏感肌安心日常。在繁複的飲食禁忌中，為香港與台灣異位性皮膚炎、濕疹朋友建立可信賴的安心指南。
+      </p>
+</section>
+<!-- Horizontal Scroll Anchor Bar -->
+<nav aria-label="快速導航" class="sticky top-[57px] z-30 -mx-margin-mobile px-margin-mobile py-2.5 bg-surface/95 backdrop-blur-md border-b border-outline-variant/50 mb-6">
+<div class="flex space-x-2 overflow-x-auto no-scrollbar py-0.5">
+<a class="whitespace-nowrap px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary-container text-label-md font-label-md shadow-xs active:scale-95 transition-transform flex items-center gap-1" href="#about-mission">
+<span class="material-symbols-outlined text-xs" data-icon="nature_people">nature_people</span>
+<span class="">網站初衷</span>
+</a>
+<a class="whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-secondary text-label-md font-label-md border border-outline-variant active:scale-95 transition-all hover:bg-surface-container" href="#rating-system">
+          評級機制
+        </a>
+<a class="whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-secondary text-label-md font-label-md border border-outline-variant active:scale-95 transition-all hover:bg-surface-container" href="#data-sources">
+          權威數據
+        </a>
+<a class="whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-secondary text-label-md font-label-md border border-outline-variant active:scale-95 transition-all hover:bg-surface-container" href="#medical-disclaimer">
+          免責聲明
+        </a>
+<a class="whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-secondary text-label-md font-label-md border border-outline-variant active:scale-95 transition-all hover:bg-surface-container" href="#contact-feedback">
+          勘誤與聯絡
+        </a>
+</div>
+</nav>
+<!-- Section 1: 網站簡介 (About & Promises) -->
+<section class="space-y-4 mb-9 scroll-mt-24" id="about-mission">
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/60 shadow-sm relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-surface-container rounded-full opacity-40 pointer-events-none"></div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="restaurant">restaurant</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">我們為何創辦「濕疹食堂」？</h2>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">
+          每逢走進街市或超市，濕疹與過敏患者常陷於「這個能不能吃？會不會引發紅腫發癢？」的深深焦慮。民間偏方眾說紛紜、各說各話，讓人無所適從，甚至因過度戒口導致營養失衡。
+        </p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">「濕疹食堂」誕生於我們自身的親身抗疹經歷。我們結合現代食品科學數據庫與臨床飲食期刊，打造一個客觀、無恐慌、易於查閱的舒敏食材與料理庫。</p>
+</div>
+<!-- 3 大承諾 Cards -->
+<div class="space-y-2.5">
+<div class="text-label-caps font-label-caps text-outline tracking-wider uppercase px-1">核心原則 • OUR PROMISE</div>
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Card 1 -->
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/40 flex items-start space-x-3.5">
+<div class="w-9 h-9 rounded-full bg-secondary-fixed flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-lg fill-icon" data-icon="science">science</span>
+</div>
+<div>
+<h3 class="text-label-lg font-label-lg text-on-surface mb-0.5">實證數據為本</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">不散播焦慮與道聽途說，食材評估參照國際低組織胺標準與過敏學界臨床報告。</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/40 flex items-start space-x-3.5">
+<div class="w-9 h-9 rounded-full bg-primary-fixed flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-lg fill-icon" data-icon="spa">spa</span>
+</div>
+<div>
+<h3 class="text-label-lg font-label-lg text-on-surface mb-0.5">溫和低刺激取向</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">嚴選低水楊酸、低組織胺、低敏原清單，保留食材原貌與天然修復營養素。</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/40 flex items-start space-x-3.5">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-lg fill-icon" data-icon="fingerprint">fingerprint</span>
+</div>
+<div>
+<h3 class="text-label-lg font-label-lg text-on-surface mb-0.5">重視個人體質差異</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">每人過敏原各異，我們倡導客觀耐受度測試，而非盲目剝奪所有美食樂趣。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: 評級機制說明 (Rating Level Badges & Rules) -->
+<section class="space-y-4 mb-9 scroll-mt-24" id="rating-system">
+<div class="flex items-baseline justify-between border-b border-outline-variant/50 pb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">食材評級機制</h2>
+<p class="text-disclaimer font-disclaimer text-outline">三級三色輔助標識，守護每餐選擇</p>
+</div>
+<span class="text-label-caps font-label-caps bg-surface-container px-2 py-0.5 rounded text-secondary">SIGHI &amp; CFS 參照</span>
+</div>
+<!-- Rating Level 0-1: 一般適合 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-[#D4EAD6] shadow-sm">
+<div class="flex items-center justify-between mb-2.5">
+<div class="flex items-center space-x-2">
+<span class="px-2.5 py-1 rounded-full bg-[#E8F5E9] text-[#4E8752] text-label-md font-label-md flex items-center gap-1 border border-[#D4EAD6]">
+<span class="material-symbols-outlined text-sm fill-icon" data-icon="check_circle">check_circle</span>
+<span class="">一般適合</span>
+</span>
+<span class="text-label-caps font-label-caps text-outline">Level 0 - 1</span>
+</div>
+<span class="text-disclaimer font-disclaimer text-[#4E8752] font-medium">日常安心基石</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-2.5">
+          通常屬於極低組織胺釋放、性味平和、鮮少在人口普查中引起 IgE 媒介過敏之新鮮食材。
+        </p>
+<div class="bg-surface-container-low rounded-lg p-2.5 text-disclaimer font-disclaimer text-secondary flex items-start gap-1.5">
+<span class="material-symbols-outlined text-sm mt-0.5" data-icon="eco">eco</span>
+<span class="">常見代表：白菜、節瓜、新鮮瘦豬肉、梨（去皮）、糙米、冷壓亞麻籽油。</span>
+</div>
+</div>
+<!-- Rating Level 2: 因人而異 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-[#FADDBB] shadow-sm">
+<div class="flex items-center justify-between mb-2.5">
+<div class="flex items-center space-x-2">
+<span class="px-2.5 py-1 rounded-full bg-[#FEF3E2] text-[#D9822B] text-label-md font-label-md flex items-center gap-1 border border-[#FADDBB]">
+<span class="material-symbols-outlined text-sm fill-icon" data-icon="help_outline">help_outline</span>
+<span class="">因人而異</span>
+</span>
+<span class="text-label-caps font-label-caps text-outline">Level 2</span>
+</div>
+<span class="text-disclaimer font-disclaimer text-[#D9822B] font-medium">少量測試耐受度</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-2.5">
+          微發物或含輕度組織胺/水楊酸，或位列一般常見致敏原（如蛋品、熟黃豆、堅果），對穩定期間可能完全無礙，但敏感情況下可能激發微癢反應。
+        </p>
+<div class="bg-surface-container-low rounded-lg p-2.5 text-disclaimer font-disclaimer text-secondary flex items-start gap-1.5">
+<span class="material-symbols-outlined text-sm mt-0.5" data-icon="tune">tune</span>
+<span class="">常見代表：雞蛋、全脂牛奶、奇異果、燕麥、南瓜、熟成乳酪。</span>
+</div>
+</div>
+<!-- Rating Level 3: 常見誘發 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-[#F5C7C3] shadow-sm">
+<div class="flex items-center justify-between mb-2.5">
+<div class="flex items-center space-x-2">
+<span class="px-2.5 py-1 rounded-full bg-[#FCE8E6] text-[#C85A54] text-label-md font-label-md flex items-center gap-1 border border-[#F5C7C3]">
+<span class="material-symbols-outlined text-sm fill-icon" data-icon="warning">warning</span>
+<span class="">常見誘發</span>
+</span>
+<span class="text-label-caps font-label-caps text-outline">Level 3</span>
+</div>
+<span class="text-disclaimer font-disclaimer text-[#C85A54] font-medium">發作期慎食</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-2.5">
+          含高濃度外源性組織胺、強烈組織胺釋放劑、或具高致敏刺激性（如甲殼類、發酵酒精、辛辣辛香料）。皮膚紅斑或滲出水液期間強烈建議排除。
+        </p>
+<div class="bg-surface-container-low rounded-lg p-2.5 text-disclaimer font-disclaimer text-secondary flex items-start gap-1.5">
+<span class="material-symbols-outlined text-sm mt-0.5" data-icon="block">block</span>
+<span class="">常見代表：蟹蝦貝類、菠菜、茄子、番茄、加工醃肉、酒精、辣椒。</span>
+</div>
+</div>
+<!-- 飲食日記提醒卡片 -->
+<div class="p-3.5 bg-surface-container rounded-xl border border-primary-fixed flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm fill-icon" data-icon="edit_note">edit_note</span>
+</div>
+<div class="text-disclaimer font-disclaimer text-on-surface">
+<span class="font-semibold text-primary">重要法則：</span>再權威的通用分級，都比不上您個人的「48小時飲食與皮膚狀況日記」。
+        </div>
+</div>
+</section>
+<!-- Section 3: 權威資料來源與審核 (Authoritative Sources) -->
+<section class="space-y-4 mb-9 scroll-mt-24" id="data-sources">
+<div class="flex items-center gap-2 border-b border-outline-variant/50 pb-2">
+<span class="material-symbols-outlined text-primary" data-icon="library_books">library_books</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">資料來源與審核流程</h2>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">為確保食材數據的嚴謹性，「濕疹食堂」的所有成份分析、組織胺評等及過敏原交叉比對，均溯源自下列權威機構資料庫：</p>
+<div class="space-y-2">
+<!-- Source 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-3.5 border border-outline-variant/50 flex items-start justify-between">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5" data-icon="dataset">dataset</span>
+<div>
+<div class="text-label-lg font-label-lg text-on-surface">USDA FoodData Central</div>
+<div class="text-disclaimer font-disclaimer text-on-surface-variant">美國農業部食品營養與微量元素基礎資料庫</div>
+</div>
+</div>
+<span class="text-label-caps font-label-caps text-outline bg-surface px-2 py-0.5 rounded">微量元素</span>
+</div>
+<!-- Source 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-3.5 border border-outline-variant/50 flex items-start justify-between">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5" data-icon="health_and_safety">health_and_safety</span>
+<div>
+<div class="text-label-lg font-label-lg text-on-surface">香港食物安全中心 (CFS HK)</div>
+<div class="text-disclaimer font-disclaimer text-on-surface-variant">八大食物致敏物指引與在地農產品安全規程</div>
+</div>
+</div>
+<span class="text-label-caps font-label-caps text-outline bg-surface px-2 py-0.5 rounded">港區在地</span>
+</div>
+<!-- Source 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-3.5 border border-outline-variant/50 flex items-start justify-between">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5" data-icon="fact_check">fact_check</span>
+<div>
+<div class="text-label-lg font-label-lg text-on-surface">台灣衛福部食品營養成份庫</div>
+<div class="text-disclaimer font-disclaimer text-on-surface-variant">衛生福利部國民健康署食品熱量與過敏原標示</div>
+</div>
+</div>
+<span class="text-label-caps font-label-caps text-outline bg-surface px-2 py-0.5 rounded">台區標準</span>
+</div>
+<!-- Source 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-3.5 border border-outline-variant/50 flex items-start justify-between">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5" data-icon="menu_book">menu_book</span>
+<div>
+<div class="text-label-lg font-label-lg text-on-surface">PubMed &amp; SIGHI Histamine Guide</div>
+<div class="text-disclaimer font-disclaimer text-on-surface-variant">瑞士組織胺不耐症研究會食物清單與臨床論文</div>
+</div>
+</div>
+<span class="text-label-caps font-label-caps text-outline bg-surface px-2 py-0.5 rounded">組織胺指引</span>
+</div>
+</div>
+<!-- 複核說明卡片 -->
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/40 mt-3">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary-container" data-icon="verified">verified</span>
+<span class="text-label-lg font-label-lg text-on-surface">食譜審查與雙重複核機制</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+          本平台發佈之原創食譜，均經過合作註冊營養師對營養配比、烹調油煙溫度進行計算，並參考溫和中醫藥食同源理論（避開生冷寒涼或助濕化熱組合），力求「安全第一、美味不妥協」。
+        </p>
+</div>
+</section>
+<!-- Section 4: 醫療免責聲明 (Prominent Disclaimer Card) -->
+<section class="space-y-3 mb-9 scroll-mt-24" id="medical-disclaimer">
+<div class="bg-[#FEF3E2] rounded-xl p-5 border border-[#FADDBB] relative shadow-xs">
+<div class="flex items-start gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center shrink-0 text-tertiary">
+<span class="material-symbols-outlined text-2xl fill-icon" data-icon="shield">shield</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-tertiary">重要醫療免責聲明</h2>
+<span class="text-disclaimer font-disclaimer text-tertiary-container font-medium">MEDICAL DISCLAIMER</span>
+</div>
+</div>
+<div class="space-y-3 text-body-sm font-body-sm text-on-surface">
+<p class="leading-relaxed">「濕疹食堂」所提供之一切食材分析、評級建議、食譜組合與健康資訊，<strong>僅供日常飲食規劃與一般健康保養參考</strong>。</p>
+<div class="p-3 bg-white/70 rounded-lg border border-[#FADDBB]/60 text-disclaimer font-disclaimer text-tertiary">
+            本站資訊<strong>絕不能取代</strong>香港或台灣之註冊醫生、皮膚科專科醫生、兒科專科醫生或註冊營養師之現場診斷、個人化處方與專業醫療諮詢。
+          </div>
+<p class="leading-relaxed text-on-surface-variant">
+            若您的皮膚處於<strong>急性劇烈紅腫、滲液流膿、繼發性細菌感染或劇烈瘙癢難忍</strong>之狀態，請即時前往合資格醫療機構求醫，切勿單純依賴飲食調整延誤治療黃金期。
+          </p>
+</div>
+</div>
+</section>
+<!-- Section 5: 聯絡我們與勘誤 (Contact & Feedback) -->
+<section class="space-y-4 mb-8 scroll-mt-24" id="contact-feedback">
+<div class="flex items-center gap-2 border-b border-outline-variant/50 pb-2">
+<span class="material-symbols-outlined text-primary" data-icon="contact_support">contact_support</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">食材勘誤與聯絡我們</h2>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant shadow-sm space-y-4">
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+          現代食品科學日新月異。若您發現任何食材的組織胺等級、致敏性標籤有所疏漏，或希望與我們分享舒敏食譜與臨床觀察，我們非常期待您的寶貴反饋。
+        </p>
+<div class="p-3.5 bg-surface-container-low rounded-xl border border-outline-variant/40 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="material-symbols-outlined text-secondary" data-icon="mail">mail</span>
+<div>
+<div class="text-disclaimer font-disclaimer text-outline">聯絡電郵</div>
+<a class="text-label-lg font-label-lg text-primary underline underline-offset-2" href="mailto:hello@eczemakitchen.hk">hello@eczemakitchen.hk</a>
+</div>
+</div>
+<span class="text-label-caps font-label-caps bg-surface px-2 py-1 rounded text-secondary">24h 內回覆</span>
+</div>
+<div class="pt-1 flex flex-col gap-2">
+<button class="w-full py-3 px-4 bg-primary text-on-primary rounded-xl text-label-lg font-label-lg hover:bg-primary-container active:scale-98 transition-all flex items-center justify-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="rate_review">rate_review</span>
+<span class="">回報食材數據勘誤</span>
+</button>
+<button class="w-full py-2.5 px-4 bg-transparent text-secondary border border-outline-variant rounded-xl text-label-md font-label-md hover:bg-surface-container active:scale-98 transition-all flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="handshake">handshake</span>
+<span class="">營養師 / 醫護團體合作提案</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Standard Disclaimer Footer (As mandated by Style Guide) -->
+<footer class="pt-6 pb-2 border-t border-outline-variant/60 text-center">
+<p class="text-disclaimer font-disclaimer text-outline mb-1">
+        「本站資訊僅供參考，不能取代醫生或營養師意見。」
+      </p>
+<p class="text-label-caps font-label-caps text-outline-variant">© 2024 濕疹食堂 (ECZEMA KITCHEN HK/TW). ALL RIGHTS RESERVED.</p>
+</footer>
+</main>
+<!-- BOTTOM NAVIGATION BAR (Shared Component Execution) -->
+<!-- Contextual Active mapping: Since this page is an authoritative reference & settings destination, '食材庫' is the most relevant parent destination. -->
+<nav aria-label="底部主要功能選單" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter-mobile py-space-xs bg-surface dark:bg-surface border-t border-outline-variant dark:border-outline-variant shadow-sm">
+<!-- Tab 1: 首頁 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="spa">spa</span>
+<span class="text-label-caps font-label-caps mt-0.5">首頁</span>
+</a>
+<!-- Tab 2: 查食材 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-label-caps font-label-caps mt-0.5">查食材</span>
+</a>
+<!-- Tab 3: 配食譜 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="text-label-caps font-label-caps mt-0.5">配食譜</span>
+</a>
+<!-- Tab 4: 食材庫 / 資料庫 (ACTIVE STATE AS DEFINED IN JSON) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed min-h-[44px] min-w-[44px] py-space-xs active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined fill-icon" data-icon="inventory_2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="text-label-caps font-label-caps mt-0.5 font-semibold">食材庫</span>
+</a>
+</nav>
+<!-- Interactive Smooth Scrolling & Active State Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Gentle feedback trigger for copy/email interaction
+      const emailLink = document.querySelector('a[href^="mailto"]');
+      if (emailLink) {
+        emailLink.addEventListener('click', () => {
+          console.log('User initiated contact via email');
+        });
+      }
+
+      // Smooth horizontal scroll pill highlight update
+      const pills = document.querySelectorAll('nav[aria-label="快速導航"] a');
+      pills.forEach(pill => {
+        pill.addEventListener('click', function(e) {
+          pills.forEach(p => {
+            p.classList.remove('bg-primary-container', 'text-on-primary-container');
+            p.classList.add('bg-surface-container-lowest', 'text-secondary', 'border', 'border-outline-variant');
+          });
+          this.classList.remove('bg-surface-container-lowest', 'text-secondary', 'border', 'border-outline-variant');
+          this.classList.add('bg-primary-container', 'text-on-primary-container');
+        });
+      });
+    });
+  </script>
+
+
+</body></html>

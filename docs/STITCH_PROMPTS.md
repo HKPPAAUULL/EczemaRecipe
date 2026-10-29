@@ -1,11 +1,12 @@
 # Google Stitch 提示詞草稿
 
-使用方式：先貼「0. 全域設計規範」建立專案風格，再逐頁貼各頁提示詞；每頁分別生成 Mobile 與 Desktop 版本。提示詞以英文撰寫（Stitch 對英文效果較佳），介面文字要求使用繁體中文。
+使用方式：先貼「0. 全域設計規範」建立專案風格，再逐頁貼各頁提示詞；
+每頁分別生成 Mobile 與 Desktop 版本。提示詞以英文撰寫（Stitch 對英文效果較佳），介面文字要求使用繁體中文。
 
 ## 0. 全域設計規範（先貼這段）
 
 ```
-Design a responsive web app called "濕疹食光" (Eczema Kitchen), a one-stop food and recipe guide for people with eczema in Hong Kong and Taiwan. All UI text must be in Traditional Chinese (繁體中文), using the Noto Sans TC font.
+Design a responsive web app called "濕疹食堂" (Eczema Kitchen), a one-stop food and recipe guide for people with eczema in Hong Kong and Taiwan. All UI text must be in Traditional Chinese (繁體中文), using the Noto Sans TC font.
 
 Style: calm, gentle, low-stimulation, trustworthy and health-oriented. Soft sage green primary (#6B9080), warm off-white background (#F8F5EF), soft charcoal text (#2F3A35), rounded corners (16px cards, pill-shaped chips), generous whitespace, subtle soft shadows, friendly simple line icons. Avoid harsh reds and clutter.
 

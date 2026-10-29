@@ -1,0 +1,468 @@
+<!DOCTYPE html><html class="light" lang="zh-HK"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>清潤淮山節瓜燉雞湯 - 濕疹食堂</title>
+<!-- Google Fonts: Newsreader & Noto Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-primary": "#aacfbd",
+            "primary-container": "#5a7c6d",
+            "surface-container-highest": "#d9e5de",
+            "on-primary": "#ffffff",
+            "tertiary": "#8c4c00",
+            "secondary-fixed-dim": "#bacbc0",
+            "primary": "#426355",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "on-background": "#131e19",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#28332e",
+            "on-secondary-fixed": "#101e18",
+            "surface-bright": "#f0fcf5",
+            "background": "#f0fcf5",
+            "on-tertiary-fixed": "#2e1500",
+            "tertiary-container": "#af6102",
+            "inverse-on-surface": "#e7f4ec",
+            "surface-container-high": "#dfebe4",
+            "surface": "#f0fcf5",
+            "primary-fixed": "#c6ebd9",
+            "primary-fixed-dim": "#aacfbd",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#f7fff9",
+            "on-error": "#ffffff",
+            "on-primary-fixed-variant": "#2c4d40",
+            "secondary": "#526259",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "surface-variant": "#d9e5de",
+            "error-container": "#ffdad6",
+            "secondary-fixed": "#d5e7dc",
+            "on-secondary-fixed-variant": "#3b4a42",
+            "surface-tint": "#446557",
+            "on-surface": "#131e19",
+            "outline-variant": "#c1c8c3",
+            "outline": "#727974",
+            "tertiary-fixed-dim": "#ffb77a",
+            "secondary-container": "#d5e7dc",
+            "on-secondary-container": "#58685f",
+            "surface-dim": "#d1ddd6",
+            "on-tertiary-container": "#fffcff",
+            "surface-container-low": "#eaf7ef",
+            "tertiary-fixed": "#ffdcc2",
+            "surface-container": "#e5f1e9",
+            "on-surface-variant": "#414844",
+            "on-primary-fixed": "#002116"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "gutter-mobile": "1rem",
+            "margin-mobile": "1.25rem",
+            "margin": "2.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "display-hero": ["Newsreader"],
+            "headline-lg-mobile": ["Newsreader"],
+            "label-md": ["Noto Sans"],
+            "label-caps": ["Noto Sans"],
+            "body-lg": ["Noto Sans"],
+            "headline-lg": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "label-lg": ["Noto Sans"],
+            "display-hero-mobile": ["Newsreader"],
+            "title-editorial": ["Newsreader"],
+            "disclaimer": ["Noto Sans"],
+            "body-sm": ["Noto Sans"],
+            "body-md": ["Noto Sans"],
+            "headline-sm": ["Newsreader"]
+          },
+          "fontSize": {
+            "display-hero": ["48px", { "lineHeight": "60px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "36px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-lg": ["36px", { "lineHeight": "48px", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "38px", "fontWeight": "500" }],
+            "label-lg": ["15px", { "lineHeight": "22px", "fontWeight": "500" }],
+            "display-hero-mobile": ["34px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "title-editorial": ["20px", { "lineHeight": "30px", "fontWeight": "600" }],
+            "disclaimer": ["12px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "body-md": ["16px", { "lineHeight": "28px", "letterSpacing": "0.015em", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "32px", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Hide scrollbar for smooth carousel */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md min-h-screen pb-28">
+<!-- Mobile Container Constraints -->
+<div class="max-w-[430px] mx-auto min-h-screen bg-surface flex flex-col relative shadow-sm">
+<!-- 1. 頂部 App Bar -->
+<header class="sticky top-0 z-40 bg-surface/95 backdrop-blur-md px-margin-mobile py-space-sm flex justify-between items-center transition-colors">
+<div class="flex items-center space-x-2">
+<button aria-label="返回上一頁" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-primary hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<span class="font-title-editorial text-title-editorial text-primary tracking-tight font-bold">食譜詳情</span>
+</div>
+<div class="flex items-center space-x-1">
+<button aria-label="收藏食譜" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-secondary hover:bg-surface-container active:scale-95 transition-all" id="bookmarkBtn" type="button">
+<span class="material-symbols-outlined text-[22px]" id="bookmarkIcon">bookmark</span>
+</button>
+<button aria-label="分享" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-secondary hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[22px]">share</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="px-margin-mobile flex-1 space-y-5 pt-1">
+<!-- 2. 食譜主圖與概覽 -->
+<section class="space-y-4">
+<!-- 主圖 (圓角與細膩邊框) -->
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-[0_4px_20px_-2px_rgba(47,58,53,0.08)] border border-outline-variant/40 bg-surface-container">
+<img alt="清潤淮山節瓜燉雞湯" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUHM4NC0dRxL7cew8ICXWeEtrJ5WbK-r8_S9uaj07vDKxWdyISbuAt4VKwdZfwEk9lMVE2pwXac34SJ4XhkSGWtpvl5W5XeZOnRfxWzj_L45hbJTdi6uAWcyRKXqFHmm7FXznfHLdzsFwx1mmwBoQZZV-C9HCEL79p9XfXxM1vgy1BpTLdajCuzEdWH0f6aHOIseg3hnzD5Kz7h8vzad4UJCg7Lkhcm2di2QBax50S">
+<div class="absolute bottom-3 right-3 bg-surface-container-lowest/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-[12px] font-label-md flex items-center space-x-1 shadow-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px] text-primary">local_dining</span>
+<span class="">舒敏溫補品</span>
+</div>
+</div>
+<!-- 標題與副標題 -->
+<div class="space-y-1.5 pt-1">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-semibold tracking-tight text-primary">
+            清潤淮山節瓜燉雞湯
+          </h1>
+<p class="font-body-sm text-body-sm text-secondary leading-relaxed">
+            健脾化濕，清熱而不寒涼 · 溫和舒敏湯水
+          </p>
+</div>
+<!-- 濕疹舒緩安心評分卡 (Suitability Triage Card) -->
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-[#D4EAD6] shadow-[0_2px_12px_-2px_rgba(78,135,82,0.08)] flex items-start space-x-3">
+<div class="w-10 h-10 rounded-full bg-[#E8F5E9] flex items-center justify-center text-[#4E8752] flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[22px] material-symbols-fill">spa</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-title-editorial text-[17px] font-bold text-[#4E8752]">4.8 / 5 極度安心評分</span>
+<span class="px-2 py-0.5 rounded-full text-[11px] font-label-caps bg-[#E8F5E9] text-[#4E8752] border border-[#D4EAD6]">一般適合</span>
+</div>
+<p class="font-label-md text-label-md text-secondary leading-snug">
+              無麩質 · 無乳製品 · 無甲殼類 · 低組織胺
+            </p>
+</div>
+</div>
+<!-- Meta 行 (橫向排列) -->
+<div class="grid grid-cols-3 gap-2 py-2 border-y border-outline-variant/30">
+<div class="flex flex-col items-center justify-center py-1">
+<div class="flex items-center space-x-1 text-primary mb-0.5">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-label-caps text-label-caps text-secondary">烹飪時間</span>
+</div>
+<span class="font-title-editorial text-[15px] font-semibold text-on-surface">45 分鐘</span>
+</div>
+<div class="flex flex-col items-center justify-center py-1 border-x border-outline-variant/30">
+<div class="flex items-center space-x-1 text-primary mb-0.5">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="font-label-caps text-label-caps text-secondary">份量規格</span>
+</div>
+<span class="font-title-editorial text-[15px] font-semibold text-on-surface">2-3 人份</span>
+</div>
+<div class="flex flex-col items-center justify-center py-1">
+<div class="flex items-center space-x-1 text-primary mb-0.5">
+<span class="material-symbols-outlined text-[18px]">signal_cellular_alt</span>
+<span class="font-label-caps text-label-caps text-secondary">難易度</span>
+</div>
+<span class="font-title-editorial text-[15px] font-semibold text-on-surface">初級易煮</span>
+</div>
+</div>
+</section>
+<!-- 3. 醒目的過敏原警示橫幅 (WarningBanner) -->
+<section class="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-3.5 space-y-1.5 shadow-sm">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-amber-800 text-[20px]">warning</span>
+<span class="font-title-editorial text-[16px] font-bold text-amber-900">避敏溫馨提醒</span>
+</div>
+<p class="font-body-sm text-[13px] leading-relaxed text-amber-950">
+          本食譜含少許「老薑片（微辛溫發物）」，若急性紅腫搔癢發作期建議去除；雞肉請選用去皮肉塊。無蛋、奶、海鮮等常見高致敏原。
+        </p>
+</section>
+<!-- 4. 簡介與外鏈原網站按鈕 -->
+<section class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/30 space-y-3.5 shadow-[0_4px_20px_-2px_rgba(47,58,53,0.04)]">
+<div>
+<h2 class="font-title-editorial text-title-editorial text-primary font-semibold mb-1.5">食療與醫學雙觀點</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            廣東與嶺南氣候濕熱，脾虛濕盛常加劇皮膚過敏。節瓜生津利尿而不損正氣，鮮淮山補脾固腎強化黏膜屏障；去皮雞肉提供優質低脂蛋白質，助傷口修復組織生成。
+          </p>
+</div>
+<div class="pt-1 border-t border-outline-variant/20 flex flex-col space-y-2">
+<a class="w-full min-h-[48px] bg-primary text-on-primary rounded-xl flex items-center justify-center space-x-2 font-label-lg text-label-lg font-medium shadow-sm hover:bg-primary-container active:scale-[0.98] transition-all" href="#">
+<span class="">查看完整食譜 (原網站)</span>
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+<p class="text-center font-disclaimer text-disclaimer text-secondary">
+            授權出處：香港中醫食療筆記 / 綠健廚房
+          </p>
+</div>
+</section>
+<!-- 5. 食材清單 (Ingredients List) -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-[20px]">grocery</span>
+<h2 class="font-title-editorial text-title-editorial text-primary font-semibold">食材清單</h2>
+</div>
+<span class="font-disclaimer text-disclaimer text-secondary">共 6 種嚴選原料</span>
+</div>
+<!-- 條目清單 -->
+<div class="space-y-2">
+<!-- 潛在過敏/發物食材 (高亮琥珀色) -->
+<div class="bg-amber-50/90 border border-amber-200 rounded-xl p-3 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#D9822B] flex-shrink-0"></span>
+<div>
+<span class="font-body-md text-on-surface font-medium">老薑</span>
+<span class="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-label-caps bg-amber-100 text-amber-900 border border-amber-200">因人而異 / 辛熱發物</span>
+</div>
+</div>
+<span class="font-body-sm font-semibold text-amber-950">2 片</span>
+</div>
+<!-- 需特別處理之食材 -->
+<div class="bg-amber-50/90 border border-amber-200 rounded-xl p-3 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#D9822B] flex-shrink-0"></span>
+<div>
+<span class="font-body-md text-on-surface font-medium">去皮雞胸肉</span>
+<span class="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-label-caps bg-amber-100 text-amber-900 border border-amber-200">需去皮減脂</span>
+</div>
+</div>
+<span class="font-body-sm font-semibold text-amber-950">300 克</span>
+</div>
+<!-- 一般安心食材 -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-3 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4E8752] flex-shrink-0"></span>
+<div>
+<span class="font-body-md text-on-surface font-medium">節瓜 (毛瓜)</span>
+<span class="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-label-caps bg-[#E8F5E9] text-[#4E8752]">利濕生津</span>
+</div>
+</div>
+<span class="font-body-sm text-secondary">2 條 (約400克)</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-3 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4E8752] flex-shrink-0"></span>
+<div>
+<span class="font-body-md text-on-surface font-medium">鮮淮山 (山藥)</span>
+<span class="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-label-caps bg-[#E8F5E9] text-[#4E8752]">健脾厚腸</span>
+</div>
+</div>
+<span class="font-body-sm text-secondary">200 克</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-3 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4E8752] flex-shrink-0"></span>
+<div>
+<span class="font-body-md text-on-surface font-medium">去核紅棗</span>
+<span class="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-label-caps bg-[#E8F5E9] text-[#4E8752]">平補氣血</span>
+</div>
+</div>
+<span class="font-body-sm text-secondary">4 顆</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-3 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4E8752] flex-shrink-0"></span>
+<div>
+<span class="font-body-md text-on-surface font-medium">寧夏枸杞</span>
+<span class="inline-block ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-label-caps bg-[#E8F5E9] text-[#4E8752]">抗氧化</span>
+</div>
+</div>
+<span class="font-body-sm text-secondary">10 克</span>
+</div>
+</div>
+<!-- 一鍵加入買餸清單 -->
+<button class="w-full min-h-[44px] border border-outline-variant bg-surface-container-low hover:bg-surface-container text-primary font-label-md rounded-xl flex items-center justify-center space-x-1.5 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+<span class="">+ 一鍵加入買餸清單</span>
+</button>
+</section>
+<!-- 6. 「營養概覽」區塊 -->
+<section class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/30 space-y-3.5 shadow-[0_4px_20px_-2px_rgba(47,58,53,0.04)]">
+<div class="flex items-center justify-between">
+<h2 class="font-title-editorial text-title-editorial text-primary font-semibold">營養與修復指標</h2>
+<span class="font-label-caps text-label-caps text-secondary">每份估算</span>
+</div>
+<!-- 四格營養網格 -->
+<div class="grid grid-cols-4 gap-2 text-center">
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<span class="block font-label-caps text-label-caps text-secondary mb-1">熱量</span>
+<span class="font-title-editorial text-[16px] font-bold text-primary">210</span>
+<span class="text-[10px] text-secondary">kcal</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<span class="block font-label-caps text-label-caps text-secondary mb-1">蛋白質</span>
+<span class="font-title-editorial text-[16px] font-bold text-primary">24</span>
+<span class="text-[10px] text-secondary">g</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<span class="block font-label-caps text-label-caps text-secondary mb-1">脂肪</span>
+<span class="font-title-editorial text-[16px] font-bold text-primary">3.2</span>
+<span class="text-[10px] text-secondary">g</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<span class="block font-label-caps text-label-caps text-secondary mb-1">碳水</span>
+<span class="font-title-editorial text-[16px] font-bold text-primary">12</span>
+<span class="text-[10px] text-secondary">g</span>
+</div>
+</div>
+<!-- 肌膚屏障微量元素卡片 -->
+<div class="p-3 bg-surface-bright rounded-lg border border-[#D4EAD6] space-y-1.5">
+<div class="flex items-center space-x-1.5 text-[#4E8752]">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-title-editorial text-[14px] font-semibold">肌膚屏障關鍵支持成分</span>
+</div>
+<p class="font-body-sm text-[12px] text-secondary leading-relaxed">
+            • 高鉀低鈉：協助排出多餘組織液，減輕浮腫。<br>
+            • 鋅與水溶性纖維：淮山黏液蛋白富含多醣體，有助維持腸道微生態與皮脂膜屏障。
+          </p>
+</div>
+</section>
+<!-- 7. 「可替代食材建議」區塊 -->
+<section class="space-y-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-[20px]">swap_horiz</span>
+<h2 class="font-title-editorial text-title-editorial text-primary font-semibold">可替代食材建議</h2>
+</div>
+<span class="font-disclaimer text-disclaimer text-secondary">因應體質微調</span>
+</div>
+<!-- 橫向滑動替換卡片 -->
+<div class="flex space-x-3 overflow-x-auto no-scrollbar pb-1 pt-0.5">
+<!-- 替代卡 1 -->
+<div class="flex-shrink-0 w-[200px] bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-3 shadow-sm space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-title-editorial text-[14px] font-bold text-on-surface">雞肉替換</span>
+<span class="text-[11px] font-label-caps text-primary bg-primary-fixed/40 px-1.5 py-0.5 rounded">蛋白質</span>
+</div>
+<p class="font-body-sm text-[12px] text-secondary">
+              可換為 <strong class="text-on-surface">豬瘦肉</strong> 或素食者選用 <strong class="text-on-surface">板豆腐</strong>，同樣溫和不易致敏。
+            </p>
+</div>
+<!-- 替代卡 2 -->
+<div class="flex-shrink-0 w-[200px] bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-3 shadow-sm space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-title-editorial text-[14px] font-bold text-on-surface">節瓜替換</span>
+<span class="text-[11px] font-label-caps text-primary bg-primary-fixed/40 px-1.5 py-0.5 rounded">祛濕清暑</span>
+</div>
+<p class="font-body-sm text-[12px] text-secondary">
+              可選用 <strong class="text-on-surface">冬瓜</strong>（偏涼微去皮）或 <strong class="text-on-surface">合掌瓜（佛手瓜）</strong>，性質平和。
+            </p>
+</div>
+<!-- 替代卡 3 -->
+<div class="flex-shrink-0 w-[200px] bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-3 shadow-sm space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-title-editorial text-[14px] font-bold text-on-surface">淮山替換</span>
+<span class="text-[11px] font-label-caps text-primary bg-primary-fixed/40 px-1.5 py-0.5 rounded">健脾厚土</span>
+</div>
+<p class="font-body-sm text-[12px] text-secondary">
+              鮮淮山可用 <strong class="text-on-surface">鮮蓮藕</strong> 或乾品熟芡實替換，提升健脾固澀效用。
+            </p>
+</div>
+</div>
+</section>
+<!-- 8. 頁尾友善免責聲明 -->
+<footer class="pt-4 pb-2 border-t border-outline-variant/30 text-center">
+<p class="font-disclaimer text-disclaimer text-secondary">
+          「本站資訊僅供參考，不能取代醫生或營養師意見。」
+        </p>
+</footer>
+</main>
+<!-- 8. 底部常駐 4 分頁導航列 BottomNavBar (Active: 配食譜) -->
+<!-- Applying exact style attributes from JSON: style_shell_layout, style_active_navigation, style_inactive_navigation -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter-mobile py-space-xs bg-surface dark:bg-surface shadow-[0_-2px_12px_rgba(47,58,53,0.06)] border-none">
+<div class="max-w-[430px] w-full mx-auto flex justify-around items-center">
+<!-- Tab 1: 首頁 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">spa</span>
+<span class="font-label-caps text-label-caps mt-0.5">首頁</span>
+</a>
+<!-- Tab 2: 查食材 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">search</span>
+<span class="font-label-caps text-label-caps mt-0.5">查食材</span>
+</a>
+<!-- Tab 3: 配食譜 (Active Tab: style_active_navigation) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed min-h-[44px] min-w-[44px] py-space-xs active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] material-symbols-fill" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="font-label-caps text-label-caps font-bold mt-0.5">配食譜</span>
+</a>
+<!-- Tab 4: 食材庫 (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline min-h-[44px] min-w-[44px] py-space-xs hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">inventory_2</span>
+<span class="font-label-caps text-label-caps mt-0.5">食材庫</span>
+</a>
+</div>
+</nav>
+</div>
+<script>
+    // Micro-interaction for bookmark toggle
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
+    const bookmarkIcon = document.getElementById('bookmarkIcon');
+    let isBookmarked = false;
+
+    bookmarkBtn.addEventListener('click', () => {
+      isBookmarked = !isBookmarked;
+      if (isBookmarked) {
+        bookmarkIcon.classList.add('material-symbols-fill', 'text-primary');
+        bookmarkIcon.style.fontVariationSettings = "'FILL' 1";
+      } else {
+        bookmarkIcon.classList.remove('material-symbols-fill', 'text-primary');
+        bookmarkIcon.style.fontVariationSettings = "'FILL' 0";
+      }
+    });
+  </script>
+
+
+</body></html>
