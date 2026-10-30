@@ -41,6 +41,7 @@ export interface RecipeSuggestion {
   unknown_allergen_hints: string[] | null;
   rank_score: number;
   draft: boolean;
+  is_original: boolean;
 }
 
 export interface SuggestResponse {
@@ -82,6 +83,9 @@ export interface RecipeDetail {
   allergens: string[];
   allergen_warning: boolean;
   draft: boolean;
+  steps: string[];
+  notes: string | null;
+  is_original: boolean;
   disclaimer: string;
 }
 

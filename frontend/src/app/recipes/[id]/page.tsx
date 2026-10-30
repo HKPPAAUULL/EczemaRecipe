@@ -55,6 +55,11 @@ export default async function RecipeDetailPage({
         </Link>
         <h1 className="mt-2 text-2xl font-bold text-ink md:text-3xl">
           {item.title}
+          {item.is_original && (
+            <span className="ml-2 align-middle rounded bg-surface-alt px-2 py-1 text-xs font-normal text-ink-muted">
+              原創食譜（站方整理）
+            </span>
+          )}
           {item.draft && (
             <span className="ml-2 align-middle rounded bg-caution-bg px-2 py-1 text-xs font-normal text-caution">
               此資料尚待人工審核
@@ -152,6 +157,27 @@ export default async function RecipeDetailPage({
         )}
       </section>
 
+      {item.steps.length > 0 && (
+        <section className="rounded-2xl bg-surface p-5 ring-1 ring-line">
+          <h2 className="text-sm font-semibold text-ink">步驟</h2>
+          <ol className="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-ink">
+            {item.steps.map((st, i) => (
+              <li key={i}>{st}</li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {item.notes && (
+        <section className="rounded-2xl bg-surface p-5 ring-1 ring-line">
+          <h2 className="text-sm font-semibold text-ink">備註</h2>
+          <p className="mt-2 text-sm text-ink-muted">{item.notes}</p>
+        </section>
+      )}
+
+      {item.is_original ? (
+        <p className="text-xs text-ink-muted">原創食譜（站方整理）</p>
+      ) : (
       <p className="text-xs text-ink-muted">
         來源：
         {item.source_url ? (
@@ -168,6 +194,7 @@ export default async function RecipeDetailPage({
         )}
         {item.license && `（${item.license}）`}
       </p>
+      )}
     </div>
   );
 }

@@ -163,7 +163,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 3. 前端 MVP | 首頁、食材查詢、分類庫（功能 1、3） | 進行中（v0.4.0 骨架／食材查詢／食材庫；v0.7.0 食譜配對頁、忌口設定、買餸清單） |
 | 4. 食譜 | 爬蟲＋標準化＋配對＋警示（功能 2） | 進行中（v0.5.0 客家食譜開放資料管線；v0.6.0 食譜配對與致敏警示 API；食譜前端頁與更多來源待做） |
 | 5. 審核與品質 | 簡易審核介面、爬蟲監控、測試 | 進行中（v0.7.0：`/admin` 審核介面已完成；爬蟲監控待做；食材／食譜待人工審核） |
-| 6. 上線 | 部署、Tunnel、SEO、備份、免責/隱私頁 | 進行中（v0.8.0：正式 compose、Tunnel profile、SEO、安全 header、限速、私隱頁、DEPLOY_PROD.md；待填私隱頁聯絡方式與實際 Tunnel 上線） |
+| 6. 上線 | 部署、Tunnel、SEO、備份、免責/隱私頁 | 進行中（v0.9.0：原創食譜 CSV 匯入與後台編輯；v0.8.0：正式 compose、Tunnel profile、SEO、安全 header、限速、私隱頁、DEPLOY_PROD.md；待填私隱頁聯絡方式與實際 Tunnel 上線） |
 
 ## 10. 待辦與未決事項
 
@@ -198,6 +198,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 | 日期 | 版本 | 內容 |
 |---|---|---|
+| 2026-10-30 | v0.2.6 | v0.9.0：自建食譜工具（CSV 雙檔匯入、後台新增／編輯表單、步驟與原創標示）；食譜由外部 AI 起草成 CSV，經用戶審核後發佈 |
 | 2026-10-30 | v0.2.5 | 第二輪來源搜尋結論（D、E 級）：無更多合格開放食譜來源；用戶決定不建國家文化記憶庫管線，食譜日後自建 |
 | 2026-10-30 | v0.2.4 | v0.8.0：正式部署準備（prod compose、cloudflared profile、SEO、安全 header、BFF 限速、私隱頁） |
 | 2026-10-30 | v0.2.3 | v0.7.0：前端食譜配對／忌口設定（localStorage）／買餸清單；新增 `/admin` 審核介面（規則伺服器端強制）、`audit_log` 表；審核介面決定採 FastAPI 本機後台 |

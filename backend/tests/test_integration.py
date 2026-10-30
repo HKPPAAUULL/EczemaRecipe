@@ -124,8 +124,9 @@ def test_import_rating_counts_match_csv(fresh_db, seed_rows):
 
 def test_health_endpoint(fresh_db, monkeypatch):
     monkeypatch.setenv("DATABASE_URL", fresh_db)
-    from app.main import create_app
     from fastapi.testclient import TestClient
+
+    from app.main import create_app
 
     with TestClient(create_app()) as client:
         resp = client.get("/health")
@@ -147,9 +148,10 @@ def imported_db(fresh_db, seed_rows):
 
 def _client(db_url, drafts=False):
     """Context-managed TestClient bound to db_url with the given visibility."""
+    from fastapi.testclient import TestClient
+
     from app.config import load_settings
     from app.main import create_app
-    from fastapi.testclient import TestClient
 
     settings = load_settings(
         {
@@ -631,3 +633,141 @@ def test_suggest_pagination_and_openapi(recipe_api_db):
         assert r.status_code == 200 and len(r.json()["recipes"]) == 1
         r = c.get("/openapi.json")
         assert r.status_code == 200 and "/api/recipes/suggest" in r.text
+
+
+# --------------------------------------------------------------------------
+# Recipe authoring import (v0.9.0)
+# --------------------------------------------------------------------------
+
+RECIPES_CSV = (
+    "recipe_id,title,description,cook_time_min,servings,steps,tags,notes\n"
+    "m1,清炒白菜,簡單,10,2,洗淨||炒熟,快煮,\n"
+)
+ITEMS_CSV = (
+    "recipe_id,ingredient_name,qty,unit,note,is_staple\n"
+    "m1,白菜,200,克,,N\n"
+    "m1,鹽,,,少許,Y\n"
+)
+
+
+def _author_import(db_url, rb=None, ib=None, dry_run=False):
+    rb = RECIPES_CSV.encode() if rb is None else rb
+    ib = ITEMS_CSV.encode() if ib is None else ib
+    import psycopg
+
+    from app.recipe_import import (
+        build_context,
+        import_to_db,
+        match_recipes,
+        parse_import,
+    )
+
+    res = parse_import(rb, ib)
+    with psycopg.connect(db_url) as conn:
+        matcher, staples, kw = build_context(conn)
+        stats = import_to_db(
+            conn, match_recipes(res.recipes, matcher, staples, kw), kw)
+        if dry_run:
+            conn.rollback()
+        else:
+            conn.commit()
+    return res, stats
+
+
+@pytest.fixture()
+def authoring_db(recipes_db):
+    """recipe tables truncated; seed ingredients present."""
+    with psycopg.connect(recipes_db, autocommit=True) as conn:
+        conn.execute("TRUNCATE recipe_tag, recipe_ingredient, recipe,"
+                     " review_queue, audit_log CASCADE")
+    return recipes_db
+
+
+def test_authoring_fields_and_idempotent(authoring_db):
+    _res, s1 = _author_import(authoring_db)
+    assert s1.inserted == 1
+    _, s2 = _author_import(authoring_db)
+    assert s2.skipped_unchanged == 1
+    from psycopg.rows import dict_row
+    with psycopg.connect(authoring_db, row_factory=dict_row) as conn:
+        r = conn.execute("SELECT * FROM recipe").fetchone()
+        assert r["is_original"] and r["external_key"] == "m1"
+        assert r["status"] == "pending_review"
+        assert r["steps"] == ["洗淨", "炒熟"] and r["cook_time"] == 10
+        assert conn.execute(
+            "SELECT count(*) AS n FROM recipe_ingredient").fetchone()["n"] == 2
+        assert conn.execute(
+            "SELECT is_staple FROM recipe_ingredient ri JOIN ingredient i"
+            " ON i.id=ri.ingredient_id WHERE i.name_zh='鹽'"
+        ).fetchone()["is_staple"]
+        assert conn.execute(
+            "SELECT count(*) AS n FROM review_queue WHERE entity_type='recipe'"
+            " AND status='pending'").fetchone()["n"] == 1
+        assert conn.execute(
+            "SELECT count(*) AS n FROM audit_log WHERE action='import_recipe'"
+        ).fetchone()["n"] >= 1
+        assert conn.execute(
+            "SELECT license FROM data_source WHERE name='濕疹食堂原創食譜'"
+        ).fetchone()["license"] == "站方原創"
+
+
+def test_authoring_manual_status_not_overwritten(authoring_db):
+    _author_import(authoring_db)
+    with psycopg.connect(authoring_db, autocommit=True) as conn:
+        conn.execute(
+            "UPDATE recipe SET status='published', content_hash='x'")
+    _, s = _author_import(authoring_db,
+        rb=RECIPES_CSV.replace("清炒白菜", "清炒白菜改").encode())
+    assert s.skipped_manual_status == 1
+    with psycopg.connect(authoring_db) as conn:
+        assert conn.execute(
+            "SELECT title FROM recipe").fetchone()[0] == "清炒白菜"
+        # pending_review CAN be updated
+        conn.execute("UPDATE recipe SET status='pending_review',"
+                     " content_hash='x'")
+    _, s3 = _author_import(authoring_db,
+        rb=RECIPES_CSV.replace("清炒白菜", "清炒白菜改2").encode())
+    assert s3.updated == 1
+    with psycopg.connect(authoring_db) as conn:
+        assert conn.execute(
+            "SELECT title FROM recipe").fetchone()[0] == "清炒白菜改2"
+
+
+def test_view_exposes_new_columns(authoring_db):
+    _author_import(authoring_db)
+    from psycopg.rows import dict_row
+    with psycopg.connect(authoring_db, autocommit=True,
+                         row_factory=dict_row) as conn:
+        conn.execute("UPDATE recipe SET status='published'")
+        row = conn.execute(
+            "SELECT steps, notes, is_original, external_key"
+            " FROM published_recipe").fetchone()
+        assert row["steps"] == ["洗淨", "炒熟"]
+        assert row["is_original"] and row["external_key"] == "m1"
+
+
+def test_migration_0006_matches_schema():
+    mig = (REPO_ROOT / "docs/db/migrations/0006_recipe_authoring.sql"
+           ).read_text(encoding="utf-8")
+    schema = (REPO_ROOT / "docs/db/schema.sql").read_text(encoding="utf-8")
+    for col in ("steps", "notes", "is_original", "external_key"):
+        assert col in mig and col in schema
+    assert "CREATE OR REPLACE VIEW published_recipe" in mig
+    assert "CREATE OR REPLACE VIEW published_recipe" in schema
+
+
+def test_detail_api_returns_steps(authoring_db):
+    _author_import(authoring_db)
+    with psycopg.connect(authoring_db, autocommit=True) as conn:
+        conn.execute("UPDATE recipe SET status='published'")
+        rid = conn.execute("SELECT id FROM recipe").fetchone()[0]
+    with _client(authoring_db) as client:
+        d = client.get(f"/api/recipes/{rid}").json()
+    assert d["steps"] == ["洗淨", "炒熟"] and d["is_original"] is True
+    with _client(authoring_db, drafts=True) as client:
+        client.post("/api/recipes/suggest",
+                    json={"ingredient_ids": []})
+    # empty selection → no recipes; call detail via drafts too
+    with _client(authoring_db, drafts=True) as client:
+        d2 = client.get(f"/api/recipes/{rid}").json()
+        assert d2["is_original"] is True

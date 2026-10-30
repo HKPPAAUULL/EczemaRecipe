@@ -3,10 +3,11 @@
 import os
 
 import pytest
+from fastapi.testclient import TestClient
+
 from app.admin import auth
 from app.config import Settings, load_settings
 from app.main import create_app
-from fastapi.testclient import TestClient
 
 TOKEN = "unit-test-admin-token-123456"
 DB = os.environ.get("TEST_DATABASE_URL") or "postgresql://nobody@127.0.0.1:1/none"
@@ -195,3 +196,26 @@ def test_security_headers(client):
 
 def test_admin_not_in_openapi(client):
     assert "/admin" not in str(client.get("/openapi.json").json()["paths"])
+
+
+def test_authoring_endpoints_require_login(client):
+    for path in ("/admin/recipes/import", "/admin/recipes/new",
+                 "/admin/recipes/1/content",
+                 "/admin/exports/ingredient-names.csv"):
+        assert client.get(path).status_code == 303
+    assert client.post("/admin/recipes/import/confirm").status_code == 303
+
+
+def test_authoring_csrf_missing(client):
+    login(client)
+    for path in ("/admin/recipes/import/confirm", "/admin/recipes/new",
+                 "/admin/recipes/1/content"):
+        assert client.post(path, data={}).status_code == 403
+
+
+def test_authoring_cf_ray_blocked():
+    with make_client() as c:
+        login(c)
+        for path in ("/admin/recipes/import", "/admin/recipes/new",
+                     "/admin/exports/ingredient-names.csv"):
+            assert c.get(path, headers={"Cf-Ray": "x"}).status_code == 403

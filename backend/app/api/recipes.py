@@ -47,6 +47,7 @@ def _facts(row, links, allergen_union):
         trigger_ingredients=[
             l["name_zh"] for l in links.get(row["id"], [])
             if l["eczema_rating"] == "trigger"],
+        is_original=bool(row["is_original"]),
     )
 
 
@@ -138,4 +139,6 @@ def detail(recipe_id: int, request: Request):
         unmatched_staples=list(row["unmatched_staples"] or []),
         allergens=union_names, allergen_warning=warning,
         draft=row["status"] != "published" or bool(row["unmatched_ingredients"]),
+        steps=list(row["steps"] or []), notes=row["notes"],
+        is_original=bool(row["is_original"]),
     )

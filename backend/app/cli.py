@@ -179,6 +179,10 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--limit", type=int, default=None)
     c.add_argument("--dry-run", action="store_true")
     c.add_argument("--validate-only", action="store_true", help="parse+match only; no DB")
+    r = sub.add_parser("import-recipes", help="manual recipe CSV import")
+    r.add_argument("--recipes", required=True, help="recipes.csv path")
+    r.add_argument("--ingredients", required=True, help="recipe_ingredients.csv path")
+    r.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
 
     try:
@@ -188,10 +192,63 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_import_nutrition(args)
         if args.command == "crawl-recipes":
             return _cmd_crawl_recipes(args)
+        if args.command == "import-recipes":
+            return _cmd_import_recipes(args)
     except (SeedValidationError, NutritionValidationError) as exc:
         print(f"validation error: {exc}", file=sys.stderr)
         return 1
     return 2
+
+
+def _cmd_import_recipes(args: argparse.Namespace) -> int:
+    import psycopg
+
+    from app.recipe_import import (
+        ImportFormatError,
+        build_context,
+        import_to_db,
+        match_recipes,
+        parse_import,
+    )
+
+    try:
+        recipes_bytes = Path(args.recipes).read_bytes()
+        ingredients_bytes = Path(args.ingredients).read_bytes()
+        result = parse_import(recipes_bytes, ingredients_bytes)
+    except (ImportFormatError, OSError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    for errs in result.recipe_errors.values():
+        for e in errs:
+            print(f"  reject {e.recipe_id} row{e.row} {e.field}: {e.message}")
+    for e in result.errors:
+        print(f"  error {e.recipe_id or '-'} row{e.row} {e.field}: {e.message}")
+    try:
+        database_url = get_database_url()
+    except RuntimeError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    with psycopg.connect(database_url) as conn:
+        matcher, staples, keyword_map = build_context(conn)
+        prepared = match_recipes(result.recipes, matcher, staples, keyword_map)
+        if args.dry_run:
+            stats = import_to_db(conn, prepared, keyword_map)
+            conn.rollback()
+        else:
+            stats = import_to_db(conn, prepared, keyword_map)
+            conn.commit()
+    top = sorted(stats.unmatched_names.items(), key=lambda kv: (-kv[1], kv[0]))[:10]
+    print(
+        f"import-recipes{' dry-run: rolled back' if args.dry_run else ''}: "
+        f"inserted={stats.inserted} updated={stats.updated} "
+        f"unchanged={stats.skipped_unchanged} "
+        f"manual-status-skipped={stats.skipped_manual_status} "
+        f"rejected={len(result.recipe_errors)} "
+        f"unmatched_items={sum(stats.unmatched_names.values())}"
+    )
+    if top:
+        print("  top unmatched: " + "、".join(f"{n}×{c}" for n, c in top))
+    return 0
 
 
 if __name__ == "__main__":

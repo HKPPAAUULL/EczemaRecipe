@@ -36,6 +36,7 @@ def dashboard_counts(conn) -> dict:
           (SELECT count(*) FROM ingredient WHERE NOT reviewed AND needs_senior_review) AS ing_senior,
           (SELECT count(*) FROM ingredient WHERE NOT reviewed AND eczema_rating = 'unrated') AS ing_unrated,
           (SELECT count(*) FROM recipe WHERE status IN ('pending_review', 'draft')) AS rec_pending,
+          (SELECT count(*) FROM recipe WHERE is_original AND status = 'pending_review') AS rec_original_pending,
           (SELECT count(*) FROM recipe WHERE cardinality(unmatched_ingredients) > 0) AS rec_unmatched,
           (SELECT count(*) FROM review_queue WHERE status = 'pending') AS queue_pending
         """
@@ -292,9 +293,13 @@ def set_ingredient_reviewed(conn, iid: int, reviewed: bool) -> list[str]:
 
 
 def list_recipes(
-    conn, status: str, unmatched: bool, q: str, page: int
+    conn, status: str, unmatched: bool, q: str, page: int, original: str = ""
 ) -> tuple[int, list[dict]]:
     where, params = ["true"], {}
+    if original == "1":
+        where.append("r.is_original")
+    elif original == "0":
+        where.append("NOT r.is_original")
     if status in RECIPE_STATUSES:
         where.append("r.status = %(status)s")
         params["status"] = status
@@ -308,7 +313,7 @@ def list_recipes(
         f"SELECT count(*) AS n FROM recipe r WHERE {clause}", params
     ).fetchone()["n"]
     rows = conn.execute(
-        f"""SELECT r.id, r.title, r.status, r.eczema_friendly_score,
+        f"""SELECT r.id, r.title, r.status, r.eczema_friendly_score, r.is_original,
                    cardinality(r.unmatched_ingredients) AS unmatched_count,
                    cardinality(r.allergen_hints) AS hint_count
               FROM recipe r WHERE {clause}
@@ -326,7 +331,7 @@ def get_recipe(conn, rid: int, lock: bool = False) -> dict | None:
 
 def _matched(conn, rid: int) -> list[dict]:
     return conn.execute(
-        """SELECT ri.ingredient_id, ri.raw_text, ri.is_staple, i.name_zh, i.eczema_rating,
+        """SELECT ri.ingredient_id, ri.raw_text, ri.qty, ri.unit, ri.is_staple, i.name_zh, i.eczema_rating,
                   i.reviewed,
                   COALESCE((SELECT array_agg(a.name_zh ORDER BY a.id)
                               FROM ingredient_allergen ia JOIN allergen a ON a.id = ia.allergen_id
@@ -541,3 +546,89 @@ def change_recipe_status(conn, rid: int, action: str, reason: str) -> list[str]:
         note += f"：{reason}"
     _recipe_queue(conn, rid, note, final)
     return []
+
+
+def export_ingredient_names(conn) -> list[dict]:
+    """ingredient_names.csv export rows: ingredients + staple condiments."""
+    rows = conn.execute(
+        """SELECT i.name_zh, i.aliases, i.eczema_rating, i.reviewed,
+                  c.name_zh AS category,
+                  COALESCE((SELECT array_agg(a.name_zh ORDER BY a.id)
+                              FROM ingredient_allergen ia
+                              JOIN allergen a ON a.id = ia.allergen_id
+                             WHERE ia.ingredient_id = i.id), '{}') AS allergens
+             FROM ingredient i LEFT JOIN food_category c ON c.id = i.category_id
+            ORDER BY i.name_zh""").fetchall()
+    return rows
+
+
+def save_recipe_content(conn, rid: int, m, *, creating: bool) -> tuple[int, list[str]]:
+    """Write matched content into recipe + rows; recompute all derived fields.
+
+    Returns (rid, []). Editing a published original demotes it to
+    pending_review (same reset behaviour as ingredient review).
+    """
+    r = m.recipe
+    rec = get_recipe(conn, rid, lock=True) if not creating else None
+    demoted = bool(rec and rec["status"] == "published")
+    status = "pending_review" if demoted else (rec["status"] if rec else "draft")
+    fields = (
+        r.title, r.description, r.cook_time, r.servings, r.steps, r.notes,
+        m.unmatched, m.unmatched_staples, m.allergen_hints, m.content_hash,
+        status,
+    )
+    if creating:
+        ds = conn.execute(
+            "SELECT id FROM data_source WHERE name = %s",
+            ("濕疹食堂原創食譜",)).fetchone()
+        if ds:
+            ds_id = ds["id"]
+        else:
+            ds_id = conn.execute(
+                "INSERT INTO data_source (name,url,license,kind)"
+                " VALUES ('濕疹食堂原創食譜',NULL,'站方原創','manual')"
+                " RETURNING id").fetchone()["id"]
+        rid = conn.execute(
+            "INSERT INTO recipe (title, description, cook_time, servings,"
+            " steps, notes, is_original, data_source_id, status,"
+            " unmatched_ingredients, unmatched_staples, allergen_hints,"
+            " content_hash) VALUES (%s,%s,%s,%s,%s,%s,true,%s,%s,%s,%s,%s,%s)"
+            " RETURNING id",
+            (r.title, r.description, r.cook_time, r.servings, r.steps,
+             r.notes, ds_id, status, m.unmatched, m.unmatched_staples,
+             m.allergen_hints, m.content_hash)).fetchone()["id"]
+    else:
+        conn.execute(
+            "UPDATE recipe SET title=%s, description=%s, cook_time=%s,"
+            " servings=%s, steps=%s, notes=%s, unmatched_ingredients=%s,"
+            " unmatched_staples=%s, allergen_hints=%s, content_hash=%s,"
+            " status=%s WHERE id=%s",
+            (*fields, rid))
+        conn.execute(
+            "DELETE FROM recipe_ingredient WHERE recipe_id=%s", (rid,))
+        conn.execute("DELETE FROM recipe_tag WHERE recipe_id=%s", (rid,))
+    for iid, its in m.matched.items():
+        qty = next((i.qty for i in its if i.qty is not None), None)
+        unit = next((i.unit for i in its if i.unit), None)
+        conn.execute(
+            "INSERT INTO recipe_ingredient (recipe_id, ingredient_id,"
+            " raw_text, qty, unit, is_staple) VALUES (%s,%s,%s,%s,%s,%s)"
+            " ON CONFLICT (recipe_id, ingredient_id) DO UPDATE SET"
+            " raw_text=EXCLUDED.raw_text, qty=EXCLUDED.qty,"
+            " unit=EXCLUDED.unit, is_staple=EXCLUDED.is_staple",
+            (rid, iid, "；".join(i.raw_text for i in its), qty, unit,
+             any(i.is_staple for i in its)))
+    for tag in r.tags:
+        conn.execute(
+            "INSERT INTO recipe_tag (recipe_id, tag) VALUES (%s,%s)"
+            " ON CONFLICT DO NOTHING", (rid, tag))
+    action = "create_recipe" if creating else "edit_content"
+    audit(conn, "recipe", rid, action, {
+        "title": r.title, "matched": len(m.matched),
+        "unmatched": len(m.unmatched), "demoted_to_review": demoted,
+    })
+    note = "建立原創食譜草稿" if creating else "編輯食譜內容"
+    if demoted:
+        note += "（已由已發佈改回待審核）"
+    _recipe_queue(conn, rid, note)
+    return rid, []

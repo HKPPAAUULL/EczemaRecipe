@@ -3,11 +3,12 @@
 import os
 
 import pytest
+from conftest import REPO_ROOT, SCHEMA_SQL, SEED_SQL
+from fastapi.testclient import TestClient
+
 from app.admin import auth
 from app.config import Settings
 from app.main import create_app
-from conftest import REPO_ROOT, SCHEMA_SQL, SEED_SQL
-from fastapi.testclient import TestClient
 
 psycopg = pytest.importorskip("psycopg")
 TEST_URL = os.environ.get("TEST_DATABASE_URL")
@@ -337,3 +338,126 @@ def test_recipe_pages_render_and_filter(db, client):
     assert "乾淨食譜" in client.get("/admin/recipes?status=draft").text
     assert client.get("/admin/recipes/99999").status_code == 404
     assert post(client, "/admin/recipes/99999/status", action="publish").status_code == 404
+
+
+# --------------------------------------------------------------------------
+# Recipe authoring (v0.9.0): form, CSV import, exports
+# --------------------------------------------------------------------------
+
+def _mk(db, name, reviewed=True, **kw):
+    return mk_ing(db, name, reviewed=reviewed, **kw)
+
+
+def test_recipe_new_form_creates_draft(db, client):
+    _mk(db, "雞蛋"); _mk(db, "鹽")
+    r = post(client, "/admin/recipes/new",
+             title="蒸蛋", description="", cook_time="15", servings="2",
+             steps="打散\n蒸熟", tags="蒸", notes="",
+             ing_name=["雞蛋", "鹽"], ing_qty=["2", ""], ing_unit=["顆", ""],
+             ing_note=["", ""], ing_staple=["1"])
+    assert r.status_code == 303
+    rid = one(db, "SELECT id FROM recipe WHERE is_original")
+    rec = db.execute(
+        "SELECT status, steps, allergen_hints FROM recipe WHERE id=%s",
+        (rid,)).fetchone()
+    assert rec[0] == "draft" and rec[1] == ["打散", "蒸熟"]
+    assert one(db, "SELECT count(*) FROM recipe_ingredient WHERE recipe_id=%s",
+               rid) == 2
+    assert "蛋" in list(rec[2])  # 雞蛋 keyword
+
+
+def test_recipe_new_forbidden_and_min_items(db, client):
+    _mk(db, "雞蛋"); _mk(db, "鹽")
+    r = post(client, "/admin/recipes/new",
+             title="抗濕疹食譜", description="", cook_time="", servings="",
+             steps="a", tags="", notes="",
+             ing_name=["雞蛋", "鹽"], ing_qty=["", ""], ing_unit=["", ""],
+             ing_note=["", ""], ing_staple=[])
+    assert r.status_code == 422 and "禁用詞" in r.text
+    r = post(client, "/admin/recipes/new",
+             title="ok", description="", cook_time="", servings="",
+             steps="a", tags="", notes="",
+             ing_name=["雞蛋"], ing_qty=[""], ing_unit=[""], ing_note=[""],
+             ing_staple=[])
+    assert r.status_code == 422
+
+
+def test_content_edit_recomputes_and_demotes(db, client):
+    _mk(db, "雞蛋"); _mk(db, "鹽")
+    rid = one(db, "SELECT id FROM recipe WHERE is_original") \
+        if one(db, "SELECT count(*) FROM recipe WHERE is_original") else None
+    if rid is None:
+        rid = mk_recipe(db, title="原創", status="published")
+        db.execute("UPDATE recipe SET is_original=true WHERE id=%s", (rid,))
+    iid = db.execute("SELECT id FROM ingredient WHERE name_zh='雞蛋'").fetchone()[0]
+    db.execute("INSERT INTO recipe_ingredient (recipe_id, ingredient_id, raw_text)"
+               " VALUES (%s,%s,'x') ON CONFLICT DO NOTHING", (rid, iid))
+    r = post(client, f"/admin/recipes/{rid}/content",
+             title="原創改", description="", cook_time="5", servings="1",
+             steps="a", tags="", notes="",
+             ing_name=["雞蛋", "鹽"], ing_qty=["1", ""], ing_unit=["顆", ""],
+             ing_note=["", ""], ing_staple=["1"])
+    assert r.status_code == 303
+    rec = db.execute("SELECT status, allergen_hints FROM recipe WHERE id=%s",
+                     (rid,)).fetchone()
+    assert rec[0] == "pending_review"  # published → demoted
+    assert "蛋" in list(rec[1])
+
+
+def test_crawler_recipe_content_edit_blocked(db, client):
+    rid = mk_recipe(db, title="爬蟲", status="draft")
+    r = post(client, f"/admin/recipes/{rid}/content",
+             title="x", steps="a",
+             ing_name=["a", "b"], ing_qty=["", ""], ing_unit=["", ""],
+             ing_note=["", ""], ing_staple=[])
+    assert r.status_code == 422 and "不開放" in r.text
+
+
+def test_export_ingredient_names(db, client):
+    _mk(db, "雞蛋", allergen="major_allergen")
+    r = client.get("/admin/exports/ingredient-names.csv")
+    assert r.status_code == 200 and "雞蛋" in r.text
+    assert "staple" in r.text and "ingredient" in r.text
+
+
+def test_csv_import_preview_and_confirm(db, client):
+    _mk(db, "雞蛋"); _mk(db, "鹽")
+    recipes = (
+        "recipe_id,title,description,cook_time_min,servings,steps,tags,notes\n"
+        "imp1,蒸蛋,簡單,15,2,打散||蒸熟,蒸,\n").encode()
+    items = ("recipe_id,ingredient_name,qty,unit,note,is_staple\n"
+             "imp1,雞蛋,2,顆,,N\nimp1,鹽,,,,Y\n").encode()
+    csrf_t = auth.parse_cookie(TOKEN, client.cookies.get(auth.COOKIE_NAME)).csrf
+    r = client.post("/admin/recipes/import", data={"csrf": csrf_t}, files={
+        "recipes": ("recipes.csv", recipes, "text/csv"),
+        "ingredients": ("ingredients.csv", items, "text/csv")})
+    assert r.status_code == 200 and "蒸蛋" in r.text and "確認匯入" in r.text
+    r = post(client, "/admin/recipes/import/confirm")
+    assert r.status_code == 303
+    assert one(db, "SELECT count(*) FROM recipe WHERE external_key='imp1'") == 1
+    rec = db.execute("SELECT status, is_original, steps FROM recipe"
+                     " WHERE external_key='imp1'").fetchone()
+    assert rec[0] == "pending_review" and rec[1]
+    # confirm again → preview gone → redirect with flash
+    r = post(client, "/admin/recipes/import/confirm")
+    assert r.status_code == 303
+
+
+def test_csv_import_rejects_bad_upload(db, client):
+    csrf_t = auth.parse_cookie(TOKEN, client.cookies.get(auth.COOKIE_NAME)).csrf
+    r = client.post("/admin/recipes/import", data={"csrf": csrf_t}, files={
+        "recipes": ("r.exe", b"\xff\xfe", "application/x-msdownload"),
+        "ingredients": ("i.csv", b"a,b", "text/csv")})
+    assert r.status_code == 422
+    r = client.post("/admin/recipes/import", data={"csrf": csrf_t}, files={
+        "recipes": ("r.csv", b"wrong,header\n1,2", "text/csv"),
+        "ingredients": ("i.csv", b"recipe_id,ingredient_name,qty,unit,note,is_staple\n", "text/csv")})
+    assert r.status_code == 422
+
+
+def test_recipe_list_original_filter(db, client):
+    mk_recipe(db, title="爬蟲菜", status="draft")
+    r = client.get("/admin/recipes?original=0")
+    assert "爬蟲菜" in r.text
+    r = client.get("/admin/recipes?original=1")
+    assert "爬蟲菜" not in r.text

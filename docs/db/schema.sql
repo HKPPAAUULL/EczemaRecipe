@@ -188,6 +188,10 @@ CREATE TABLE recipe (
     unmatched_ingredients   text[] NOT NULL DEFAULT '{}',
     unmatched_staples       text[] NOT NULL DEFAULT '{}',
     allergen_hints          text[] NOT NULL DEFAULT '{}',
+    steps                   text[] NOT NULL DEFAULT '{}',
+    notes                   text,
+    is_original             boolean NOT NULL DEFAULT false,
+    external_key            text,
     content_hash            text,
     created_at              timestamptz NOT NULL DEFAULT now(),
     updated_at              timestamptz NOT NULL DEFAULT now()
@@ -202,7 +206,12 @@ COMMENT ON COLUMN recipe.unmatched_ingredients IS '配對失敗的食材原文�
 COMMENT ON COLUMN recipe.unmatched_staples IS '常備調味料中配對失敗的食材原文（不影響 published_recipe；致敏風險由 allergen_hints 關鍵字掃描覆蓋）';
 COMMENT ON COLUMN recipe.allergen_hints IS '對全部食材原文（含未配對）做 allergen_keywords 掃描得到的過敏原名稱';
 COMMENT ON COLUMN recipe.content_hash IS '內容雜湊：增量更新判斷，未變則跳過';
+COMMENT ON COLUMN recipe.steps IS '烹調步驟（逐項）；原創食譜才有內容';
+COMMENT ON COLUMN recipe.notes IS '備註（原創食譜）';
+COMMENT ON COLUMN recipe.is_original IS '站方原創食譜（後台建立/CSV 匯入；爬蟲食譜為 false）';
+COMMENT ON COLUMN recipe.external_key IS '匯入用穩定鍵（CSV recipe_id）；同 key 的後續匯入為更新而非新增';
 
+CREATE UNIQUE INDEX recipe_external_key_key ON recipe (external_key) WHERE external_key IS NOT NULL;
 CREATE INDEX recipe_status_idx ON recipe (status);
 CREATE INDEX recipe_title_trgm_idx ON recipe USING gin (title gin_trgm_ops);
 CREATE INDEX recipe_data_source_idx ON recipe (data_source_id);
@@ -302,7 +311,7 @@ CREATE VIEW published_ingredient AS
 SELECT * FROM ingredient WHERE reviewed = true;
 COMMENT ON VIEW published_ingredient IS '對外發佈的食材：display_status 規則＝只顯示 reviewed=true（LLM/爬蟲產生的內容未經人工審核不會出現）';
 
-CREATE VIEW published_recipe AS
+CREATE OR REPLACE VIEW published_recipe AS
 SELECT * FROM recipe
  WHERE status = 'published' AND cardinality(unmatched_ingredients) = 0;
 COMMENT ON VIEW published_recipe IS '對外發佈的食譜：status=published 且無未配對食材（安全關鍵：有未識別食材的食譜不公開）';

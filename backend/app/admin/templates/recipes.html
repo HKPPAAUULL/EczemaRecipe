@@ -6,13 +6,18 @@
 <div><label for="status">狀態</label><select id="status" name="status"><option value="">全部</option>
 {% for s in statuses %}<option value="{{ s }}" {{ 'selected' if f.status == s }}>{{ STATUS_LABELS[s] }}（{{ s }}）</option>{% endfor %}</select></div>
 <div><label><input type="checkbox" name="unmatched" value="1" {{ 'checked' if f.unmatched }}> 只看有未配對食材</label></div>
+<div><label for="original">來源</label><select id="original" name="original">
+<option value="" {{ 'selected' if f.original == '' }}>全部</option>
+<option value="1" {{ 'selected' if f.original == '1' }}>原創</option>
+<option value="0" {{ 'selected' if f.original == '0' }}>爬蟲</option></select></div>
 <div><label for="q">搜尋標題</label><input type="search" id="q" name="q" value="{{ f.q }}"></div>
 <button type="submit">篩選</button>
 </form>
+<p><a href="/admin/recipes/import">匯入 CSV</a> ・ <a href="/admin/recipes/new">新增原創食譜</a></p>
 <table>
 <tr><th>#</th><th>標題</th><th>狀態</th><th>未配對</th><th>致敏提示</th><th>友善分數</th></tr>
 {% for r in rows %}
-<tr><td>{{ r.id }}</td><td><a href="/admin/recipes/{{ r.id }}">{{ r.title }}</a></td><td>{{ STATUS_LABELS[r.status] }}</td>
+<tr><td>{{ r.id }}</td><td><a href="/admin/recipes/{{ r.id }}">{{ r.title }}</a>{% if r.is_original %} <span class="badge">原創</span>{% endif %}</td><td>{{ STATUS_LABELS[r.status] }}</td>
 <td>{{ r.unmatched_count or '' }}</td><td>{{ r.hint_count or '' }}</td><td>{{ r.eczema_friendly_score if r.eczema_friendly_score is not none else '' }}</td></tr>
 {% else %}<tr><td colspan="6" class="muted">沒有符合的食譜。</td></tr>{% endfor %}
 </table>

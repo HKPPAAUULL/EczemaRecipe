@@ -1,6 +1,7 @@
 """Unit tests for settings parsing, the production guard, helpers and constants."""
 
 import pytest
+
 from app.config import load_settings
 from app.repository import like_escape
 from app.schemas import ALLOWED_RATINGS_FILTER, RATING_LABELS

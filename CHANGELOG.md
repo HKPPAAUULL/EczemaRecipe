@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-10-30
+
+### Added
+
+- **原創食譜工具**：CSV 雙檔匯入（`recipes.csv` + `recipe_ingredients.csv`；UTF-8／BOM、≤1MB／500 筆、`EXAMPLE` 開頭保留、逐筆錯誤隔離）、`external_key` upsert（published／rejected 不覆蓋）、CLI `import-recipes`。
+- `/admin/recipes/import` 上傳 → 預覽 → 確認流程（10 分鐘暫存），並提供兩個範本與全量食材名單 CSV 下載。
+- `/admin` 新增／編輯食譜表單（步驟、備註、食材表格；儲存時重算配對與 `allergen_hints`；已發佈食譜被編輯後自動回到待審核）；食譜列表原創篩選與標籤、儀表板原創待審數。
+- `recipe.steps`／`notes`／`is_original`／`external_key`（migration `0006_recipe_authoring.sql`；`published_recipe` view 重建以含新欄）。
+- 前端食譜詳情顯示步驟、備註與「原創食譜（站方整理）」標示；公開 API detail 回 `steps`／`notes`／`is_original`，suggest 回 `is_original`。
+
+### Changed
+
+- 食譜文字禁用詞：沿用既有清單，另加食譜專用詞（舒緩、低敏、無致敏、安全食用等）；tags 不得以「無」「不含」開頭。
+
 ## [0.8.0] - 2026-10-30
 
 ### Added

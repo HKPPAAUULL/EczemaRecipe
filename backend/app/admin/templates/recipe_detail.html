@@ -4,10 +4,13 @@
 <p><a href="/admin/recipes">← 食譜列表</a></p>
 <h1>{{ rec.title }}</h1>
 <p><span class="badge">{{ STATUS_LABELS[rec.status] }}</span>
+{% if rec.is_original %}<span class="badge">原創</span> <a href="/admin/recipes/{{ rec.id }}/content">編輯內容</a>{% endif %}
 來源：{% if rec.source_url %}<a href="{{ rec.source_url }}" rel="noreferrer noopener" target="_blank">{{ rec.source_url }}</a>{% else %}—{% endif %}
 ／ {{ rec.source_name or '未登記來源' }}｜授權：{{ rec.source_license or '—' }}
 {% if rec.source_site %}（<a href="{{ rec.source_site }}" rel="noreferrer noopener" target="_blank">網站</a>）{% endif %}</p>
-<p class="muted">content_hash：{{ rec.content_hash or '—' }}｜標籤：{{ rec.tags | join('、') or '—' }}</p>
+<p class="muted">content_hash：{{ rec.content_hash or '—' }}｜標籤：{{ rec.tags | join('、') or '—' }}｜時間：{{ rec.cook_time or '—' }} 分｜份量：{{ rec.servings or '—' }}</p>
+{% if rec.steps %}<section><h2>步驟</h2><ol>{% for st in rec.steps %}<li>{{ st }}</li>{% endfor %}</ol></section>{% endif %}
+{% if rec.notes %}<section><h2>備註</h2><p>{{ rec.notes }}</p></section>{% endif %}
 
 <section>
 <h2>狀態操作</h2>

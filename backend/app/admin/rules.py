@@ -11,6 +11,10 @@ SEVERITIES = ("low", "medium", "high")
 RECIPE_ACTIONS = ("publish", "reject", "resubmit")
 
 FORBIDDEN_TERMS = ("治療", "根治", "會導致", "抗濕疹", "抗炎", "消炎", "療效", "保證")
+RECIPE_FORBIDDEN_TERMS = FORBIDDEN_TERMS + (
+    "舒緩", "修復", "緩解", "改善濕疹", "對濕疹有益", "低敏", "抗敏",
+    "不致敏", "無致敏", "過敏者適用", "安全食用", "無過敏原",
+)
 
 _TRANSITIONS = {
     "publish": {"pending_review", "draft"},
@@ -28,6 +32,11 @@ ACTION_LABELS = {"publish": "發佈", "reject": "退回", "resubmit": "重新送
 def find_forbidden_terms(text: str | None) -> list[str]:
     text = text or ""
     return [t for t in FORBIDDEN_TERMS if t in text]
+
+
+def find_recipe_forbidden_terms(text: str | None) -> list[str]:
+    text = text or ""
+    return [t for t in RECIPE_FORBIDDEN_TERMS if t in text]
 
 
 def is_http_url(url: str | None) -> bool:

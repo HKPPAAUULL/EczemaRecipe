@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}匯入食譜 CSV{% endblock %}
+{% block body %}
+<h1>匯入原創食譜 CSV</h1>
+{% if upload_error %}<div class="err" role="alert">{{ upload_error }}</div>{% endif %}
+<section>
+<h2>1. 下載範本與食材名單</h2>
+<p>
+<a href="/admin/exports/template-recipes.csv">範本 recipes.csv</a> ・
+<a href="/admin/exports/template-ingredients.csv">範本 recipe_ingredients.csv</a> ・
+<a href="/admin/exports/ingredient-names.csv">食材名單 ingredient_names.csv</a>（供起草工具對照庫內名稱/別名/常備調味料）
+</p>
+<p class="muted">格式：UTF-8（可含 BOM）；steps 以 <code>||</code> 分隔；tags 以 <code>;</code> 分隔；recipe_id 只可用英數/底線/連字元且不得以 EXAMPLE 開頭。每個檔 ≤1MB、食譜 ≤500 筆。</p>
+</section>
+<section>
+<h2>2. 上傳並預覽</h2>
+<form method="post" action="/admin/recipes/import" enctype="multipart/form-data" class="filters">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<div><label for="recipes">recipes.csv</label><input type="file" id="recipes" name="recipes" accept=".csv" required></div>
+<div><label for="ingredients">recipe_ingredients.csv</label><input type="file" id="ingredients" name="ingredients" accept=".csv" required></div>
+<button type="submit">上傳並預覽</button>
+</form>
+</section>
+{% if preview %}
+<section>
+<h2>3. 預覽（尚未寫入）</h2>
+<p>可匯入 {{ preview.matched | length }} 筆；
+{% if preview.result.recipe_errors %}<strong>拒絕 {{ preview.result.recipe_errors | length }} 筆</strong>；{% endif %}
+{% if preview.result.errors %}<strong>檔案錯誤 {{ preview.result.errors | length }} 項</strong>。{% endif %}</p>
+{% if preview.result.recipe_errors %}
+<div class="err"><strong>被拒絕的食譜（不會匯入）：</strong><ul>
+{% for key, errs in preview.result.recipe_errors.items() %}
+{% for e in errs %}<li>{{ e.recipe_id or key }}（第 {{ e.row }} 行・{{ e.field }}）：{{ e.message }}</li>{% endfor %}
+{% endfor %}</ul></div>
+{% endif %}
+{% if preview.result.errors %}
+<div class="warn"><strong>資料行錯誤（相關行已略過）：</strong><ul>
+{% for e in preview.result.errors %}<li>{{ e.recipe_id or '—' }}（第 {{ e.row }} 行・{{ e.field }}）：{{ e.message }}</li>{% endfor %}
+</ul></div>
+{% endif %}
+<table>
+<tr><th>recipe_id</th><th>標題</th><th>已配對</th><th>未配對</th><th>未配對調味料</th><th>致敏提示</th><th>既有狀態</th></tr>
+{% for m in preview.matched %}
+<tr>
+<td>{{ m.recipe.external_key }}</td><td>{{ m.recipe.title }}</td>
+<td>{{ m.matched | length }}</td>
+<td>{% if m.unmatched %}<span class="warn">{{ m.unmatched | join('、') }}</span>{% else %}0{% endif %}</td>
+<td>{{ m.unmatched_staples | join('、') or '—' }}</td>
+<td>{{ m.allergen_hints | join('、') or '—' }}</td>
+<td>{{ STATUS_LABELS[preview.existing[m.recipe.external_key]] if preview.existing[m.recipe.external_key] else '新增' }}</td>
+</tr>
+{% endfor %}
+</table>
+<p class="muted">既有狀態為「已發佈／已退回」的食譜<strong>不會</strong>被覆蓋（略過，需手動編輯）；待審核／草稿會更新內容。</p>
+<form method="post" action="/admin/recipes/import/confirm">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<button type="submit">確認匯入（{{ preview.matched | length }} 筆）</button>
+</form>
+</section>
+{% endif %}
+{% endblock %}

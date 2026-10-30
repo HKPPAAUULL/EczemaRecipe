@@ -15,6 +15,11 @@ export default function RecipeCard({ r }: { r: RecipeSuggestion }) {
             className="hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {r.title}
+            {r.is_original && (
+              <span className="ml-1.5 align-middle rounded bg-surface-alt px-1.5 py-0.5 text-xs font-normal text-ink-muted">
+                原創
+              </span>
+            )}
           </Link>
           {r.draft && (
             <span className="ml-2 rounded bg-caution-bg px-1.5 py-0.5 text-xs font-normal text-caution">
@@ -83,6 +88,9 @@ export default function RecipeCard({ r }: { r: RecipeSuggestion }) {
           </ul>
         </div>
       )}
+      {r.is_original ? (
+        <p className="mt-3 text-xs text-ink-muted">原創食譜（站方整理）</p>
+      ) : (
       <p className="mt-3 text-xs text-ink-muted">
         來源：
         {r.source_url ? (
@@ -99,6 +107,7 @@ export default function RecipeCard({ r }: { r: RecipeSuggestion }) {
         )}
         {r.license && `（${r.license}）`}
       </p>
+      )}
     </article>
   );
 }

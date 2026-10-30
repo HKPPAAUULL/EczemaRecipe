@@ -58,6 +58,7 @@ class RecipeFacts:
     # union over matched ingredients (incl. staples): allergen id → name_zh
     allergens: dict[int, str]
     trigger_ingredients: list[str]
+    is_original: bool = False
 
 
 def selection_warnings(sel: list[SelectedIngredient]) -> list[dict]:
@@ -140,6 +141,7 @@ def evaluate(
         "unknown_allergen_hints": unknown or None,
         "rank_score": cov * score,
         "draft": recipe.status != "published" or bool(recipe.unmatched),
+        "is_original": recipe.is_original,
     }
     return out
 

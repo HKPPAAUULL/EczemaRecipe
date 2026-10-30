@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}{{ '新增原創食譜' if not rec else '編輯食譜內容' }}{% endblock %}
+{% block body %}
+<h1>{{ '新增原創食譜' if not rec else '編輯食譜內容：' ~ rec.title }}</h1>
+{% if errors %}<div class="err" role="alert"><strong>無法儲存：</strong><ul>
+{% for e in errors %}<li>{{ e.field }}：{{ e.message }}</li>{% endfor %}</ul></div>{% endif %}
+{% macro v(k, d='') %}{{ values.get(k, d) if values else d }}{% endmacro %}
+<form method="post" action="{{ '/admin/recipes/new' if not rec else '/admin/recipes/' ~ rec.id ~ '/content' }}">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="title">標題（≤60 字）*</label>
+<input type="text" id="title" name="title" size="50" maxlength="60" required value="{{ v('title', rec.title if rec else '') }}">
+<label for="description">描述（≤200 字）</label>
+<textarea id="description" name="description" rows="2" maxlength="200">{{ v('description', rec.description if rec else '') }}</textarea>
+<div class="filters">
+<div><label for="cook_time">烹調時間（分鐘，1–600）</label><input type="text" id="cook_time" name="cook_time" size="5" value="{{ v('cook_time', rec.cook_time if rec and rec.cook_time is not none else '') }}"></div>
+<div><label for="servings">份量（1–20）</label><input type="text" id="servings" name="servings" size="5" value="{{ v('servings', rec.servings if rec and rec.servings is not none else '') }}"></div>
+</div>
+<label for="steps">步驟（每行一步，1–30 步，每步 ≤300 字）*</label>
+<textarea id="steps" name="steps" rows="8" required>{{ v('steps', (rec.steps | join('\n')) if rec and rec.steps else '') }}</textarea>
+<label for="tags">標籤（以 , 或 ; 分隔，≤8 個，不得用「無」「不含」開頭）</label>
+<input type="text" id="tags" name="tags" size="50" value="{{ v('tags', (rec.tags | join(';')) if rec and rec.tags else '') }}">
+<label for="notes">備註（≤500 字）</label>
+<textarea id="notes" name="notes" rows="3" maxlength="500">{{ v('notes', rec.notes if rec else '') }}</textarea>
+<h2>食材（至少 2 行；名稱須與庫內食材/別名/常備調味料精確相符）</h2>
+<table id="ing-table">
+<tr><th>食材名稱</th><th>數量</th><th>單位</th><th>備註</th><th>調味料</th><th></th></tr>
+{% set old_items = values.getlist('ing_name') if values else [] %}
+{% if rec and rec.matched and not values %}
+{% for m in rec.matched %}<tr>
+<td><input type="text" name="ing_name" size="14" value="{{ m.name_zh }}" list="ing-names" required></td>
+<td><input type="text" name="ing_qty" size="5" value="{{ m.qty if m.qty is not none else '' }}"></td>
+<td><input type="text" name="ing_unit" size="4" value="{{ m.unit or '' }}"></td>
+<td><input type="text" name="ing_note" size="8" value=""></td>
+<td><input type="checkbox" name="ing_staple" value="{{ loop.index0 }}" {{ 'checked' if m.is_staple }}></td>
+<td><button type="button" class="secondary" onclick="this.closest('tr').remove()">刪除</button></td></tr>{% endfor %}
+{% else %}
+{% for i in range((old_items | length) if old_items else 2) %}<tr>
+<td><input type="text" name="ing_name" size="14" value="{{ old_items[i] if old_items else '' }}" list="ing-names" required></td>
+<td><input type="text" name="ing_qty" size="5" value="{{ values.getlist('ing_qty')[i] if values else '' }}"></td>
+<td><input type="text" name="ing_unit" size="4" value="{{ values.getlist('ing_unit')[i] if values else '' }}"></td>
+<td><input type="text" name="ing_note" size="8" value="{{ values.getlist('ing_note')[i] if values else '' }}"></td>
+<td><input type="checkbox" name="ing_staple" value="{{ i }}" {{ 'checked' if values and (i|string) in values.getlist('ing_staple') }}></td>
+<td><button type="button" class="secondary" onclick="this.closest('tr').remove()">刪除</button></td></tr>{% endfor %}
+{% endif %}
+</table>
+<datalist id="ing-names">{% for n in names %}<option value="{{ n.name_zh }}">{% for a in n.aliases %}<option value="{{ a }}">{% endfor %}{% endfor %}</datalist>
+<p><button type="button" class="secondary" id="add-row">＋新增食材行</button></p>
+<p><button type="submit">儲存（會重新配對與計算致敏提示）</button></p>
+</form>
+<script>
+document.getElementById('add-row').addEventListener('click', function () {
+  var t = document.getElementById('ing-table');
+  var i = t.rows.length - 1;
+  var tr = t.insertRow(-1);
+  tr.innerHTML = '<td><input type="text" name="ing_name" size="14" list="ing-names" required></td>' +
+    '<td><input type="text" name="ing_qty" size="5"></td>' +
+    '<td><input type="text" name="ing_unit" size="4"></td>' +
+    '<td><input type="text" name="ing_note" size="8"></td>' +
+    '<td><input type="checkbox" name="ing_staple" value="' + i + '"></td>' +
+    '<td><button type="button" class="secondary" onclick="this.closest(\'tr\').remove()">刪除</button></td>';
+});
+</script>
+{% endblock %}

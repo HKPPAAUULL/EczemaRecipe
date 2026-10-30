@@ -148,6 +148,7 @@ class RecipeSuggestion(BaseModel):
     unknown_allergen_hints: list[str] | None = None
     rank_score: float
     draft: bool
+    is_original: bool = False
 
 
 class SuggestResponse(BaseModel):
@@ -189,4 +190,7 @@ class RecipeDetailResponse(BaseModel):
     allergens: list[str]
     allergen_warning: bool
     draft: bool
+    steps: list[str] = []
+    notes: str | None = None
+    is_original: bool = False
     disclaimer: str = DISCLAIMER

@@ -1,11 +1,12 @@
 """Unit tests for the recipe crawl pipeline (DB-free where possible)."""
 
+from conftest import REPO_ROOT
+
 from app.crawler.allergens import load_keyword_map, scan_allergens
 from app.crawler.base import content_hash, stable_recipe_slug
 from app.crawler.matcher import IngredientMatcher
 from app.crawler.parse import parse_item, parse_practic
 from app.crawler.pipeline import load_staples
-from conftest import REPO_ROOT
 
 ALLERGEN_CSV = REPO_ROOT / "data" / "reference" / "allergen_keywords.csv"
 STAPLE_CSV = REPO_ROOT / "data" / "reference" / "staple_ingredients.csv"

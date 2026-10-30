@@ -50,6 +50,7 @@
   - 匯入種子：`cd backend && python -m app.cli import-seed`（先設 `DATABASE_URL` 指向 `127.0.0.1`；`--dry-run` 試跑）
   - 後台：設 `ADMIN_TOKEN`（≥16 字元）才啟用 `/admin`（僅限本機，不得經 Cloudflare Tunnel 公開）；`cd backend && ADMIN_TOKEN=... uvicorn app.main:app --port 8010`；既有 DB 升級用 `docs/db/migrations/0005_audit_log.sql`
   - 前端 BFF：`/api/ingredients/search`、`/api/recipes/suggest`；localStorage key：`ek:v1:allergen-exclusions`、`ek:v1:shopping-list`
+  - 匯入原創食譜：`cd backend && python -m app.cli import-recipes --recipes <csv> --ingredients <csv> [--dry-run]`（或在 `/admin/recipes/import` 上傳）；既有 DB 升級用 `docs/db/migrations/0006_recipe_authoring.sql`
   - 啟動 API：`cd backend && uvicorn app.main:app --reload`（env：`DATABASE_URL` 必需；`APP_ENV`、`INCLUDE_DRAFTS`、`CORS_ORIGINS` 見 `.env.example`；production 下 `INCLUDE_DRAFTS` 必須為 false）
   - 食譜爬蟲：`cd backend && python -m app.cli crawl-recipes --source hakka [--download] [--limit N] [--dry-run] [--validate-only]`（設 `DATABASE_URL`；報告寫 `data/reference/recipe_match_report_hakka.md`）
   - 前端：`cd frontend`；`npm run lint`（eslint）、`npm run typecheck`（tsc --noEmit）、`npm test`（vitest）、`npm run build`、`npm run dev`/`npm start`（env：`API_BASE_URL`，預設 `http://127.0.0.1:8000`）
