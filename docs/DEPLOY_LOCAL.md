@@ -158,22 +158,61 @@ Get-Content docs\db\migrations\0005_audit_log.sql | docker compose exec -T db ps
 （migration 檔均冪等，含 `IF NOT EXISTS`，重複套用安全；已實測 0003–0005 可重跑。）
 全新 volume 不需要，因為 `schema.sql` 已包含所有變更。
 
-## 10. 備份與還原（最基本版）
+## 10. 備份與還原
+
+**審核資料只存在資料庫**（`eczemarecipe_pgdata` volume）——換環境或升級前**一定要先備份**。
+
+### 10.1 備份：`scripts/backup.ps1`
 
 ```powershell
-# 先在容器內寫好 dump，再 docker cp 出來（PowerShell 的 ">" 會寫 UTF-16，psql 讀不了）
-docker compose exec -T db pg_dump -U <user> -f /tmp/backup.sql <db>
-docker compose cp db:/tmp/backup.sql backup_$(Get-Date -Format yyyyMMdd).sql
+.\scripts\backup.ps1                          # 預設輸出到 %USERPROFILE%\EczemaRecipeBackups
+.\scripts\backup.ps1 -OutDir D:\backups -Keep 30
 ```
 
-還原（複製入容器再 -f，避免 PowerShell 管線把含中文的 SQL 轉碼）：
+- 產生 `eczema_yyyyMMdd_HHmmss.dump`（pg_dump 自訂格式），`-Keep` 只清理同名舊檔，其他檔不碰。
+- 在容器內 `pg_dump` 後 `docker cp` 取出（避免 PowerShell 重導向寫成 UTF-16），並以 `pg_restore --list` 驗證可讀；結尾印出主要表筆數摘要。
+- `-OutDir` 不可位於專案目錄內（避免備份誤入版控）。
+
+### 10.2 還原：`scripts/restore.ps1`
 
 ```powershell
-docker compose cp backup_YYYYMMDD.sql db:/tmp/restore.sql
-docker compose exec -T db psql -U <user> -d <db> -f /tmp/restore.sql
+# 還原到新資料庫（安全、免確認）——先這樣檢查備份內容
+.\scripts\restore.ps1 -File D:\backups\eczema_20261030_030000.dump -TargetDb tmp_check
+
+# 還原到主庫（破壞性）：先自動做安全備份，再要求手動輸入資料庫名確認
+.\scripts\restore.ps1 -File D:\backups\eczema_20261030_030000.dump
 ```
 
-備份檔放到另一個磁碟，不要放進專案目錄（含資料，勿入版控）。
+- `-SkipSafetyBackup` 略過安全備份；`-StopApp` 還原前 `docker compose stop api web`、完成後重啟。
+- 副檔名非 `.dump`、檔案讀不出 → 在動任何資料前中止。
+
+### 10.3 換環境還原流程
+
+clone → 設 `.env` → `docker compose up -d db` → `.\scripts\restore.ps1 -File <備份>`（新庫不存在會自動建立；要還原到 `.env` 的主庫名時照 10.2 確認流程）→ 匯入缺失資料（若有）→ `docker compose up -d api web`。
+
+### 10.4 每日自動備份（需用戶自行設定）
+
+以下指令只作範例，**需你自行執行**（不要由我代註冊）：每天 03:00 跑備份；前提是 Docker Desktop 已運行。
+
+```powershell
+$act = New-ScheduledTaskAction -Execute "powershell.exe" `
+  -Argument "-NoProfile -ExecutionPolicy Bypass -File C:\EczemaRecipe\scripts\backup.ps1"
+$trg = New-ScheduledTaskTrigger -Daily -At 03:00
+Register-ScheduledTask -TaskName "EczemaRecipe-Backup" -Action $act -Trigger $trg -Description "daily DB backup"
+```
+
+或以 `schtasks`：`schtasks /create /tn "EczemaRecipe-Backup" /sc daily /st 03:00 /tr "powershell -NoProfile -ExecutionPolicy Bypass -File C:\EczemaRecipe\scripts\backup.ps1"`。
+
+### 10.5 手動指令（備用）
+
+```powershell
+docker compose exec -T db pg_dump -U <user> -Fc -f /tmp/backup.dump <db>
+docker compose cp db:/tmp/backup.dump backup.dump
+docker compose cp backup.dump db:/tmp/restore.dump
+docker compose exec -T db pg_restore --clean --if-exists --no-owner --no-privileges -U <user> -d <db> /tmp/restore.dump
+```
+
+（PowerShell `>` 重導向會寫 UTF-16，psql 讀不了，所以走容器內檔案＋`docker cp`。）
 
 ## 11. 疑難排解
 
