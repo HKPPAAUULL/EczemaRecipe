@@ -44,9 +44,11 @@
   - Lint：`ruff check backend`
   - 單元測試：`python -m pytest backend/tests -q`（整合測試需設 `TEST_DATABASE_URL`，見 `.env.example`）
   - 種子驗證（免 DB）：`cd backend && python -m app.cli import-seed --validate-only`
+  - 營養資料（TFDA）：`cd backend && python -m app.cli import-nutrition --download`（原始檔→`data/raw/`，不入版控）→ `--build`（產生 `data/reference/nutrition_tfda.csv`＋配對報告）→ `--validate-only` 驗證 → `python -m app.cli import-nutrition` 匯入（設 `DATABASE_URL`；`--dry-run` 試跑）
   - 起 DB：`docker compose up -d db`（首次自動執行 `docs/db/*.sql`）；停：`docker compose down`（保留 volume）
   - 匯入種子：`cd backend && python -m app.cli import-seed`（先設 `DATABASE_URL` 指向 `127.0.0.1`；`--dry-run` 試跑）
   - 啟動 API：`cd backend && uvicorn app.main:app --reload`（env：`DATABASE_URL` 必需；`APP_ENV`、`INCLUDE_DRAFTS`、`CORS_ORIGINS` 見 `.env.example`；production 下 `INCLUDE_DRAFTS` 必須為 false）
+  - 前端：`cd frontend`；`npm run lint`（eslint）、`npm run typecheck`（tsc --noEmit）、`npm test`（vitest）、`npm run build`、`npm run dev`/`npm start`（env：`API_BASE_URL`，預設 `http://127.0.0.1:8000`）
 
 ## 文件索引
 - `docs/PLAN.md` — 方案書（開發依據）

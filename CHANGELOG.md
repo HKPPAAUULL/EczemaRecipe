@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-10-30
+
+### Added
+
+- **Frontend MVP** (`frontend/`, PLAN.md §9 phase 3 features 1 & 3): Next.js 16 (App Router) + TypeScript + Tailwind CSS v4, mobile-first, 繁中, brand「濕疹食堂 Eczema Kitchen」, Noto Sans TC via `next/font/google`, design tokens extracted from `stitch_eczema_kitchen/eczema_kitchen/DESIGN.md` (canvas `#F8F5EF`, rating colours, 1200px max width).
+- **Pages**: `/` home (large search box, entry cards, neutral quick links, rating explainer; 食譜配對 shown as 即將推出), `/ingredients?q=` search results, `/ingredients/[id]` detail (rating + reason, draft notice「此資料尚待人工審核」, allergens, per-100g nutrient table with source name, evidence links `rel="noopener noreferrer"`), `/categories` + `/categories/[id]` (rating filter chips, limit/offset pagination), `/about` (disclaimer, rating summary, TFDA 顯名聲明, audit process), styled 404, loading/error states, per-page metadata.
+- **Components** (`src/components/`): `RatingBadge` (colour + icon + text, four states incl. 資料不足, no Level numbers), `AllergenTag`, `NutrientTable`, `WarningBanner`, `IngredientCard`, `Disclaimer` (every page footer), `SiteHeader` (desktop nav), `BottomNav` (mobile nav, ≥44px targets, no user/auth icons), `SearchBox`, `Pagination`.
+- **API client** (`src/lib/api.ts`): server-side `fetch` with `API_BASE_URL` env (default `http://127.0.0.1:8000`), `cache: 'no-store'`, typed responses mirroring `backend/app/schemas.py`, `ApiError` + type guards; backend-unavailable renders a friendly warning instead of crashing.
+- **Deployment**: `frontend/Dockerfile` (multi-stage, `output: 'standalone'`, non-root), `docker-compose.yml` `web` service (`API_BASE_URL=http://api:8000`, bound to `127.0.0.1:3000`), `.env.example` additions.
+- **CI**: `frontend` job in `.github/workflows/ci.yml` (node 22: `npm ci`, eslint, `tsc --noEmit`, vitest, `next build`).
+- **Tests**: vitest + jsdom — rating→label/icon/style mapping (incl. unrated fallback), API type guards, search-URL encoding, pagination math, RatingBadge render (no Level text).
+
+### Changed
+
+- Rendering runs in the classic dynamic model (`cacheComponents`/`partialPrefetching` disabled): API-backed routes are server-rendered on demand so `notFound()` returns real 404 statuses instead of streamed 200 shells; mobile `BottomNav` drops the active-state highlight to keep the layout static.
+
+## [0.3.0] - 2026-10-30
+
+### Added
+
+- **Nutrition import pipeline** (`backend/app/nutrition.py`, PLAN.md §9 phase 1): TFDA 食品營養成分資料集（政府資料開放授權條款-第1版，顯名於 SOURCES.md 與日後關於頁）download → deterministic match → versioned reference CSV → DB import.
+- **CLI `python -m app.cli import-nutrition`**: `--download` (fetch raw ZIP/CSV to `data/raw/`, git-ignored), `--build` (produce `data/reference/nutrition_tfda.csv` + `data/reference/nutrition_match_report.md`), `--validate-only`, `--dry-run`; default run upserts `data_source` (kind='nutrition'), `nutrient` (name+unit) and `ingredient_nutrient` (PK incl. source_id) in one idempotent transaction. Only existing ingredients are written — never creates ingredients nor touches `reviewed`/rating.
+- **Deterministic matching rules**: NFKC + whitespace normalization, parenthesis- and `平均值`-stripped variants, exact match on 樣品名稱/俗名 vs seed name_zh/aliases (incl. synonyms), tiered name-over-alias priority, raw-only filter (processed categories/states/names excluded), unique candidate wins; multi-candidate falls back to the single official `平均值` sample, else skipped and reported.
+- **Whitelisted nutrients**: 熱量、粗蛋白、粗脂肪、總碳水化合物、膳食纖維、鈉、鈣、鐵、鋅、維生素D、維生素E、EPA、DHA、α-次亞麻油酸；units normalized to g/mg/µg/kcal; non-numeric values skipped.
+- **Generated data**: `data/reference/nutrition_tfda.csv` (908 rows, 76/163 seed ingredients matched) and `nutrition_match_report.md` (human-review list: no-candidate / all-processed / ambiguous).
+- **Tests**: `backend/tests/test_nutrition.py` (30 unit tests — normalization, processed exclusion, match tiers, unit handling, CSV validation, "never writes ingredient/reviewed" via FakeConn); integration tests (TEST_DATABASE_URL-gated) for import idempotency, ingredient immutability and nutrients in the detail endpoint.
+
 ## [0.2.1] - 2026-10-29
 
 ### Fixed

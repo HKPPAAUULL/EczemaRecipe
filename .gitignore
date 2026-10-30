@@ -18,3 +18,5 @@ node_modules/
 pgdata/
 backups/
 *.log
+data/raw/
+.tmp/

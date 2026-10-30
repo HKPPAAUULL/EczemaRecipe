@@ -9,7 +9,7 @@ import os
 from collections import Counter
 
 import pytest
-from conftest import SCHEMA_SQL, SEED_CSV, SEED_SQL, SYNONYMS_CSV
+from conftest import REPO_ROOT, SCHEMA_SQL, SEED_CSV, SEED_SQL, SYNONYMS_CSV
 
 psycopg = pytest.importorskip("psycopg")
 
@@ -306,3 +306,82 @@ def test_allergens_endpoint(imported_db):
         assert r.status_code == 200
         assert len(r.json()) == 13
         assert {a["name_zh"] for a in r.json()} >= {"蛋", "奶", "花粉交叉"}
+
+
+# --------------------------------------------------------------------------
+# Nutrition import (v0.3.0) — reference CSV → ingredient_nutrient
+# --------------------------------------------------------------------------
+
+NUTRITION_CSV = (
+    REPO_ROOT / "data" / "reference" / "nutrition_tfda.csv"
+)
+
+
+def _import_nutrition(db_url, dry_run=False):
+    from app.nutrition import parse_reference_csv
+    from app.nutrition import run_import as run_nutrition
+
+    return run_nutrition(db_url, parse_reference_csv(NUTRITION_CSV), dry_run)
+
+
+@pytest.fixture()
+def nutrition_db(imported_db):
+    _import_nutrition(imported_db)
+    return imported_db
+
+
+def test_nutrition_import_is_idempotent(nutrition_db):
+    with psycopg.connect(nutrition_db) as conn:
+        counts = {
+            t: conn.execute(f"SELECT count(*) FROM {t}").fetchone()[0]
+            for t in ("ingredient", "nutrient", "ingredient_nutrient")
+        }
+    _import_nutrition(nutrition_db)
+    with psycopg.connect(nutrition_db) as conn:
+        for t, n in counts.items():
+            assert conn.execute(
+                f"SELECT count(*) FROM {t}"
+            ).fetchone()[0] == n
+
+
+def test_nutrition_import_never_touches_ingredient(nutrition_db):
+    with psycopg.connect(nutrition_db) as conn:
+        snapshot = conn.execute(
+            "SELECT id, name_zh, eczema_rating, reviewed FROM ingredient "
+            "ORDER BY id"
+        ).fetchall()
+    _import_nutrition(nutrition_db)
+    with psycopg.connect(nutrition_db) as conn:
+        assert (
+            conn.execute(
+                "SELECT id, name_zh, eczema_rating, reviewed "
+                "FROM ingredient ORDER BY id"
+            ).fetchall()
+            == snapshot
+        )
+        (src,) = conn.execute(
+            "SELECT count(*) FROM data_source "
+            "WHERE kind = 'nutrition' AND name LIKE 'TFDA%'"
+        ).fetchone()
+        assert src == 1
+        # only whitelisted units
+        bad = conn.execute(
+            "SELECT count(*) FROM nutrient WHERE unit NOT IN "
+            "('g', 'mg', 'µg', 'kcal')"
+        ).fetchone()[0]
+        assert bad == 0
+
+
+def test_detail_endpoint_returns_nutrients(nutrition_db):
+    with psycopg.connect(nutrition_db) as conn:
+        row = conn.execute(
+            "SELECT i.id FROM ingredient i "
+            "JOIN ingredient_nutrient n ON n.ingredient_id = i.id "
+            "LIMIT 1"
+        ).fetchone()
+    iid = row[0]
+    with _client(nutrition_db, drafts=True) as client:
+        d = client.get(f"/api/ingredients/{iid}").json()
+    assert d["nutrients"], "expected nutrients in detail payload"
+    assert all(n["source"].startswith("TFDA") for n in d["nutrients"])
+    assert all(n["unit"] in {"g", "mg", "µg", "kcal"} for n in d["nutrients"])
