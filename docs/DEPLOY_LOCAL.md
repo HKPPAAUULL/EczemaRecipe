@@ -155,13 +155,22 @@ docker compose up -d
 Get-Content docs\db\migrations\0005_audit_log.sql | docker compose exec -T db psql -U <user> -d <db>
 ```
 
+（migration 檔均冪等，含 `IF NOT EXISTS`，重複套用安全；已實測 0003–0005 可重跑。）
 全新 volume 不需要，因為 `schema.sql` 已包含所有變更。
 
 ## 10. 備份與還原（最基本版）
 
 ```powershell
-docker compose exec -T db pg_dump -U <user> <db> > backup_$(Get-Date -Format yyyyMMdd).sql
-Get-Content backup_YYYYMMDD.sql | docker compose exec -T db psql -U <user> -d <db>
+# 先在容器內寫好 dump，再 docker cp 出來（PowerShell 的 ">" 會寫 UTF-16，psql 讀不了）
+docker compose exec -T db pg_dump -U <user> -f /tmp/backup.sql <db>
+docker compose cp db:/tmp/backup.sql backup_$(Get-Date -Format yyyyMMdd).sql
+```
+
+還原（複製入容器再 -f，避免 PowerShell 管線把含中文的 SQL 轉碼）：
+
+```powershell
+docker compose cp backup_YYYYMMDD.sql db:/tmp/restore.sql
+docker compose exec -T db psql -U <user> -d <db> -f /tmp/restore.sql
 ```
 
 備份檔放到另一個磁碟，不要放進專案目錄（含資料，勿入版控）。
