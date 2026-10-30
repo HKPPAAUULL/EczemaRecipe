@@ -61,6 +61,7 @@
 - `stitch_eczema_kitchen/` — Stitch 匯出（參考用；其中示意文獻、療效宣稱與 Level 分級不得直接採用）
 - `docs/SOURCES.md` — 食譜／資料來源與條款核實
 - `docs/RATING_CRITERIA.md` — 食材濕疹評級準則（評級唯一標準）
+- `docs/DEPLOY_LOCAL.md` — 本機 Docker 測試部署步驟（可在新機重現）
 - `docs/db/` — PostgreSQL schema 與初始資料
 - `data/seed/`、`data/reference/` — 食材種子草稿、過敏原關鍵字、同義詞表（草稿須人工審核）
 - `CHANGELOG.md` — 版本更新記錄（開始建站時建立）
