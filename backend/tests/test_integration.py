@@ -385,3 +385,106 @@ def test_detail_endpoint_returns_nutrients(nutrition_db):
     assert d["nutrients"], "expected nutrients in detail payload"
     assert all(n["source"].startswith("TFDA") for n in d["nutrients"])
     assert all(n["unit"] in {"g", "mg", "µg", "kcal"} for n in d["nutrients"])
+
+
+# --------------------------------------------------------------------------
+# Recipe crawl pipeline (v0.5.0) — hakka records → recipe tables
+# --------------------------------------------------------------------------
+
+
+@pytest.fixture()
+def recipes_db(imported_db):
+    """DB with seed ingredients + recipe-pipeline schema objects."""
+    with psycopg.connect(imported_db, autocommit=True) as conn:
+        for col in ("unmatched_ingredients", "allergen_hints", "content_hash"):
+            conn.execute(
+                f"ALTER TABLE recipe ADD COLUMN IF NOT EXISTS {col} "
+                "text[] NOT NULL DEFAULT '{}'" if col != "content_hash"
+                else "ALTER TABLE recipe ADD COLUMN IF NOT EXISTS content_hash text"
+            )
+        conn.execute(
+            "CREATE OR REPLACE VIEW published_recipe AS SELECT * FROM recipe "
+            "WHERE status = 'published' AND cardinality(unmatched_ingredients) = 0"
+        )
+        conn.execute("TRUNCATE recipe_tag, recipe_ingredient, recipe, "
+                     "review_queue, crawl_job CASCADE")
+    return imported_db
+
+
+def _hakka_records(limit=None):
+    from app.crawler.hakka import DEFAULT_RAW, load_records
+
+    return load_records(DEFAULT_RAW, limit=limit)
+
+
+def _crawl_import(db_url, records, dry_run=False):
+    from app.crawler import hakka
+    from app.crawler.pipeline import run_import as run_crawl
+
+    return run_crawl(db_url, hakka.SOURCE_NAME, hakka.SOURCE_URL,
+                     hakka.SOURCE_LICENSE, records, dry_run=dry_run)
+
+
+def test_recipe_import_idempotent_and_gating(recipes_db):
+    records = _hakka_records()
+    s1 = _crawl_import(recipes_db, records)
+    assert s1.inserted == len(records)
+    s2 = _crawl_import(recipes_db, records)
+    assert s2.skipped_unchanged == len(records)
+    with psycopg.connect(recipes_db) as conn:
+        assert conn.execute(
+            "SELECT count(*) FROM recipe"
+        ).fetchone()[0] == len(records)
+        # nothing auto-published; unmatched recipes stay out of the view
+        pub = conn.execute(
+            "SELECT count(*) FROM published_recipe").fetchone()[0]
+        total = conn.execute(
+            "SELECT count(*) FROM recipe WHERE status='published'"
+        ).fetchone()[0]
+        assert pub == 0 and total == 0
+        # manually publish one with unmatched → still hidden from view
+        conn.execute(
+            "UPDATE recipe SET status='published' "
+            "WHERE cardinality(unmatched_ingredients) > 0 LIMIT 1"
+            .replace(" LIMIT 1", "") + "")
+        conn.execute(
+            "UPDATE recipe SET status='published' WHERE id = "
+            "(SELECT id FROM recipe WHERE cardinality(unmatched_ingredients) > 0 "
+            "LIMIT 1)")
+        assert conn.execute(
+            "SELECT count(*) FROM published_recipe").fetchone()[0] == 0
+        # review_queue pending rows exist for every recipe
+        assert conn.execute(
+            "SELECT count(*) FROM review_queue WHERE entity_type='recipe' "
+            "AND status='pending'").fetchone()[0] == len(records)
+        assert conn.execute(
+            "SELECT status FROM crawl_job ORDER BY id DESC LIMIT 1"
+        ).fetchone()[0] == "succeeded"
+
+
+def test_recipe_import_never_overrides_manual_status(recipes_db):
+    records = _hakka_records()
+    _crawl_import(recipes_db, records)
+    with psycopg.connect(recipes_db) as conn:
+        # changed hash + manual status → must hit the manual-status branch
+        conn.execute(
+            "UPDATE recipe SET status='rejected', content_hash='changed' "
+            "WHERE id = (SELECT id FROM recipe LIMIT 1)")
+    s = _crawl_import(recipes_db, records)
+    assert s.skipped_manual_status >= 1
+    with psycopg.connect(recipes_db) as conn:
+        assert conn.execute(
+            "SELECT count(*) FROM recipe WHERE status='rejected'"
+        ).fetchone()[0] == 1
+
+
+def test_migration_matches_schema(recipes_db):
+    """schema.sql vs migration: identical recipe columns after apply."""
+    mig = (
+        REPO_ROOT / "docs" / "db" / "migrations" / "0003_recipe_pipeline.sql"
+    ).read_text(encoding="utf-8")
+    schema = (REPO_ROOT / "docs" / "db" / "schema.sql").read_text(encoding="utf-8")
+    for col in ("unmatched_ingredients", "allergen_hints", "content_hash"):
+        assert col in mig and col in schema
+    assert "cardinality(unmatched_ingredients) = 0" in mig
+    assert "cardinality(unmatched_ingredients) = 0" in schema

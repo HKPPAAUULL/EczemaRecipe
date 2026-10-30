@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-10-30
+
+### Added
+
+- **Recipe crawl pipeline** (`backend/app/crawler/`, PLAN.md §9 phase 4 groundwork): `base` (polite fetch: UA, timeout, retry, delay; content hash; stable slug), `hakka.py` (客委會 dataset adapter), `parse.py` (practic→材料/調味料 items with name/qty/unit incl. fractions, ranges, Chinese numerals, 少許/適量), `matcher.py` (exact + longest-token deterministic match, ambiguity→unmatched), `allergens.py` (allergen_keywords.csv scan over ALL raw item text incl. hidden forms), `pipeline.py` (single-transaction idempotent import).
+- **CLI `python -m app.cli crawl-recipes --source hakka`**: `--download`, `--limit`, `--dry-run`, `--validate-only`; writes `data/reference/recipe_match_report_hakka.md` (match rate, top-50 unmatched, parse failures).
+- **DB**: `recipe.unmatched_ingredients`, `recipe.allergen_hints`, `recipe.content_hash`; `published_recipe` view now also requires `cardinality(unmatched_ingredients)=0`; migration `docs/db/migrations/0003_recipe_pipeline.sql` kept in sync with `schema.sql`.
+- **Write rules**: every recipe lands as `pending_review` (+ pending `review_queue` row with unmatched count and allergen hints), never auto-published; `published`/`rejected` rows are never overwritten on re-import; unchanged (source_url + content_hash) rows skipped; `crawl_job` records stats.
+- **Reference data**: `data/reference/staple_ingredients.csv` (staple condiments → `is_staple`).
+- **Tests**: `test_crawler.py` (12 unit tests — parse forms, match ambiguity, allergen hidden forms, staples, hash, manual-status protection) + integration tests (idempotent re-run, published_recipe gating, review_queue/crawl_job, migration↔schema sync).
+- Hakka run: 32 recipes, 174 matched / 136 unmatched items (56.1%), 0 parse failures.
+
 ## [0.4.0] - 2026-10-30
 
 ### Added

@@ -19,6 +19,7 @@
 - 絕不 commit 密鑰（`.env`、API key、Cloudflare token）；確保 `.gitignore` 涵蓋。
 - 不 force-push、不改寫歷史。若 remote 尚未設定，先詢問用戶 GitHub repo 網址。
 - 2026-10-29 用戶已確認「開始製作」：進入開發階段，按方案書 §9 階段推進；每個版本完成並驗證後自動 commit、更新 CHANGELOG、打 tag 並 push。
+- 2026-10-30 用戶決定：**不寄授權信**；需授權的來源一律不爬，只用開放授權／明確允許的來源，並持續尋找更多（見 PLAN §4.5）。
 - 範圍：第一版只做核心功能（見 `docs/DESIGN_REVIEW.md`）；中醫內容只可作「傳統說法」，不影響評級。
 
 ## 技術棧（摘要，詳見方案書）
@@ -48,6 +49,7 @@
   - 起 DB：`docker compose up -d db`（首次自動執行 `docs/db/*.sql`）；停：`docker compose down`（保留 volume）
   - 匯入種子：`cd backend && python -m app.cli import-seed`（先設 `DATABASE_URL` 指向 `127.0.0.1`；`--dry-run` 試跑）
   - 啟動 API：`cd backend && uvicorn app.main:app --reload`（env：`DATABASE_URL` 必需；`APP_ENV`、`INCLUDE_DRAFTS`、`CORS_ORIGINS` 見 `.env.example`；production 下 `INCLUDE_DRAFTS` 必須為 false）
+  - 食譜爬蟲：`cd backend && python -m app.cli crawl-recipes --source hakka [--download] [--limit N] [--dry-run] [--validate-only]`（設 `DATABASE_URL`；報告寫 `data/reference/recipe_match_report_hakka.md`）
   - 前端：`cd frontend`；`npm run lint`（eslint）、`npm run typecheck`（tsc --noEmit）、`npm test`（vitest）、`npm run build`、`npm run dev`/`npm start`（env：`API_BASE_URL`，預設 `http://127.0.0.1:8000`）
 
 ## 文件索引

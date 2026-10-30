@@ -185,6 +185,9 @@ CREATE TABLE recipe (
     data_source_id          bigint REFERENCES data_source (id) ON DELETE SET NULL,
     status                  recipe_status NOT NULL DEFAULT 'draft',
     eczema_friendly_score   numeric(5, 2) CHECK (eczema_friendly_score IS NULL OR (eczema_friendly_score >= 0 AND eczema_friendly_score <= 100)),
+    unmatched_ingredients   text[] NOT NULL DEFAULT '{}',
+    allergen_hints          text[] NOT NULL DEFAULT '{}',
+    content_hash            text,
     created_at              timestamptz NOT NULL DEFAULT now(),
     updated_at              timestamptz NOT NULL DEFAULT now()
 );
@@ -194,6 +197,9 @@ COMMENT ON COLUMN recipe.source_url IS '原文連結，UNIQUE 防止重複匯入
 COMMENT ON COLUMN recipe.data_source_id IS '取代 PLAN.md §5 的 source_name 文字欄位，改為指向 data_source';
 COMMENT ON COLUMN recipe.eczema_friendly_score IS '濕疹友善分數 0–100，配對排序＝覆蓋率×分數';
 COMMENT ON COLUMN recipe.status IS 'draft=自建草擬、pending_review=待人工審核、published=已發佈、rejected=退回';
+COMMENT ON COLUMN recipe.unmatched_ingredients IS '配對失敗的食材原文（不得丟棄或猜測）；非空時食譜不得公開（見 published_recipe）';
+COMMENT ON COLUMN recipe.allergen_hints IS '對全部食材原文（含未配對）做 allergen_keywords 掃描得到的過敏原名稱';
+COMMENT ON COLUMN recipe.content_hash IS '內容雜湊：增量更新判斷，未變則跳過';
 
 CREATE INDEX recipe_status_idx ON recipe (status);
 CREATE INDEX recipe_title_trgm_idx ON recipe USING gin (title gin_trgm_ops);
@@ -281,7 +287,8 @@ SELECT * FROM ingredient WHERE reviewed = true;
 COMMENT ON VIEW published_ingredient IS '對外發佈的食材：display_status 規則＝只顯示 reviewed=true（LLM/爬蟲產生的內容未經人工審核不會出現）';
 
 CREATE VIEW published_recipe AS
-SELECT * FROM recipe WHERE status = 'published';
-COMMENT ON VIEW published_recipe IS '對外發佈的食譜：只顯示 status=published';
+SELECT * FROM recipe
+ WHERE status = 'published' AND cardinality(unmatched_ingredients) = 0;
+COMMENT ON VIEW published_recipe IS '對外發佈的食譜：status=published 且無未配對食材（安全關鍵：有未識別食材的食譜不公開）';
 
 COMMIT;

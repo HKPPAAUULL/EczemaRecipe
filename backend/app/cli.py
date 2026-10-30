@@ -107,6 +107,47 @@ def _cmd_import_nutrition(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_crawl_recipes(args: argparse.Namespace) -> int:
+    from app.crawler import hakka
+    from app.crawler.pipeline import REPORT_MD, run_import, write_report
+
+    raw = Path(args.raw) if args.raw else hakka.DEFAULT_RAW
+    if args.download:
+        print(f"downloaded: {hakka.download_raw(raw)}")
+    records = hakka.load_records(raw, limit=args.limit)
+    if args.validate_only:
+        from app.crawler.pipeline import CrawlStats, import_recipes  # noqa: F401
+        stats = CrawlStats(fetched=len(records))
+        stats.parse_failed = sum(1 for r in records if r.parse_failed)
+        items = sum(len(r.items) + len(r.seasoning_items) for r in records)
+        print(
+            f"validate-only OK: {len(records)} recipes, {items} items, "
+            f"{stats.parse_failed} parse failures"
+        )
+        return 0
+    try:
+        database_url = get_database_url()
+    except RuntimeError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    stats = run_import(
+        database_url, hakka.SOURCE_NAME, hakka.SOURCE_URL,
+        hakka.SOURCE_LICENSE, records, dry_run=args.dry_run,
+    )
+    write_report(records, stats, args.report or REPORT_MD)
+    print(
+        f"crawl-recipes ({args.source})"
+        f"{' dry-run: rolled back' if args.dry_run else ''}: "
+        f"fetched={stats.fetched} inserted={stats.inserted} "
+        f"updated={stats.updated} unchanged={stats.skipped_unchanged} "
+        f"manual-status-skipped={stats.skipped_manual_status} "
+        f"parse_failed={stats.parse_failed} "
+        f"matched={stats.matched_items} unmatched={stats.unmatched_items} "
+        f"match_rate={stats.match_rate:.1%}"
+    )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="app.cli")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -130,6 +171,14 @@ def main(argv: list[str] | None = None) -> int:
     n.add_argument("--build", action="store_true", help="build reference CSV + match report")
     n.add_argument("--dry-run", action="store_true", help="run in one transaction then roll back")
     n.add_argument("--validate-only", action="store_true", help="validate reference CSV only")
+    c = sub.add_parser("crawl-recipes", help="recipe crawl pipeline")
+    c.add_argument("--source", default="hakka", choices=["hakka"])
+    c.add_argument("--raw", default=None, help="raw JSON path (default data/raw/hakka_recipes.json)")
+    c.add_argument("--report", default=None, help="match report path")
+    c.add_argument("--download", action="store_true", help="fetch raw file first")
+    c.add_argument("--limit", type=int, default=None)
+    c.add_argument("--dry-run", action="store_true")
+    c.add_argument("--validate-only", action="store_true", help="parse+match only; no DB")
     args = parser.parse_args(argv)
 
     try:
@@ -137,6 +186,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_import_seed(args)
         if args.command == "import-nutrition":
             return _cmd_import_nutrition(args)
+        if args.command == "crawl-recipes":
+            return _cmd_crawl_recipes(args)
     except (SeedValidationError, NutritionValidationError) as exc:
         print(f"validation error: {exc}", file=sys.stderr)
         return 1

@@ -169,3 +169,4 @@ USDA FoodData Central、Open Food Facts：**本輪未核實**（API key、用量
 | 來源 | 用途 | 首次使用 | 顯名聲明位置 |
 |---|---|---|---|
 | TFDA 食品營養成分資料集 <https://data.gov.tw/dataset/8543>（衛生福利部食品藥物管理署，政府資料開放授權條款-第1版） | 食材每 100g 營養成分（`ingredient_nutrient`，經 `import-nutrition` 管線，見 `data/reference/nutrition_tfda.csv` 與配對報告） | v0.3.0（2026-10-30） | 網站「關於」頁資料來源段；`data_source.license` 記錄條款名稱 |
+| data.gov.tw 客家委員會「客家創意菜色及經典菜餚食譜(歷史資料)」 <https://data.gov.tw/dataset/147690>（政府資料開放授權條款-第1版） | 食譜標題＋拆分後食材＋簡述＋來源連結（`recipe`/`recipe_ingredient`，經 `crawl-recipes --source hakka`；不存步驟全文） | v0.5.0（2026-10-30） | 網站「關於」頁資料來源段（v0.4.0 已建）與 `data_source.license` |
