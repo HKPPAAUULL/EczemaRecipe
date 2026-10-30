@@ -1,11 +1,20 @@
+import { clientIp, createLimiter } from "@/lib/rateLimit";
 import { BODY_LIMIT, validateSuggestBody } from "@/lib/bff";
 
 const API_BASE = (
   process.env.API_BASE_URL ?? "http://127.0.0.1:8000"
 ).replace(/\/+$/, "");
 const TIMEOUT_MS = 8000;
+const limiter = createLimiter(60);
 
 export async function POST(request: Request) {
+  const lim = limiter.check(clientIp(request));
+  if (!lim.allowed) {
+    return Response.json(
+      { error: "請求太頻密，請稍後再試" },
+      { status: 429, headers: { "Retry-After": String(lim.retryAfterSec) } }
+    );
+  }
   const len = Number(request.headers.get("content-length") ?? 0);
   if (len > BODY_LIMIT) {
     return Response.json({ error: "請求內容過大" }, { status: 413 });

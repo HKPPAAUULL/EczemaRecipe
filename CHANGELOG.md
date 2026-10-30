@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2026-10-30
+
+### Added
+
+- `docker-compose.prod.yml`：production override（強制 `APP_ENV=production`、`INCLUDE_DRAFTS=false`，restart、healthcheck、log rotation）；Cloudflare Tunnel `cloudflared` 服務掛在 `tunnel` profile。
+- 前端 SEO：`SITE_URL` 驅動 metadataBase／canonical／OG／Twitter，`robots.ts`、`sitemap.ts`（靜態頁、分類、可見食材）。
+- 安全 header（含 CSP、HSTS）與 BFF per-IP 限速（429）。
+- `/privacy` 私隱政策頁與頁尾連結。
+- `docs/DEPLOY_PROD.md` 正式部署文件。
+
 ## [0.7.0] - 2026-10-30
 
 ### Added
