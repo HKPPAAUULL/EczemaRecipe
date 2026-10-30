@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2026-10-30
+
+### Added
+
+- **食譜配對頁 `/recipes`**：BFF 代理（`/api/ingredients/search`、`/api/recipes/suggest`，嚴格驗證、8s timeout、422 語意轉發）；防抖搜尋加 chips、自動帶忌口排除、致敏警示橫幅、排除提示、RecipeCard（覆蓋率、致敏原、未識別食材、待審核標示、來源顯名）、分頁。
+- **食譜詳情 `/recipes/[id]`**（真 404）、**我的忌口 `/settings`**、**買餸清單 `/shopping`**（localStorage：`ek:v1:allergen-exclusions`、`ek:v1:shopping-list`，上限 200 項，含列印與複製）；`AddToShoppingListButton` 接至食材卡、詳情與食譜結果。
+- **後台審核介面 `/admin`**（FastAPI + Jinja2）：儀表板、食材審核、食譜審核（處理未配對食材、發佈／退回／重新送審）、待處理佇列。
+- **審核規則（伺服器端強制）**：caution/trigger 須有原因；trigger 須有含網址的證據才可審核；連結九大過敏原者不可審核為「一般適合」；原因不得含療效／絕對用語；食譜發佈須無未配對食材、食材全部已審核、至少 1 個非調味料食材。
+- **後台安全**：`ADMIN_TOKEN`（≥16 字元，未設定則 `/admin` 回 404）、簽名 session cookie、CSRF、登入限速、拒絕 Cloudflare Tunnel 請求（`Cf-Connecting-Ip`／`Cf-Ray` → 403）、no-store 等 header。
+- `audit_log` 表與 migration `0005_audit_log.sql`；新依賴 jinja2 3.1.6、python-multipart 0.0.32。
+
+### Changed
+
+- BottomNav 改為食譜配對／食材查詢／食材庫／買餸清單四格；食材卡與詳情頁加「買餸清單」按鈕。
+
+### Fixed
+
+- `test_health_endpoint` 改用 `create_app()`，避免模組層 `app` 在其他測試先匯入時沿用舊設定。
+
 ## [0.6.0] - 2026-10-30
 
 ### Added

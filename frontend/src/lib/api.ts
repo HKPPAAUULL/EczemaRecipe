@@ -176,3 +176,19 @@ export function getCategoryIngredients(
     `/api/categories/${id}/ingredients?${params}`
   );
 }
+
+export function getAllergens() {
+  return apiGet<AllergenItem[]>("/api/allergens");
+}
+
+export async function getRecipe(id: number): Promise<import("./recipes").RecipeDetail | null> {
+  try {
+    const data = await apiGet<import("./recipes").RecipeDetail>(
+      `/api/recipes/${id}`
+    );
+    return data;
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 404) return null;
+    throw err;
+  }
+}

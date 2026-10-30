@@ -5,6 +5,7 @@ import AllergenTag from "@/components/AllergenTag";
 import NutrientTable from "@/components/NutrientTable";
 import RatingBadge from "@/components/RatingBadge";
 import WarningBanner from "@/components/WarningBanner";
+import AddToShoppingListButton from "@/components/AddToShoppingListButton";
 import { ApiError, getIngredient, type IngredientDetail } from "@/lib/api";
 
 async function fetchDetail(id: string) {
@@ -67,6 +68,14 @@ function DetailBody({ item }: { item: IngredientDetail }) {
             {item.rating_reason}
           </p>
         ) : null}
+        <div className="mt-4">
+          <AddToShoppingListButton
+            ingredientId={item.id}
+            name={item.name_zh}
+            category={item.category?.name_zh}
+            allergenIds={item.allergens.map((a) => a.id)}
+          />
+        </div>
       </header>
 
       {item.draft ? (

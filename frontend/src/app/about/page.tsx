@@ -77,10 +77,28 @@ export default function AboutPage() {
             本站之使用不代表該機關對本站內容之認可或背書。
           </li>
           <li>
+            食譜：
+            <a
+              href="https://data.gov.tw/dataset/147690"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-primary underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              客家委員會「客家創意菜色及經典菜餚食譜(歷史資料)」
+            </a>
+            ，依「政府資料開放授權條款-第1版」提供；此開放資料依該條款釋出，
+            本站之使用不代表該機關對本站內容之認可或背書。食譜全部經人工
+            審核後才對外發佈。
+          </li>
+          <li>
             食材評級、致敏原標記與同義詞表：由本站按評級準則整理，
             並經人工審核後發佈。
           </li>
         </ul>
+        <p className="text-sm leading-relaxed text-ink-muted">
+          你的「忌口」與「買餸清單」只儲存於你的瀏覽器
+          （localStorage），不會上傳到伺服器。
+        </p>
       </section>
 
       <section aria-labelledby="disclaimer-h" className="space-y-3">

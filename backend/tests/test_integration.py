@@ -124,10 +124,10 @@ def test_import_rating_counts_match_csv(fresh_db, seed_rows):
 
 def test_health_endpoint(fresh_db, monkeypatch):
     monkeypatch.setenv("DATABASE_URL", fresh_db)
-    from app.main import app
+    from app.main import create_app
     from fastapi.testclient import TestClient
 
-    with TestClient(app) as client:
+    with TestClient(create_app()) as client:
         resp = client.get("/health")
     assert resp.status_code == 200
     assert resp.json() == {"status": "ok", "db": True}

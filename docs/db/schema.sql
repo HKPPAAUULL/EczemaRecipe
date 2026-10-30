@@ -265,6 +265,20 @@ CREATE INDEX review_queue_pending_idx ON review_queue (status) WHERE status = 'p
 CREATE INDEX review_queue_entity_idx ON review_queue (entity_type, entity_id);
 
 -- ---------------------------------------------------------------------------
+-- audit_log — 後台審核操作稽核（只追加）
+-- ---------------------------------------------------------------------------
+CREATE TABLE audit_log (
+    id          bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    entity_type text NOT NULL,
+    entity_id   bigint NOT NULL,
+    action      text NOT NULL,
+    detail      jsonb NOT NULL DEFAULT '{}',
+    created_at  timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX audit_log_entity_idx ON audit_log (entity_type, entity_id, id);
+COMMENT ON TABLE audit_log IS '後台（/admin）所有食材/食譜改動的追加式稽核記錄；detail 為操作摘要（舊值/新值）';
+
+-- ---------------------------------------------------------------------------
 -- updated_at 觸發器
 -- ---------------------------------------------------------------------------
 CREATE TRIGGER trg_data_source_updated_at        BEFORE UPDATE ON data_source         FOR EACH ROW EXECUTE FUNCTION set_updated_at();

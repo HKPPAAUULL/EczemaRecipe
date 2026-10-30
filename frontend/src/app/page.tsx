@@ -13,6 +13,11 @@ const QUICK_LINKS = [
 
 const ENTRIES = [
   {
+    href: "/recipes",
+    title: "食譜配對",
+    desc: "選擇手上食材，配對合適食譜並按你的忌口排除。",
+  },
+  {
     href: "/ingredients",
     title: "食材查詢",
     desc: "搜尋食材的濕疹適合度評級、致敏原與營養成分。",
@@ -21,6 +26,16 @@ const ENTRIES = [
     href: "/categories",
     title: "食材庫",
     desc: "按分類瀏覽食材，可按評級篩選，買餸前快速查閱。",
+  },
+  {
+    href: "/settings",
+    title: "我的忌口",
+    desc: "設定致敏原忌口，配對自動排除（只存於你的瀏覽器）。",
+  },
+  {
+    href: "/shopping",
+    title: "買餸清單",
+    desc: "記低要買的食材，可複製或列印（只存於你的瀏覽器）。",
   },
 ];
 
@@ -53,7 +68,7 @@ export default function Home() {
 
       <section
         aria-label="功能入口"
-        className="grid gap-4 md:grid-cols-3"
+        className="grid gap-4 md:grid-cols-3 lg:grid-cols-5"
       >
         {ENTRIES.map((e) => (
           <Link
@@ -70,18 +85,6 @@ export default function Home() {
             </span>
           </Link>
         ))}
-        <div
-          className="rounded-2xl bg-surface-alt p-5 ring-1 ring-line"
-          aria-disabled="true"
-        >
-          <h2 className="text-lg font-semibold text-ink-muted">食譜配對</h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
-            選擇手上食材，配對合適食譜並提示致敏風險。
-          </p>
-          <span className="mt-3 inline-block rounded-full bg-surface px-3 py-1 text-sm text-ink-muted ring-1 ring-line">
-            即將推出
-          </span>
-        </div>
       </section>
 
       <section

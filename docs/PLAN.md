@@ -150,6 +150,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 - Docker Compose 服務：`db`（Postgres）、`api`、`web`、`crawler`（按需/排程）、`cloudflared`（或沿用現有 tunnel 設定）。
 - Windows 注意：設定 Docker Desktop 開機自啟、電腦停用睡眠、備份目錄放另一磁碟。
+- 後台 `/admin` 只供本機／內網，**不得**經 Tunnel 公開（程式亦拒絕帶 Cf-* header 的請求）；`ADMIN_TOKEN` 不入版控。
 - 對外只經 Cloudflare Tunnel；DB 不對外暴露；密鑰放 `.env`（不入版控）。
 
 ## 9. 開發階段
@@ -159,9 +160,9 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 0. 準備 | 方案書、agents.md、Stitch 設計稿、確定來源站點合規清單 | 完成（授權徵詢信待寄） |
 | 1. 資料基礎 | DB schema、營養資料匯入、約 150 種常見食材人工評級種子資料 | 進行中（v0.1.0 骨架／種子匯入器；v0.3.0 TFDA 營養資料匯入，163 項中 76 項配對成功，其餘待人工複查 `data/reference/nutrition_match_report.md`） |
 | 2. 後端 API | 搜尋、詳情、分類、食譜配對 | 進行中（v0.2.0：食材搜尋／詳情／分類／過敏原 API 已完成；食譜配對待階段 4） |
-| 3. 前端 MVP | 首頁、食材查詢、分類庫（功能 1、3） | 進行中（v0.4.0：Next.js 骨架、首頁、搜尋、食材詳情、食材庫、關於頁；忌口設定與買餸清單待做） |
+| 3. 前端 MVP | 首頁、食材查詢、分類庫（功能 1、3） | 進行中（v0.4.0 骨架／食材查詢／食材庫；v0.7.0 食譜配對頁、忌口設定、買餸清單） |
 | 4. 食譜 | 爬蟲＋標準化＋配對＋警示（功能 2） | 進行中（v0.5.0 客家食譜開放資料管線；v0.6.0 食譜配對與致敏警示 API；食譜前端頁與更多來源待做） |
-| 5. 審核與品質 | 簡易審核介面、爬蟲監控、測試 | 未開始 |
+| 5. 審核與品質 | 簡易審核介面、爬蟲監控、測試 | 進行中（v0.7.0：`/admin` 審核介面已完成；爬蟲監控待做；食材／食譜待人工審核） |
 | 6. 上線 | 部署、Tunnel、SEO、備份、免責/隱私頁 | 未開始 |
 
 ## 10. 待辦與未決事項
@@ -176,7 +177,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 - [x] Stitch 設計稿已匯出（`stitch_eczema_kitchen/`），審查結果見 `docs/DESIGN_REVIEW.md`；design token 於開始製作前端時抽取
 - [ ] 設計傳統說法（中醫）資料表與「資料不足」「傳統說法」元件設計
 - [ ] 決定繁中全文搜尋方案（別名表 + pg_trgm 是否足夠）
-- [ ] 決定審核介面形式（簡易後台頁 vs 直接改資料庫）
+- [x] 審核介面形式：FastAPI 伺服器端渲染 `/admin`，ADMIN_TOKEN 保護，僅限本機／內網，不經 Tunnel 公開（Tunnel ingress 只轉發前端）
 
 ## 11. 風險
 
@@ -197,6 +198,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 | 日期 | 版本 | 內容 |
 |---|---|---|
+| 2026-10-30 | v0.2.3 | v0.7.0：前端食譜配對／忌口設定（localStorage）／買餸清單；新增 `/admin` 審核介面（規則伺服器端強制）、`audit_log` 表；審核介面決定採 FastAPI 本機後台 |
 | 2026-10-30 | v0.2.2 | v0.6.0：`POST /api/recipes/suggest`、`GET /api/recipes/{id}`（覆蓋率不計常備調味料、未配對項計入分母、過敏原硬排除並回報剔除數、排序＝覆蓋率×友善分數）；常備調味料未配對不再阻擋發佈（致敏改由關鍵字掃描覆蓋）；配對率 66.3% |
 | 2026-10-30 | v0.2.1 | 新增 §4.5：用戶決定不寄授權信，僅爬無需授權來源，持續尋找新來源；階段 4 開始（客家開放資料管線） |
 | 2026-10-30 | v0.2 | v0.3.0 營養資料匯入（TFDA 開放資料，保守配對）；v0.4.0 前端骨架與食材查詢／食材庫／關於頁（Next.js 16、關閉 cacheComponents 以確保 404 狀態碼）；新增 §9 狀態更新 |

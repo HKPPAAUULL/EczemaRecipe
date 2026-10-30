@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { IngredientListItem } from "@/lib/api";
 import RatingBadge from "@/components/RatingBadge";
 import AllergenTag from "@/components/AllergenTag";
+import AddToShoppingListButton from "@/components/AddToShoppingListButton";
 
 const MAX_TAGS = 4;
 
@@ -59,6 +60,14 @@ export default function IngredientCard({
           </div>
         ) : null}
       </Link>
+      <div className="mt-1.5">
+        <AddToShoppingListButton
+          ingredientId={item.id}
+          name={item.name_zh}
+          category={item.category?.name_zh}
+          small
+        />
+      </div>
     </li>
   );
 }

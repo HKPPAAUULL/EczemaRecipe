@@ -1,10 +1,11 @@
 import Link from "next/link";
+import ExclusionBadge from "@/components/ExclusionBadge";
 
 export const NAV_ITEMS = [
-  { href: "/", label: "首頁" },
+  { href: "/recipes", label: "食譜配對" },
   { href: "/ingredients", label: "食材查詢" },
   { href: "/categories", label: "食材庫" },
-  { href: "/about", label: "關於" },
+  { href: "/shopping", label: "買餸清單" },
 ] as const;
 
 export default function SiteHeader() {
@@ -30,6 +31,23 @@ export default function SiteHeader() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/settings"
+                className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-alt hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                我的忌口
+                <ExclusionBadge />
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-alt hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                關於
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>

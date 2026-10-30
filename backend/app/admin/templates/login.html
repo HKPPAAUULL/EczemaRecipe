@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}登入{% endblock %}
+{% block body %}
+<h1>後台登入</h1>
+{% if error %}<div class="err" role="alert">{{ error }}</div>{% endif %}
+<form method="post" action="/admin/login" class="card">
+<label for="token">管理密碼（ADMIN_TOKEN）</label>
+<input type="password" id="token" name="token" autocomplete="current-password" required autofocus>
+<p><button type="submit">登入</button></p>
+<p class="muted">僅限本機／內網使用，不可經 Cloudflare Tunnel 存取。</p>
+</form>
+{% endblock %}

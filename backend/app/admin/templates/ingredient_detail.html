@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}{{ ing.name_zh }}{% endblock %}
+{% block body %}
+<p><a href="/admin/ingredients">← 食材列表</a></p>
+<h1>{{ ing.name_zh }} <small class="muted">{{ ing.name_en or '' }}</small></h1>
+<p>
+<span class="badge r-{{ ing.eczema_rating }}">{{ RATING_LABELS[ing.eczema_rating] }}</span>
+{% if ing.reviewed %}<span class="badge">已審核 {{ ing.reviewed_at.strftime('%Y-%m-%d %H:%M') if ing.reviewed_at }}</span>{% else %}<span class="badge">未審核</span>{% endif %}
+{% if ing.needs_senior_review %}<span class="badge">需資深審核</span>{% endif %}
+分類：{{ ing.category_name or '—' }}
+</p>
+{% if ing.published_recipe_count %}<div class="warn">此食材被 {{ ing.published_recipe_count }} 個已發佈食譜使用；更改評級／取消審核前請留意。</div>{% endif %}
+
+<section>
+<h2>審核</h2>
+{% if ing.reviewed %}
+<form method="post" action="/admin/ingredients/{{ ing.id }}/unreview" class="inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="danger" type="submit">取消審核</button></form>
+{% else %}
+<form method="post" action="/admin/ingredients/{{ ing.id }}/review" class="inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button type="submit">標記為已審核</button></form>
+<p class="muted">規則：常見誘發須有含網址的證據；連結九大過敏原者不可為「一般適合」；原因不可含療效或絕對用語。審核前請先儲存編輯。</p>
+{% endif %}
+</section>
+
+<section>
+<h2>評級與基本資料</h2>
+<form method="post" action="/admin/ingredients/{{ ing.id }}/edit">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="rating">評級</label>
+<select id="rating" name="rating">{% for r in RATINGS %}<option value="{{ r }}" {{ 'selected' if values.rating == r }}>{{ RATING_LABELS[r] }}（{{ r }}）</option>{% endfor %}</select>
+<label for="rating_reason">評級原因（因人而異／常見誘發必填）</label>
+<textarea id="rating_reason" name="rating_reason" rows="4">{{ values.reason }}</textarea>
+<label><input type="checkbox" name="needs_senior_review" value="1" {{ 'checked' if values.senior }}> 需資深審核（needs_senior_review）</label>
+<label for="category_id">分類</label>
+<select id="category_id" name="category_id"><option value="">（無）</option>
+{% for c in categories %}<option value="{{ c.id }}" {{ 'selected' if values.category_id == c.id }}>{{ c.name_zh }}</option>{% endfor %}</select>
+<label for="aliases">別名（每行一個，或以逗號分隔）</label>
+<textarea id="aliases" name="aliases" rows="3">{{ values.aliases }}</textarea>
+<p><button type="submit">儲存</button>
+{% if ing.reviewed %}<span class="muted">已審核的食材若改動評級或原因，會自動變回未審核。</span>{% endif %}</p>
+</form>
+</section>
+
+<section>
+<h2>致敏原連結</h2>
+<table><tr><th>過敏原</th><th>類型</th><th>嚴重度</th><th></th></tr>
+{% for a in ing.allergens %}<tr><td>{{ a.name_zh }}</td><td>{{ a.type }}</td><td>{{ a.severity or '' }}</td>
+<td><form method="post" action="/admin/ingredients/{{ ing.id }}/allergens/{{ a.id }}/delete" class="inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="danger" type="submit">刪除</button></form></td></tr>
+{% else %}<tr><td colspan="4" class="muted">沒有連結。</td></tr>{% endfor %}</table>
+<form method="post" action="/admin/ingredients/{{ ing.id }}/allergens/add" class="filters">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<div><label for="allergen_id">過敏原</label><select id="allergen_id" name="allergen_id">{% for a in allergens %}<option value="{{ a.id }}">{{ a.name_zh }}（{{ a.type }}）</option>{% endfor %}</select></div>
+<div><label for="severity">嚴重度</label><select id="severity" name="severity"><option value="">（未指定）</option>{% for s in SEVERITIES %}<option>{{ s }}</option>{% endfor %}</select></div>
+<button type="submit">新增／更新</button>
+</form>
+</section>
+
+<section>
+<h2>證據</h2>
+<table><tr><th>標題</th><th>網址</th><th>類型</th><th>年份</th><th></th></tr>
+{% for e in ing.evidence %}<tr><td>{{ e.title }}</td>
+<td>{% if e.url %}<a href="{{ e.url }}" rel="noreferrer noopener" target="_blank">{{ e.url }}</a>{% endif %}</td>
+<td>{{ e.source_type }}</td><td>{{ e.year or '' }}</td>
+<td><form method="post" action="/admin/ingredients/{{ ing.id }}/evidence/{{ e.id }}/delete" class="inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="danger" type="submit">刪除</button></form></td></tr>
+{% else %}<tr><td colspan="5" class="muted">沒有證據。</td></tr>{% endfor %}</table>
+<form method="post" action="/admin/ingredients/{{ ing.id }}/evidence/add" class="filters">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<div><label for="ev_title">標題</label><input type="text" id="ev_title" name="title" required></div>
+<div><label for="ev_url">網址（http/https）</label><input type="url" id="ev_url" name="url" required size="40"></div>
+<div><label for="ev_type">來源類型</label><input type="text" id="ev_type" name="source_type" placeholder="guideline / review / government / hospital / other"></div>
+<div><label for="ev_year">年份</label><input type="number" id="ev_year" name="year" min="1800" max="2100"></div>
+<button type="submit">新增證據</button>
+</form>
+</section>
+
+<section>
+<h2>營養資料（每 100g）</h2>
+<table><tr><th>成分</th><th>含量</th><th>來源</th></tr>
+{% for n in ing.nutrients %}<tr><td>{{ n.name }}</td><td>{{ n.amount_per_100g }} {{ n.unit }}</td>
+<td>{% if n.source_url %}<a href="{{ n.source_url }}" rel="noreferrer noopener" target="_blank">{{ n.source }}</a>{% else %}{{ n.source or '' }}{% endif %}</td></tr>
+{% else %}<tr><td colspan="3" class="muted">沒有營養資料。</td></tr>{% endfor %}</table>
+</section>
+
+<section>
+<h2>最近操作</h2>
+<table>{% for a in ing.audit %}<tr><td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td><td>{{ a.action }}</td><td><pre>{{ a.detail | tojson }}</pre></td></tr>
+{% else %}<tr><td class="muted">尚無記錄。</td></tr>{% endfor %}</table>
+</section>
+{% endblock %}

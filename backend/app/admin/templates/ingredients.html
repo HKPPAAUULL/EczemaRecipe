@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}食材審核{% endblock %}
+{% block body %}
+<h1>食材審核</h1>
+<form method="get" class="filters">
+<div><label for="review">審核狀態</label><select id="review" name="review">
+{% for v, t in [('unreviewed','未審核'),('senior','未審核＋需資深審核'),('unrated','未審核＋資料不足'),('reviewed','已審核'),('all','全部')] %}<option value="{{ v }}" {{ 'selected' if f.review == v }}>{{ t }}</option>{% endfor %}</select></div>
+<div><label for="rating">評級</label><select id="rating" name="rating"><option value="">全部</option>
+{% for r in RATINGS %}<option value="{{ r }}" {{ 'selected' if f.rating == r }}>{{ RATING_LABELS[r] }}</option>{% endfor %}</select></div>
+<div><label for="category_id">分類</label><select id="category_id" name="category_id"><option value="">全部</option>
+{% for c in categories %}<option value="{{ c.id }}" {{ 'selected' if f.category_id == c.id }}>{{ c.name_zh }}</option>{% endfor %}</select></div>
+<div><label for="q">搜尋名稱</label><input type="search" id="q" name="q" value="{{ f.q }}"></div>
+<button type="submit">篩選</button>
+</form>
+<table>
+<tr><th>#</th><th>名稱</th><th>分類</th><th>評級</th><th>過敏原</th><th>狀態</th></tr>
+{% for r in rows %}
+<tr><td>{{ r.id }}</td><td><a href="/admin/ingredients/{{ r.id }}">{{ r.name_zh }}</a></td><td>{{ r.category_name or '' }}</td>
+<td><span class="badge r-{{ r.eczema_rating }}">{{ RATING_LABELS[r.eczema_rating] }}</span></td>
+<td>{{ r.allergens | join('、') }}</td>
+<td>{{ '已審核' if r.reviewed else '未審核' }}{% if r.needs_senior_review %} <span class="badge">需資深審核</span>{% endif %}</td></tr>
+{% else %}<tr><td colspan="6" class="muted">沒有符合的食材。</td></tr>{% endfor %}
+</table>
+{% include "pager.html" %}
+{% endblock %}

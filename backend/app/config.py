@@ -4,6 +4,7 @@ import os
 from dataclasses import dataclass, field
 
 VALID_APP_ENVS = {"development", "production", "test"}
+MIN_ADMIN_TOKEN_LENGTH = 16
 _TRUE_VALUES = {"1", "true", "yes", "on"}
 
 
@@ -13,6 +14,7 @@ class Settings:
     app_env: str = "development"
     include_drafts: bool = False
     cors_origins: tuple[str, ...] = field(default_factory=tuple)
+    admin_token: str = field(default="", repr=False)
 
 
 def _parse_bool(value: str | None) -> bool:
@@ -21,6 +23,9 @@ def _parse_bool(value: str | None) -> bool:
 
 def load_settings(env: dict | None = None) -> Settings:
     """Build Settings from env (default os.environ).
+
+    ADMIN_TOKEN unset/empty disables the admin backend; set but shorter than
+    16 characters raises RuntimeError.
 
     Raises RuntimeError when APP_ENV is invalid, and when
     APP_ENV=production is combined with INCLUDE_DRAFTS=true — drafts must
@@ -38,11 +43,17 @@ def load_settings(env: dict | None = None) -> Settings:
     cors_origins = tuple(
         o.strip() for o in env.get("CORS_ORIGINS", "").split(",") if o.strip()
     )
+    admin_token = env.get("ADMIN_TOKEN", "").strip()
+    if admin_token and len(admin_token) < MIN_ADMIN_TOKEN_LENGTH:
+        raise RuntimeError(
+            f"ADMIN_TOKEN must be at least {MIN_ADMIN_TOKEN_LENGTH} characters"
+        )
     return Settings(
         database_url=env.get("DATABASE_URL", "").strip(),
         app_env=app_env,
         include_drafts=include_drafts,
         cors_origins=cors_origins,
+        admin_token=admin_token,
     )
 
 

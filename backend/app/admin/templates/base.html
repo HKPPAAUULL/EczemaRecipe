@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{% block title %}後台{% endblock %} · 濕疹食堂後台</title>
+<style>
+body{font:15px/1.6 system-ui,"Noto Sans TC","Microsoft JhengHei",sans-serif;margin:0;color:#222;background:#f6f7f5}
+header{background:#2f5d50;color:#fff;padding:.5rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+header a{color:#fff;text-decoration:none;padding:.2rem .5rem;border-radius:4px}
+header a.on,header a:hover{background:rgba(255,255,255,.2)}
+header form{margin-left:auto}
+main{max-width:1100px;margin:1rem auto;padding:0 1rem}
+h1{font-size:1.4rem}h2{font-size:1.1rem;margin-top:1.6rem;border-bottom:1px solid #ccd;padding-bottom:.2rem}
+table{border-collapse:collapse;width:100%;background:#fff}
+th,td{border:1px solid #dde;padding:.35rem .6rem;text-align:left;vertical-align:top}
+th{background:#eef1ee}
+section,.card{background:#fff;border:1px solid #dde;border-radius:6px;padding:.8rem 1rem;margin:.8rem 0}
+label{display:block;margin:.4rem 0 .1rem;font-weight:600}
+input[type=text],input[type=url],input[type=password],input[type=number],input[type=search],select,textarea{padding:.3rem .4rem;border:1px solid #99a;border-radius:4px;font:inherit;max-width:100%}
+textarea{width:100%;box-sizing:border-box}
+button{padding:.3rem .9rem;border:1px solid #2f5d50;background:#2f5d50;color:#fff;border-radius:4px;cursor:pointer;font:inherit}
+button.secondary{background:#fff;color:#2f5d50}
+button.danger{background:#a33;border-color:#a33}
+.inline{display:inline}
+.err{background:#fde8e8;border:1px solid #d99;border-radius:6px;padding:.5rem 1rem;margin:.8rem 0}
+.ok{background:#e6f4e6;border:1px solid #9c9;border-radius:6px;padding:.5rem 1rem;margin:.8rem 0}
+.warn{background:#fff6dd;border:1px solid #dc9;border-radius:6px;padding:.5rem 1rem;margin:.8rem 0}
+.badge{display:inline-block;padding:0 .5rem;border-radius:1em;font-size:.85em;border:1px solid #999;background:#eee}
+.r-suitable{background:#d8f0d8}.r-caution{background:#fff0c2}.r-trigger{background:#f8d0d0}.r-unrated{background:#e8e8e8}
+.muted{color:#667}.filters{display:flex;gap:.6rem;flex-wrap:wrap;align-items:end;margin:.6rem 0}
+.pager a,.pager span{margin-right:.6rem}
+.cards{display:flex;gap:1rem;flex-wrap:wrap}.cards .card{flex:1 1 220px}.big{font-size:2rem;font-weight:700}
+pre{white-space:pre-wrap;margin:0}
+</style>
+</head>
+<body>
+{% if logged_in %}
+<header>
+<strong>濕疹食堂後台</strong>
+<a href="/admin" class="{{ 'on' if nav == 'dashboard' }}">儀表板</a>
+<a href="/admin/ingredients" class="{{ 'on' if nav == 'ingredients' }}">食材審核</a>
+<a href="/admin/recipes" class="{{ 'on' if nav == 'recipes' }}">食譜審核</a>
+<a href="/admin/queue" class="{{ 'on' if nav == 'queue' }}">待處理佇列</a>
+<form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="secondary" type="submit">登出</button></form>
+</header>
+{% endif %}
+<main>
+{% for m in flashes %}<div class="ok" role="status">{{ m }}</div>{% endfor %}
+{% if errors %}<div class="err" role="alert"><strong>無法完成：</strong><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+{% block body %}{% endblock %}
+</main>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}食譜審核{% endblock %}
+{% block body %}
+<h1>食譜審核</h1>
+<form method="get" class="filters">
+<div><label for="status">狀態</label><select id="status" name="status"><option value="">全部</option>
+{% for s in statuses %}<option value="{{ s }}" {{ 'selected' if f.status == s }}>{{ STATUS_LABELS[s] }}（{{ s }}）</option>{% endfor %}</select></div>
+<div><label><input type="checkbox" name="unmatched" value="1" {{ 'checked' if f.unmatched }}> 只看有未配對食材</label></div>
+<div><label for="q">搜尋標題</label><input type="search" id="q" name="q" value="{{ f.q }}"></div>
+<button type="submit">篩選</button>
+</form>
+<table>
+<tr><th>#</th><th>標題</th><th>狀態</th><th>未配對</th><th>致敏提示</th><th>友善分數</th></tr>
+{% for r in rows %}
+<tr><td>{{ r.id }}</td><td><a href="/admin/recipes/{{ r.id }}">{{ r.title }}</a></td><td>{{ STATUS_LABELS[r.status] }}</td>
+<td>{{ r.unmatched_count or '' }}</td><td>{{ r.hint_count or '' }}</td><td>{{ r.eczema_friendly_score if r.eczema_friendly_score is not none else '' }}</td></tr>
+{% else %}<tr><td colspan="6" class="muted">沒有符合的食譜。</td></tr>{% endfor %}
+</table>
+{% include "pager.html" %}
+{% endblock %}

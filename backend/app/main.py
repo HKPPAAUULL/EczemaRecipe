@@ -62,6 +62,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(categories.router)
     app.include_router(allergens.router)
     app.include_router(recipes.router)
+    if settings.admin_token:
+        from app.admin.router import setup_admin
+
+        setup_admin(app)
     return app
 
 

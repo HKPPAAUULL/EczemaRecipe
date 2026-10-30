@@ -1,0 +1,3 @@
+<p class="pager muted">共 {{ pager.total }} 筆；第 {{ pager.page }} / {{ pager.pages }} 頁
+{% if pager.page > 1 %}<a href="?{{ pager.qs }}{{ '&' if pager.qs }}page={{ pager.page - 1 }}">上一頁</a>{% endif %}
+{% if pager.page < pager.pages %}<a href="?{{ pager.qs }}{{ '&' if pager.qs }}page={{ pager.page + 1 }}">下一頁</a>{% endif %}</p>

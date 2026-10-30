@@ -48,6 +48,8 @@
   - 營養資料（TFDA）：`cd backend && python -m app.cli import-nutrition --download`（原始檔→`data/raw/`，不入版控）→ `--build`（產生 `data/reference/nutrition_tfda.csv`＋配對報告）→ `--validate-only` 驗證 → `python -m app.cli import-nutrition` 匯入（設 `DATABASE_URL`；`--dry-run` 試跑）
   - 起 DB：`docker compose up -d db`（首次自動執行 `docs/db/*.sql`）；停：`docker compose down`（保留 volume）
   - 匯入種子：`cd backend && python -m app.cli import-seed`（先設 `DATABASE_URL` 指向 `127.0.0.1`；`--dry-run` 試跑）
+  - 後台：設 `ADMIN_TOKEN`（≥16 字元）才啟用 `/admin`（僅限本機，不得經 Cloudflare Tunnel 公開）；`cd backend && ADMIN_TOKEN=... uvicorn app.main:app --port 8010`；既有 DB 升級用 `docs/db/migrations/0005_audit_log.sql`
+  - 前端 BFF：`/api/ingredients/search`、`/api/recipes/suggest`；localStorage key：`ek:v1:allergen-exclusions`、`ek:v1:shopping-list`
   - 啟動 API：`cd backend && uvicorn app.main:app --reload`（env：`DATABASE_URL` 必需；`APP_ENV`、`INCLUDE_DRAFTS`、`CORS_ORIGINS` 見 `.env.example`；production 下 `INCLUDE_DRAFTS` 必須為 false）
   - 食譜爬蟲：`cd backend && python -m app.cli crawl-recipes --source hakka [--download] [--limit N] [--dry-run] [--validate-only]`（設 `DATABASE_URL`；報告寫 `data/reference/recipe_match_report_hakka.md`）
   - 前端：`cd frontend`；`npm run lint`（eslint）、`npm run typecheck`（tsc --noEmit）、`npm test`（vitest）、`npm run build`、`npm run dev`/`npm start`（env：`API_BASE_URL`，預設 `http://127.0.0.1:8000`）

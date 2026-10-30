@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}{{ rec.title }}{% endblock %}
+{% block body %}
+<p><a href="/admin/recipes">← 食譜列表</a></p>
+<h1>{{ rec.title }}</h1>
+<p><span class="badge">{{ STATUS_LABELS[rec.status] }}</span>
+來源：{% if rec.source_url %}<a href="{{ rec.source_url }}" rel="noreferrer noopener" target="_blank">{{ rec.source_url }}</a>{% else %}—{% endif %}
+／ {{ rec.source_name or '未登記來源' }}｜授權：{{ rec.source_license or '—' }}
+{% if rec.source_site %}（<a href="{{ rec.source_site }}" rel="noreferrer noopener" target="_blank">網站</a>）{% endif %}</p>
+<p class="muted">content_hash：{{ rec.content_hash or '—' }}｜標籤：{{ rec.tags | join('、') or '—' }}</p>
+
+<section>
+<h2>狀態操作</h2>
+{% if rec.publish_errors %}<div class="warn"><strong>目前不可發佈：</strong><ul>{% for e in rec.publish_errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+<form method="post" action="/admin/recipes/{{ rec.id }}/status" class="filters">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<div><label for="reason">原因／備註（退回必填）</label><input type="text" id="reason" name="reason" size="40"></div>
+{% if rec.status in ('pending_review', 'draft') %}<button type="submit" name="action" value="publish">發佈</button>{% endif %}
+{% if rec.status != 'rejected' %}<button type="submit" name="action" value="reject" class="danger">退回</button>{% endif %}
+{% if rec.status != 'pending_review' %}<button type="submit" name="action" value="resubmit" class="secondary">重新送審</button>{% endif %}
+</form>
+</section>
+
+<section>
+<h2>致敏提示（allergen_hints，唯讀）</h2>
+<p>{% for h in rec.allergen_hints %}<span class="badge r-caution">{{ h }}</span> {% else %}<span class="muted">無</span>{% endfor %}</p>
+</section>
+
+<section>
+<h2>已配對食材</h2>
+<table><tr><th>食材</th><th>原文</th><th>評級</th><th>過敏原</th><th>審核</th><th>調味料</th></tr>
+{% for m in rec.matched %}<tr><td><a href="/admin/ingredients/{{ m.ingredient_id }}">{{ m.name_zh }}</a></td><td>{{ m.raw_text }}</td>
+<td><span class="badge r-{{ m.eczema_rating }}">{{ RATING_LABELS[m.eczema_rating] }}</span></td>
+<td>{{ m.allergens | join('、') }}</td><td>{{ '已審核' if m.reviewed else '未審核' }}</td><td>{{ '是' if m.is_staple else '' }}</td></tr>
+{% else %}<tr><td colspan="6" class="muted">沒有已配對食材。</td></tr>{% endfor %}</table>
+</section>
+
+<section>
+<h2>未配對食材（{{ rec.unmatched_ingredients | length }}）</h2>
+{% for item in rec.unmatched_ingredients %}
+<div class="card" {% if find == item %}id="find"{% endif %}>
+<strong>{{ item }}</strong>
+<form method="get" class="inline" action="/admin/recipes/{{ rec.id }}#find">
+<input type="hidden" name="find" value="{{ item }}">
+<input type="search" name="q" value="{{ q if find == item else item }}" aria-label="搜尋食材">
+<button type="submit" class="secondary">搜尋食材</button></form>
+{% if find == item %}
+<form method="post" action="/admin/recipes/{{ rec.id }}/unmatched/map" class="filters">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="item" value="{{ item }}">
+{% if candidates %}
+<select name="ingredient_id" aria-label="選擇食材">{% for c in candidates %}<option value="{{ c.id }}">{{ c.name_zh }}（{{ RATING_LABELS[c.eczema_rating] }}，{{ '已審核' if c.reviewed else '未審核' }}）</option>{% endfor %}</select>
+<label><input type="checkbox" name="is_staple" value="1"> 調味料</label>
+<button type="submit">指定配對</button>
+{% else %}<span class="muted">找不到符合的食材。</span>{% endif %}
+</form>
+{% endif %}
+<form method="post" action="/admin/recipes/{{ rec.id }}/unmatched/ignore" class="filters">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="item" value="{{ item }}">
+<input type="text" name="reason" placeholder="忽略原因（必填，例如：非食材）" size="30" aria-label="忽略原因">
+<button type="submit" class="danger">標記為非食材／忽略</button></form>
+<form method="post" action="/admin/recipes/{{ rec.id }}/unmatched/staple" class="inline">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="item" value="{{ item }}">
+<button type="submit" class="secondary">移到未配對調味料</button></form>
+</div>
+{% else %}<p class="muted">沒有未配對食材。</p>{% endfor %}
+<p>未配對調味料（unmatched_staples）：{{ rec.unmatched_staples | join('、') or '—' }}</p>
+</section>
+
+<section>
+<h2>編輯食譜資料</h2>
+<form method="post" action="/admin/recipes/{{ rec.id }}/edit">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="description">描述</label>
+<textarea id="description" name="description" rows="4">{{ values.description }}</textarea>
+<label for="score">濕疹友善分數（0–100，可留空）</label><input type="text" id="score" name="score" value="{{ values.score }}" size="6">
+<label for="cook_time">烹調時間（分鐘）</label><input type="text" id="cook_time" name="cook_time" value="{{ values.cook_time }}" size="6">
+<label for="servings">份量</label><input type="text" id="servings" name="servings" value="{{ values.servings }}" size="6">
+<p><button type="submit">儲存</button></p>
+</form>
+</section>
+
+<section>
+<h2>審核記錄</h2>
+{% for q in rec.queue %}<div><span class="badge">{{ STATUS_LABELS[q.status] }}</span> {{ q.created_at.strftime('%Y-%m-%d %H:%M') }}<pre>{{ q.reviewer_note or '' }}</pre></div>{% else %}<p class="muted">無。</p>{% endfor %}
+<h2>最近操作</h2>
+<table>{% for a in rec.audit %}<tr><td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td><td>{{ a.action }}</td><td><pre>{{ a.detail | tojson }}</pre></td></tr>{% else %}<tr><td class="muted">尚無記錄。</td></tr>{% endfor %}</table>
+</section>
+{% endblock %}

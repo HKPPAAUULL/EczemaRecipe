@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}儀表板{% endblock %}
+{% block body %}
+<h1>儀表板</h1>
+<div class="cards">
+<div class="card"><h2>待審食材</h2><div class="big">{{ counts.ing_unreviewed }}</div>
+<p>其中需資深審核 <a href="/admin/ingredients?review=senior">{{ counts.ing_senior }}</a>，資料不足（unrated） <a href="/admin/ingredients?review=unrated">{{ counts.ing_unrated }}</a></p>
+<p><a href="/admin/ingredients">前往食材審核</a></p></div>
+<div class="card"><h2>待審食譜</h2><div class="big">{{ counts.rec_pending }}</div>
+<p>含未配對食材：<a href="/admin/recipes?unmatched=1">{{ counts.rec_unmatched }}</a></p>
+<p><a href="/admin/recipes?status=pending_review">前往食譜審核</a></p></div>
+<div class="card"><h2>待處理佇列</h2><div class="big">{{ counts.queue_pending }}</div>
+<p><a href="/admin/queue">查看佇列</a></p></div>
+</div>
+{% endblock %}
