@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] - 2026-10-30
+
+### Added
+
+- 食材列表「快速審核」：每列一鍵審核／取消審核，沿用詳情頁同一套審核規則與稽核；違規時以提示訊息顯示原因且不改資料。列表顯示評級原因摘要、證據筆數、需資深審核標示，操作後保留篩選與頁碼。
+
 ## [0.9.0] - 2026-10-30
 
 ### Added

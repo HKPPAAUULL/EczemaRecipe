@@ -202,7 +202,51 @@ def ingredients(request: Request, session: auth.Session = SESSION):
                               "category_id": category_id, "q": q},
         pager=_pager(total, page, {"review": review, "rating": rating,
                                    "category_id": category_id, "q": q}),
+        next_qs=_next_ingredients(review, rating, category_id, q, page),
     )
+
+
+def _next_ingredients(review, rating, category_id, q, page) -> str:
+    params = {"review": review, "rating": rating,
+              "category_id": category_id, "q": q, "page": page}
+    clean = {k: v for k, v in params.items() if v not in (None, "", "all")}
+    return "/admin/ingredients" + (
+        "?" + urlencode(clean) if clean else "")
+
+
+def _safe_ingredients_next(raw: str) -> str:
+    return raw if raw.startswith("/admin/ingredients") else "/admin/ingredients"
+
+
+@router.post("/ingredients/{iid}/quick-review")
+def ingredient_quick_review(iid: int, request: Request,
+                            session: auth.Session = SESSION, form=FORM):
+    action = _text(form, "action")
+    next_url = _safe_ingredients_next(_text(form, "next"))
+    with db_conn(request) as conn:
+        ing = repo.get_ingredient(conn, iid)
+        if ing is None:
+            raise HTTPException(status_code=404, detail="not found")
+        name = ing["name_zh"]
+        if action == "review":
+            if ing["reviewed"]:
+                flash(request, session, f"{name} 已是已審核，無需重複操作。")
+                return redirect(next_url)
+            errors = repo.set_ingredient_reviewed(conn, iid, True)
+        elif action == "unreview":
+            if not ing["reviewed"]:
+                flash(request, session, f"{name} 尚未審核。")
+                return redirect(next_url)
+            errors = repo.set_ingredient_reviewed(conn, iid, False)
+        else:
+            raise HTTPException(status_code=422, detail="invalid action")
+    if errors:
+        flash(request, session, *[f"{name}：{e}" for e in errors])
+    else:
+        flash(request, session,
+              f"{name} 已標記為已審核。" if action == "review"
+              else f"{name} 已取消審核。")
+    return redirect(next_url)
 
 
 def _ingredient_page(request, session, iid, errors=None, values=None, status=200):

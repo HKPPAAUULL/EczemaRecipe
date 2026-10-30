@@ -83,6 +83,8 @@ def list_ingredients(
     rows = conn.execute(
         f"""
         SELECT i.id, i.name_zh, i.eczema_rating, i.reviewed, i.needs_senior_review,
+               i.rating_reason,
+               (SELECT count(*) FROM evidence e WHERE e.ingredient_id = i.id) AS evidence_count,
                c.name_zh AS category_name,
                COALESCE((SELECT array_agg(a.name_zh ORDER BY a.id)
                            FROM ingredient_allergen ia JOIN allergen a ON a.id = ia.allergen_id

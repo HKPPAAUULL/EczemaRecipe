@@ -461,3 +461,100 @@ def test_recipe_list_original_filter(db, client):
     assert "爬蟲菜" in r.text
     r = client.get("/admin/recipes?original=1")
     assert "爬蟲菜" not in r.text
+
+
+# --------------------------------------------------------------------------
+# Quick review on the ingredients list (v0.9.1)
+# --------------------------------------------------------------------------
+
+def test_quick_review_success(db, client):
+    iid = mk_ing(db, "白菜")
+    r = post(client, f"/admin/ingredients/{iid}/quick-review",
+             action="review", next="/admin/ingredients")
+    assert r.status_code == 303 and r.headers["location"] == "/admin/ingredients"
+    row = db.execute(
+        "SELECT reviewed, reviewed_at FROM ingredient WHERE id=%s", (iid,)
+    ).fetchone()
+    assert row[0] and row[1] is not None
+    assert one(db, "SELECT count(*) FROM audit_log WHERE entity_id=%s"
+               " AND action='review'", iid) == 1
+
+
+def test_quick_review_rule_violations_no_change(db, client):
+    cases = []
+    i1 = mk_ing(db, "缺原因"); db.execute(
+        "UPDATE ingredient SET eczema_rating='caution' WHERE id=%s", (i1,))
+    cases.append((i1, "評級原因"))
+    i2 = mk_ing(db, "缺證據"); db.execute(
+        "UPDATE ingredient SET eczema_rating='trigger', rating_reason='x'"
+        " WHERE id=%s", (i2,))
+    cases.append((i2, "證據"))
+    i3 = mk_ing(db, "大豆"); db.execute(
+        "INSERT INTO ingredient_allergen (ingredient_id, allergen_id)"
+        " SELECT %s, id FROM allergen WHERE type='major_allergen' LIMIT 1", (i3,))
+    cases.append((i3, "過敏原"))
+    i4 = mk_ing(db, "禁用詞"); db.execute(
+        "UPDATE ingredient SET eczema_rating='caution', rating_reason='治療'"
+        " WHERE id=%s", (i4,))
+    cases.append((i4, "用語"))
+    for iid, hint in cases:
+        r = post(client, f"/admin/ingredients/{iid}/quick-review",
+                 action="review", next="/admin/ingredients")
+        assert r.status_code == 303
+        assert db.execute(
+            "SELECT reviewed FROM ingredient WHERE id=%s", (iid,)
+        ).fetchone()[0] is False, hint
+        assert one(db, "SELECT count(*) FROM audit_log WHERE entity_id=%s"
+                   " AND action='review'", iid) == 0
+    page = client.get("/admin/ingredients").text
+    assert "缺原因" in page or "評級原因" in page  # flash surfaced
+
+
+def test_quick_review_csrf_and_login(client):
+    iid_resp = client.get("/admin/ingredients")
+    login_cookie = client.cookies.get(auth.COOKIE_NAME)
+    assert iid_resp.status_code == 200
+    client.cookies.clear()
+    r = client.post("/admin/ingredients/1/quick-review",
+                    data={"action": "review"})
+    assert r.status_code == 303  # require_session redirects to login
+    client.cookies.set(auth.COOKIE_NAME, login_cookie, path="/admin")
+    r = client.post("/admin/ingredients/1/quick-review",
+                    data={"action": "review"})  # no csrf
+    assert r.status_code == 403
+
+
+def test_quick_review_404_and_next_whitelist(db, client):
+    r = post(client, "/admin/ingredients/999999/quick-review",
+             action="review", next="/admin/ingredients")
+    assert r.status_code == 404
+    iid = mk_ing(db, "跳轉測試")
+    for bad in ("https://evil.com", "//evil.com", "/admin/recipes",
+                "javascript:alert(1)", ""):
+        r = post(client, f"/admin/ingredients/{iid}/quick-review",
+                 action="review", next=bad)
+        assert r.headers["location"] == "/admin/ingredients", bad
+        db.execute("UPDATE ingredient SET reviewed=false WHERE id=%s", (iid,))
+    ok = "/admin/ingredients?review=senior&page=2&q=%E9%9B%9E"
+    r = post(client, f"/admin/ingredients/{iid}/quick-review",
+             action="review", next=ok)
+    assert r.headers["location"] == ok
+
+
+def test_quick_unreview_and_idempotent(db, client):
+    iid = _mk(db, "冪等測試", reviewed=True)
+    post(client, f"/admin/ingredients/{iid}/quick-review",
+         action="review", next="/admin/ingredients")
+    assert one(db, "SELECT count(*) FROM audit_log WHERE entity_id=%s"
+               " AND action='review'", iid) == 0  # already reviewed → no audit
+    post(client, f"/admin/ingredients/{iid}/quick-review",
+         action="unreview", next="/admin/ingredients")
+    assert db.execute(
+        "SELECT reviewed FROM ingredient WHERE id=%s", (iid,)
+    ).fetchone()[0] is False
+    assert one(db, "SELECT count(*) FROM audit_log WHERE entity_id=%s"
+               " AND action='unreview'", iid) == 1
+    post(client, f"/admin/ingredients/{iid}/quick-review",
+         action="unreview", next="/admin/ingredients")
+    assert one(db, "SELECT count(*) FROM audit_log WHERE entity_id=%s"
+               " AND action='unreview'", iid) == 1  # second is no-op

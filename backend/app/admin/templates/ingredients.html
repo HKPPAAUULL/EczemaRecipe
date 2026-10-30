@@ -12,14 +12,33 @@
 <div><label for="q">搜尋名稱</label><input type="search" id="q" name="q" value="{{ f.q }}"></div>
 <button type="submit">篩選</button>
 </form>
-<table>
-<tr><th>#</th><th>名稱</th><th>分類</th><th>評級</th><th>過敏原</th><th>狀態</th></tr>
+{% set quick_count = rows | selectattr('reviewed', 'equalto', false) | list | length %}
+<p class="muted">本頁可快速審核 {{ quick_count }} 項（每項一鍵，規則與詳情頁相同）。</p>
+<div style="overflow-x:auto">
+<table style="min-width:760px">
+<tr><th>#</th><th>名稱</th><th>分類</th><th>評級</th><th>過敏原</th><th>狀態</th><th>審核資訊</th><th>操作</th></tr>
 {% for r in rows %}
 <tr><td>{{ r.id }}</td><td><a href="/admin/ingredients/{{ r.id }}">{{ r.name_zh }}</a></td><td>{{ r.category_name or '' }}</td>
 <td><span class="badge r-{{ r.eczema_rating }}">{{ RATING_LABELS[r.eczema_rating] }}</span></td>
 <td>{{ r.allergens | join('、') }}</td>
-<td>{{ '已審核' if r.reviewed else '未審核' }}{% if r.needs_senior_review %} <span class="badge">需資深審核</span>{% endif %}</td></tr>
-{% else %}<tr><td colspan="6" class="muted">沒有符合的食材。</td></tr>{% endfor %}
+<td>{{ '已審核' if r.reviewed else '未審核' }}{% if r.needs_senior_review %} <span class="badge" style="background:#fff0c2">需資深審核</span>{% endif %}</td>
+<td class="muted" style="font-size:.85em">
+{% if r.rating_reason %}原因：{{ r.rating_reason[:40] }}{{ '…' if r.rating_reason | length > 40 }}<br>{% endif %}
+證據 {{ r.evidence_count }} 筆</td>
+<td>
+{% if r.reviewed %}
+<span class="badge" style="background:#d8f0d8">已審核</span>
+<form method="post" action="/admin/ingredients/{{ r.id }}/quick-review" class="inline">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="next" value="{{ next_qs }}">
+<button type="submit" name="action" value="unreview" class="secondary" style="min-height:36px">取消審核</button></form>
+{% else %}
+<form method="post" action="/admin/ingredients/{{ r.id }}/quick-review" class="inline">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="next" value="{{ next_qs }}">
+<button type="submit" name="action" value="review" style="min-height:36px">審核</button></form>
+{% endif %}
+</td></tr>
+{% else %}<tr><td colspan="8" class="muted">沒有符合的食材。</td></tr>{% endfor %}
 </table>
+</div>
 {% include "pager.html" %}
 {% endblock %}
