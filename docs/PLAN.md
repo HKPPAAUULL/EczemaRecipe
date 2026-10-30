@@ -170,7 +170,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 - [x] 來源條款第一輪核實完成（`docs/SOURCES.md`）：台灣政府開放資料與 TFDA 可用；Cookpad／iCook／香港政府網站需授權；CookWhatHK 不可用
 - [ ] ~~寫信徵詢授權~~（2026-10-30 用戶決定**不寄授權信**；改為持續尋找無需授權的來源，需授權的來源一律不爬，見 §4.5）。原清單：衞生署長者健康服務（ehsenq@dh.gov.hk）／衞生防護中心（可否擷取食材清單並附原文連結）、Cookpad（info-tw@cookpad.com）、愛料理、國民健康署
 - [ ] 補查未核實項目：國民健康署與 fae.moa.gov.tw 的 robots／條款、USDA 與 Open Food Facts 條款、醫院管理局食譜頁
-- [ ] 食譜庫起步內容決定：自建原創食譜為主（客家委員會資料集多為重油傳統菜，不適合作濕疹飲食主力）
+- [x] 食譜庫起步內容決定（2026-10-30）：第二輪來源搜尋（SOURCES.md D、E 級）找不到更多合格的開放來源；國家文化記憶庫食譜量太少（已核實約 11 道）不建管線；之後以自建原創食譜為主，現階段先建立網站
 - [ ] 人工審核 `data/seed/ingredients_draft.csv`（163 項草稿，71 項標 needs_senior_review，22 項 unrated）
 - [ ] 以真實 Postgres 16 驗證 `docs/db/schema.sql`（目前只用 pglast 驗證語法）
 - [ ] 若日後有商業用途（廣告、會員），須重新檢視所有「非商業限定」來源
@@ -198,6 +198,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 | 日期 | 版本 | 內容 |
 |---|---|---|
+| 2026-10-30 | v0.2.5 | 第二輪來源搜尋結論（D、E 級）：無更多合格開放食譜來源；用戶決定不建國家文化記憶庫管線，食譜日後自建 |
 | 2026-10-30 | v0.2.4 | v0.8.0：正式部署準備（prod compose、cloudflared profile、SEO、安全 header、BFF 限速、私隱頁） |
 | 2026-10-30 | v0.2.3 | v0.7.0：前端食譜配對／忌口設定（localStorage）／買餸清單；新增 `/admin` 審核介面（規則伺服器端強制）、`audit_log` 表；審核介面決定採 FastAPI 本機後台 |
 | 2026-10-30 | v0.2.2 | v0.6.0：`POST /api/recipes/suggest`、`GET /api/recipes/{id}`（覆蓋率不計常備調味料、未配對項計入分母、過敏原硬排除並回報剔除數、排序＝覆蓋率×友善分數）；常備調味料未配對不再阻擋發佈（致敏改由關鍵字掃描覆蓋）；配對率 66.3% |
