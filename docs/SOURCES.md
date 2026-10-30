@@ -170,3 +170,147 @@ USDA FoodData Central、Open Food Facts：**本輪未核實**（API key、用量
 |---|---|---|---|
 | TFDA 食品營養成分資料集 <https://data.gov.tw/dataset/8543>（衛生福利部食品藥物管理署，政府資料開放授權條款-第1版） | 食材每 100g 營養成分（`ingredient_nutrient`，經 `import-nutrition` 管線，見 `data/reference/nutrition_tfda.csv` 與配對報告） | v0.3.0（2026-10-30） | 網站「關於」頁資料來源段；`data_source.license` 記錄條款名稱 |
 | data.gov.tw 客家委員會「客家創意菜色及經典菜餚食譜(歷史資料)」 <https://data.gov.tw/dataset/147690>（政府資料開放授權條款-第1版） | 食譜標題＋拆分後食材＋簡述＋來源連結（`recipe`/`recipe_ingredient`，經 `crawl-recipes --source hakka`；不存步驟全文） | v0.5.0（2026-10-30） | 網站「關於」頁資料來源段（v0.4.0 已建）與 `data_source.license` |
+
+---
+
+## D 級：第二輪來源搜尋（2026-10-30）
+
+> 調查人：AI 助手（Devin 子代理）。只讀取、抓取小量樣本檢視，**未寫程式入庫、未批量爬取**。**需人工覆核**。範圍依 PLAN §4.5：不寄授權信，只考慮開放授權／明確允許的來源。
+> 方法：data.gov.tw 以其前端搜尋 API（`/api/front/dataset/list`，fulltext）逐詞查詢，再讀 `dataset/detail` 的授權／欄位／資源網址，並下載樣本；data.gov.hk 以 CKAN API（`/en-data/api/3/action/package_search`）；Wikibooks／Wikipedia／Wikidata 以 MediaWiki API／SPARQL。**搜尋非窮盡**；有些政府主機（k12ea.gov.tw、ttdares.gov.tw、soa.tainan.gov.tw）本輪連線逾時，或被 Cloudflare 驗證擋下，已在各項註明「抓不到」。
+
+### D0. 總結
+
+**結論：除已使用的客家食譜（147690）外，data.gov.tw / data.gov.hk 未找到第二個「授權明確、含逐道菜食材清單」的食譜資料集。** 最接近的是教育部校園食材登錄平臺（有「食材」與「菜色」兩份資料，但**無法對應到單一菜式**）；其餘都是出版品索引、PDF 或餐廳名單。Wikibooks 繁中食譜（CC BY-SA 4.0）有食材清單但為自由文字、質素與來源參差，且有 share-alike 問題。
+
+| # | 候選 | 授權（已核實？） | 有食材欄位？ | 建議 |
+|---|---|---|---|---|
+| D1 | 教育部校園食材登錄平臺（107 年度各縣市「食材及供應商」＋「菜色」資料集；2.0 API） | 政府資料開放授權條款-第1版（已核實） | 有「食材名稱」，但只到「學校＋日期」層級，**不對應菜式** | **不納入為食譜來源**；可選作「食材別名／常見食材詞庫」補充（需人工決定） |
+| D2 | 農業部 臺東區農業改良場食譜（41447）／高雄區鄉土食譜（40517） | 同上（已核實） | 無（只是出版品索引：年份、名稱、連結） | **不納入**（食材在 PDF 內，非結構化；PDF 授權另計，**未核實**） |
+| D3 | 臺東縣衛生局 PDF：山海的恩典（177546）、傳統植物保健與飲食營養手冊（177379） | 同上（資料集層級已核實） | 無（單一 PDF） | **不納入**（非結構化；可作人手挑選的參考連結） |
+| D4 | zh.wikibooks.org 食譜 | CC BY-SA 4.0（已核實） | 有（自由文字「食材／材料／原料」段） | **需人工覆核**（share-alike 與 AI 疑慮；不建議批量） |
+| D5 | Wikidata「made from material (P186)」之菜式 | CC0（已核實） | 有，但極粗（無份量；繁中標籤稀少） | **不納入為食譜來源**；僅作低優先補充 |
+| D6 | data.gov.hk | 平台條款（已核實） | — | **無可用食譜／營養資料集**，不適用 |
+| D7 | USDA FoodData Central | CC0 1.0（已核實） | 營養資料 | **納入（營養補充，優先於 Open Food Facts）** |
+| D8 | Open Food Facts | ODbL＋DbCL；圖片 CC BY-SA（已核實） | 包裝食品成分／過敏原 | **需人工覆核**（ODbL share-alike 影響衍生資料庫；與本站用途匹配度低） |
+
+### D1. 教育部校園食材登錄平臺（教育部國民及學前教育署）
+
+| 項目 | 內容 |
+|---|---|
+| 網址 | 2.0 平臺資料集 <https://data.gov.tw/dataset/98339>（API 規格 `https://fatraceschool.k12ea.gov.tw/cateringservice/web/openapi_doc/v1/openapi.json`，**本輪被 Cloudflare 驗證擋下，抓不到**）；107 年度歷史 CSV：食材及供應商（例 <https://data.gov.tw/dataset/46752> 臺北市、46756 新北市，各縣市 nid 88403–88435 等）、菜色（例 78344 臺北市、46750 新北市、88376–88398 各縣市） |
+| 提供機關 | 教育部國民及學前教育署 |
+| 授權原文 | 「政府資料開放授權條款-第1版」（detail API `license_name`；資料集備註「授權說明網址: http://data.gov.tw/license」）。條款全文見 A1。 |
+| 格式／筆數 | CSV（歷史）、JSON API（2.0）。**已實際下載**臺北市 107 年 1 月：食材檔 76,208 列（供餐日期 2018-01-02 至 01-31）、菜色檔 28,358 列（3,774 個相異菜色名稱）；食材檔共 2,632 個相異「食材名稱」。每個縣市另有各月檔（detail 顯示 23–24 個資源）。 |
+| 欄位 | 食材：`縣市別代碼, 縣市, 區域名稱, 學校名稱, 供餐日期, 供餐業者, 供餐業者統一編號, 食材供應商名稱, 食材供應商統編, 食材名稱, 調味料供應商名稱, 調味料供應商統編, 調味料名稱, 認證標章, 認證號碼`；菜色：`市縣名稱, 區域名稱, 學校名稱, 供餐日期, 菜色名稱` |
+| 樣本（短節錄） | 某國中 2018-01-02：食材 `CAS非基改玉米粒、柴魚粉、肉片、蒜粗、海帶芽、非基改味噌、綠豆芽、拉麵、龍骨丁、高麗菜粗絲…`；同日菜色 `味噌燒肉(麵醬)(非基改)、拉麵、日式豚骨湯(非基改)、木耳黃瓜、炸雞腿.、壽喜燒肉、珍珠奶茶、白米飯、茶葉蛋、調味料、青江菜…` |
+| 結構化「食材」？ | 有，但**同一學校同一天的所有食材與所有菜色是兩張獨立表**（一天十幾道菜、數十項食材），**無法可靠知道哪道菜用了哪些食材**。食材名稱含加工規格（「蒜粗」「高麗菜粗絲」「CAS非基改…」），無份量。 |
+| 濕疹適合度 | 不適合直接當食譜：含炸物、珍珠奶茶、加工品，**無過敏原標示欄位**；為團膳批量菜單而非家庭食譜。 |
+| 疑似 AI 生成 | 否（政府系統登錄資料）。 |
+| robots／條款 | 資料集經 data.gov.tw（`quality.data.gov.tw`）下載，屬開放資料下載，已能直接下載；k12ea.gov.tw 檔案主機本輪連線逾時（**未核實**其 robots）。 |
+| 使用義務 | 政府資料開放授權條款：須依「顯名聲明」標示機關、資料集名稱、授權條款（A1）；商業化仍可用。 |
+| 建議 | **不納入為食譜來源。** 理由：無「菜式↔食材」對應，硬配對會產生錯誤致敏提示（安全關鍵）。**可選**：僅作食材名稱詞庫／別名補充（需人工決定）。 |
+
+### D2. 農業部 臺東區／高雄區農業改良場食譜資料集
+
+| 項目 | 臺東區農業改良場食譜 | 高雄區鄉土食譜 |
+|---|---|---|
+| 網址 | <https://data.gov.tw/dataset/41447>；JSON <https://data.moa.gov.tw/Service/OpenData/DataFileService.aspx?UnitId=B88&IsTransData=1> | <https://data.gov.tw/dataset/40517>（本輪未重新下載，沿用 A1 已讀結果） |
+| 授權 | 政府資料開放授權條款-第1版（detail API `license_name`；已核實） | 同左 |
+| 格式／筆數 | JSON/CSV/XML；**已下載 JSON：14 筆** | JSON/CSV/XML |
+| 欄位／樣本 | `出刊年份, 期刊名稱, 檔案連結`；例：`2025｜2024年臺東原鄉部落創意風味餐競賽食譜｜https://www.ttdares.gov.tw/ws.php?id=8566`；另有「臺灣藜」「小米、樹豆」「木虌果」食材運用等 | `刊物名稱, 出版年月, 刊物網址, 檔案類型` |
+| 結構化食材？ | **無**（食材在連結的 PDF／網頁內）。ttdares.gov.tw 連線逾時，PDF 內容及其授權／robots **未核實**。 | 無 |
+| 建議 | **不納入**。可在人手挑選食譜時作為「原住民／雜糧食材」的參考連結。 | 同左 |
+
+> 臺東原鄉部落食譜若日後要用：須逐份確認 PDF 內有無另行著作權聲明（資料集授權只涵蓋資料集本身的欄位）；目前不作建議。
+
+### D3. 臺東縣衛生局 PDF 資料集
+
+- 山海的恩典—阿美與排灣的四季餐桌 <https://data.gov.tw/dataset/177546>（2026-08-19 更新）；傳統植物保健與飲食營養手冊 <https://data.gov.tw/dataset/177379>（2026-06-04 更新）。授權均為「政府資料開放授權條款-第1版」（已核實）；各只有 1 個 PDF 資源（`ttone.taitung.gov.tw/download?id=…`，未下載）。內容是部落「我的餐盤」與傳統植物飲食衛教，**無結構化食材欄位**，與濕疹無直接關係。
+- 建議：**不納入**（非結構化）；可作為日後原創食譜（原住民食材）的參考資料。**未核實** PDF 是否含第三方引用素材。
+
+### D4. Wikibooks 繁中「食譜」（zh.wikibooks.org，CC BY-SA 4.0）
+
+| 項目 | 內容 |
+|---|---|
+| 網址 | <https://zh.wikibooks.org/wiki/Category:食譜>（另有 `食譜/…`、`食谱/…` 兩種前綴，繁簡混雜） |
+| 提供者 | 維基共同體（社群編輯；各頁以修訂歷史顯示作者） |
+| 授權原文 | MediaWiki `siteinfo.rightsinfo`：「Creative Commons Attribution-Share Alike 4.0」，連結 <https://creativecommons.org/licenses/by-sa/4.0/deed.zh>（已讀取）。 |
+| 格式／筆數 | MediaWiki API／wikitext。`Category:食譜` 成員 **247 頁**（含索引頁、參考附錄，非全部為食譜；實際食譜數未逐頁清點）。 |
+| 食材欄位 | **無統一模板**；食材為自由文字段落，標題各異（`==食材==`、`==所需材料==`、`===原料===`），份量格式不一。 |
+| 樣本（短節錄；已讀 4 頁） | `食譜/高麗菜炊飯`（2025-09，單一編者）：`==食材== * 蒜頭 2 顆 * 新鮮菇類 3 朵 * … * 米 2 杯`；`食谱/蛤蛎蒸蛋`：`*雞蛋: 數顆 … *蛤蠣: 少許`；`食譜/三杯雞`（2012）：`*土雞 ... 1隻(900公克) *老薑 ... 113公克 …`，備註提及「鼓勵淡食」；`食譜/素什锦`（2025-09，單一編者）：每項食材附「富含維生素、增加菜品色彩」式說明，**行文帶模板／AI 風格，疑似 AI 生成（無法證實）**。 |
+| 濕疹適合度 | 一般家常／各地菜式，無濕疹考量，無過敏原標示；質素與完整度不一。 |
+| 疑似 AI 生成 | **有風險**：2025 年新頁多為單一編者、無來源；至少一頁（素什锦）文字風格可疑。依 PLAN §4.4 須逐頁審查作者及歷史；2012 年前後的舊頁較可信。 |
+| robots／API | Wikimedia 允許 API 讀取，但要求具辨識度 User-Agent 並限速（本輪以一般 UA 連續請求曾收到 **HTTP 429**）。 |
+| 使用義務與 share-alike 分析 | CC BY-SA 4.0：須**顯名**（作者／頁面連結）、註明有否修改、**改作須以相同授權（SA）釋出**；允許商業使用。對我們的影響：(a) 若只抽取「食材名稱」這類事實並連回原頁，通常不構成對受版權表達的改作（事實／單純清單的版權保護薄弱），但此為**法律判斷，需人工覆核**；(b) 若存／顯示作法文字或較長節錄，該部分屬改作，須以 CC BY-SA 發佈並顯名；(c) 與自家原創食譜混合成同一資料庫時，SA 是否「傳染」到整個資料庫屬灰色地帶。商業化後仍可用，但上述義務不變。 |
+| 建議 | **需人工覆核；不建議批量匯入。** 若要用：僅人手挑選、逐頁查作者與歷史、只取食材名稱＋原頁連結＋顯名，並於關於頁註明 CC BY-SA 4.0。**zh.wikipedia 料理條目**：`rightsinfo` 同為 CC BY-SA 4.0（已讀取）；本輪嘗試抽樣條目時被限速／未取得內容，**infobox 食材欄位是否可用未核實**，不建議作系統性來源。 |
+
+### D5. Wikidata（CC0）菜式 ← 食材
+
+- 授權：Wikidata:Licensing「Wikidata requires a CC0 license, which is equivalent to public domain」（已讀 <https://www.wikidata.org/wiki/Wikidata:Licensing>）；無顯名義務。
+- 以 SPARQL 查詢（`instance of dish (Q746549)` 且有 `made from material (P186)`）：**1,936** 個菜式；其中有 zh-Hant／zh-HK／zh-TW 標籤者僅 **120**。樣本（簡繁混雜、有重複）：`洋葱圈：面糊、洋葱`、`馬鈴薯沙拉：洋蔥、馬鈴薯`、`鴨血：家鸭`、`親子丼：稻、雞肉`。
+- 評估：食材極粗（「稻」「食用蕈」），無份量／調味，中文標籤稀少，非本地家常菜。**不納入為食譜來源**；若日後要補「食材同義詞」可再研究。
+
+### D6. data.gov.hk（香港）
+
+- CKAN 搜尋（英文關鍵字）：`recipe`、`menu`、`diet`、`meal`、`lunch`、`ingredient`、`cooking`、`allergen`、`eczema` 等均 **0 筆**；`food` 6 筆（統計處批發／本地食品生產統計表、食環署「豁免營養標籤產品」XML 等）、`nutrition` 1 筆（同一食環署 XML）、`elderly` 8 筆（均為服務機構名單／統計）。**無食譜、無膳食、無營養成分資料集。**（中文關鍵字該 API 回 0 筆，只能視為不可用，不能據此斷言不存在；建議人工在網站以中文再查。）
+- 條款（<https://data.gov.hk/en/terms-and-conditions>，已讀）：「You are allowed to browse, download, distribute, reproduce, hyperlink to, and print the Data for both commercial and non-commercial purposes on a free-of-charge basis on condition that…」，須遵守 Terms of Use、清楚標明來源並確認政府及相關機構的知識產權、給予適當歸屬。**平台條款本身允許商業用途**，但只涵蓋放在 data.gov.hk 上的 Data，與 A5 各部門網站（CHP、長者健康服務、CFS）的版權告示是兩回事。
+- 結論：**不適用**（無相關資料集）。
+
+### D7/D8. 國際營養資料核實（補充 A6）
+
+| 項目 | USDA FoodData Central | Open Food Facts |
+|---|---|---|
+| 網址 | <https://fdc.nal.usda.gov/> | <https://world.openfoodfacts.org/terms-of-use> |
+| 授權原文 | 「USDA FoodData Central data are in the public domain and they are not copyrighted. They are published under CC0 1.0 Universal (CC0 1.0) No permission is needed for their use, but we request that users list FoodData Central as the source…」（<https://fdc.nal.usda.gov/api-guide/>） | 「The Open Food Facts database is available under the Open Database License. Individual contents of the database are available under the Database Contents License. Products images are available under the Creative Commons Attribution ShareAlike licence.」 |
+| 義務 | 無強制；建議註明來源（建議引用格式見 api-guide） | ODbL：顯名＋改作之**資料庫**須以同授權釋出（share-alike）；內容 DbCL；圖片 CC BY-SA |
+| 取用 | API 免費 key，預設 1,000 requests／小時／IP；亦有整批下載 | API／整批下載 |
+| 適合度 | 西式食材營養完整；食材名為英文，與本站 TFDA（台灣食材）互補，需中英對照 | 以**包裝食品**為主，含成分表與過敏原標籤（對「加工品致敏」有用），但資料為群眾輸入、品質不一；台港產品覆蓋率未核實 |
+| 建議 | **納入（營養補充）**：僅在 TFDA 找不到的食材時補；商業化仍可用 | **需人工覆核**：ODbL SA 對我們衍生資料庫的影響要先評估；與「食材→致敏」主線匹配度低，暫不建議 |
+
+### D9. 查過但不適用（摘要）
+
+| 資料集／來源 | 原因 |
+|---|---|
+| 臺南市多國語言菜單翻譯資料庫（163915–163919，臺南市觀光旅遊局） | 欄位 `序號, 菜名, 日文菜名, 烹飪方式, 日文`（依 detail API），為餐廳菜名翻譯，**無食材**；檔案主機本輪連線逾時，未讀取內容 |
+| 客委會「客家美食校園深耕課程表」（34245）、「低碳食材暨食育課程表」（162980）、「海外客家美食料理研習班」（162472） | 課程名稱／講師／時數，非食譜（欄位 `lesson, school, teacher…`、`CountyCode, course_name, teacher…`）。data.hakka.gov.tw swagger 列出客委會全部資料集，**食譜類只有 147690 一個** |
+| 農業部「農村地方美食小吃特色料理」（6037）、「農村田媽媽田園料理及農產加工品」（13388） | 業者／店家資料（名稱、地址、電話、營業時間）；13388 已停止更新 |
+| 各縣市客家美食餐廳名冊、蔬食餐廳、低碳／低油煙／環保／友善餐廳名單、新北市餐飲業者（多語） | 店家名單，無食譜 |
+| 衛福部國健署「國人膳食營養狀況」（173403）、熱量攝取百分比、膳食營養素上限參考攝取量 | 統計／參考攝取量，非食譜 |
+| 長照／老人營養餐飲服務單位名單（嘉義市、新竹縣、雲林縣、臺南市、桃園市） | 服務機構名單，無菜單 |
+| 國軍副食供應中心（171714） | 供應單位資料，非食譜 |
+| 臺北市食材登錄平台（147004，臺北市衛生局） | 食品業者食材來源追溯資料，非食譜；欄位未逐項核實 |
+| Kaggle／GitHub 等「爬自食譜站再標 CC」的食譜資料集 | 依任務指示排除：原始版權不清，列為**不可用**；本輪未逐一查閱 |
+| data.gov.tw 回 0 筆的關鍵字：營養午餐、藥膳、原住民傳統料理、健康餐盒、銀髮餐、減鹽、長者餐、養生料理、養生、健康餐、部落美食、衛生局食譜、食譜書、低鈉、家常菜、過敏原、食物成分、食品成分 | 開放資料平臺沒有對應資料集（全文搜尋；不代表機關網站上沒有） |
+
+### D10. 對既有內容的「更正建議」（未直接修改）
+
+1. A1 表格第 2 列「高雄原住民食譜（Kaohsiung Indigenous Recipes）」：data.gov.tw 中文名稱實為「**高雄區鄉土食譜**」（農業部；欄位為刊物名稱、出版年月、刊物網址、檔案類型），建議補上中文正式名稱以便搜尋，並確認是否專指原住民食譜。
+2. A1 表格「教育部校園食材登錄平臺2.0」：欄位已核實——分為「菜色」「調味料及供應商」「食材及供應商」「供餐團膳業者」四類資料，**食材與菜色是分開的表，無菜式↔食材對應**（見 D1），「可作食材配對參考」宜改為「不可用於菜式食材配對」。
+3. A6「USDA／Open Food Facts：未核實」：本輪已核實授權（見 D7/D8），可更新為「USDA：CC0；OFF：ODbL＋DbCL」。
+4. A1 結論稱「未找到其他含完整食材清單的政府食譜資料集」——本輪以 data.gov.tw 全文搜尋複查，結論一致。
+
+### D11. 建議採用順序
+
+1. （已用）客委會客家食譜 147690 ＋ TFDA 營養 8543。
+2. **USDA FoodData Central**（CC0）：只作 TFDA 缺漏食材的營養補充。
+3. 原創食譜（約 50–100 道，經審核）仍是濕疹友善食譜的主力——開放資料中**沒有**適合直接匯入的第二個食譜集。
+4. Wikibooks 繁中食譜：僅人手逐頁挑選＋只取食材名稱＋顯名，且先解決 share-alike 判斷；不批量。
+5. 校園食材資料：僅作食材詞庫／別名參考，不作食譜。
+6. 其餘（Wikidata、Open Food Facts、臺東原鄉食譜 PDF）暫不採用。
+
+### D12. 需人工決定事項
+
+1. Wikibooks CC BY-SA 4.0：「只取食材名稱＋連結＋顯名」是否算改作？SA 是否會影響本站食譜資料庫整體授權？（建議向熟悉 CC 的人諮詢，或乾脆放棄此來源。）
+2. 是否接受用校園食材資料的食材名稱作別名詞庫（需人工清洗「蒜粗」「CAS非基改…」等加工規格）。
+3. 是否另行手動檢視 data.gov.hk（中文關鍵字）與各縣市衛生局網站（非開放資料平臺）有無食譜 PDF；PDF 型內容授權須逐份確認，且不符「結構化食材」條件。
+4. 臺東原鄉食譜 PDF（ttdares）與 k12ea 2.0 API：本輪連線失敗／被 Cloudflare 擋下，若要評估需在可連線環境重試。
+5. Open Food Facts 是否值得為「包裝食品致敏」引入（ODbL 影響）。
+
+### D13. 搜尋關鍵字與日期（2026-10-30，可重現；搜尋非窮盡）
+
+- data.gov.tw（`POST https://data.gov.tw/api/front/dataset/list`，body `{"bool":[{"fulltext":{"value":"<關鍵字>"}}],"filter":[],"page_num":1,"page_limit":10,"tids":[],"sort":"_score_desc"}`；每詞讀前 1–3 頁）：食譜、菜單、料理、菜餚、食材、營養午餐、校園食材、藥膳、月子餐、原住民傳統料理、健康餐盒、銀髮餐、食農教育、特色料理、減鹽、低油、低糖、長者餐、養生料理、在地食材、營養、膳食、午餐、飲食、養生、健康餐、長者、銀髮、部落美食、客家美食、烹飪、副食品、嬰幼兒、衛生局食譜、食譜書、菜色、食育、低鈉、少油、家常菜、素食、傳統美食、小吃、營養師、營養標示、過敏原、食物成分、食品成分、營養素。（關鍵字「食譜」僅 5 筆：高雄區鄉土食譜、臺東區農業改良場食譜、客委會客家食譜，另 2 筆無關。）
+- 詳情／樣本：`GET https://data.gov.tw/api/front/dataset/detail?nid=<id>`；CSV 樣本 `https://quality.data.gov.tw/dq_download_csv.php?nid=…`（46752、78344）；`https://data.moa.gov.tw/Service/OpenData/DataFileService.aspx?UnitId=B88&IsTransData=1`；`https://data.hakka.gov.tw/opendata/v2/swagger.json`。
+- data.gov.hk：`https://data.gov.hk/en-data/api/3/action/package_search?q=<kw>`：recipe、recipes、food、menu、nutrition、nutrient、diet、dietary、meal、lunch、school lunch、elderly、ingredient、cooking、allergen、allergy、eczema、healthy eating、vegetable，及中文 食譜、食物、營養、膳食、午餐、飲食、菜單、食材、長者、烹飪、過敏、濕疹、湯、餐（中文皆 0 筆，見 D6）。
+- Wikibooks：`https://zh.wikibooks.org/w/api.php`（`list=search` 關鍵字「食譜 食材」、`list=allcategories`、`categorymembers` Category:食譜、4 頁 wikitext、`siteinfo=rightsinfo`）；Wikipedia `rightsinfo`；Wikidata SPARQL（Q746549＋P186）。
+- 授權頁面：<https://data.gov.tw/license>（沿用 A1）、<https://data.gov.hk/en/terms-and-conditions>、<https://www.wikidata.org/wiki/Wikidata:Licensing>、<https://fdc.nal.usda.gov/api-guide/>、<https://world.openfoodfacts.org/terms-of-use>。
+- 本輪**抓不到**：k12ea.gov.tw（逾時；fatraceschool 子站被 Cloudflare 驗證擋）、ttdares.gov.tw（逾時）、soa.tainan.gov.tw（逾時）、zh.wikipedia 條目抽樣（限速）。
