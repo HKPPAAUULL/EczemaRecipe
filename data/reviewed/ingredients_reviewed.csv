@@ -1,0 +1,14 @@
+name_zh,category_zh,eczema_rating,rating_reason,needs_senior_review,reviewed_at,allergens,evidence_urls
+午餐肉,肉類,caution,加工肉類添加劑及鹽分較高，建議少量（依據：組織胺／加工食品；適用：對加工食品敏感或已知組織胺不耐受者；來源：美國營養與飲食學會期刊綜述（JAND））,t,2026-10-30 10:49:49.940067+00,組織胺:medium,https://www.jandonline.org/article/S2212-2672(14)01454-3/fulltext
+火腿,肉類,caution,加工肉類添加劑及鹽分較高，建議少量（依據：組織胺／加工食品；適用：對加工食品敏感或已知組織胺不耐受者；來源：美國營養與飲食學會期刊綜述（JAND））,t,2026-10-30 10:47:55.247682+00,組織胺:medium,https://www.jandonline.org/article/S2212-2672(14)01454-3/fulltext
+臘腸,肉類,caution,加工肉類添加劑及鹽分較高，建議少量（依據：組織胺／加工食品；適用：對加工食品敏感或已知組織胺不耐受者；來源：美國營養與飲食學會期刊綜述（JAND））,t,2026-10-30 10:48:02.05777+00,組織胺:medium,https://www.jandonline.org/article/S2212-2672(14)01454-3/fulltext
+墨魚,海鮮,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,t,2026-10-30 10:50:30.213872+00,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html
+帶子,海鮮,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,t,2026-10-30 10:50:13.178662+00,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html
+蜆,海鮮,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,t,2026-10-30 10:50:21.455272+00,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html
+蠔,海鮮,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,t,2026-10-30 10:50:17.658009+00,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html
+魷魚,海鮮,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,t,2026-10-30 10:50:25.721035+00,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html
+鮑魚,海鮮,caution,軟體類（貝類）為常見食物過敏原之一；已確診過敏者須避免（依據：過敏原；適用：已確診貝類／軟體類過敏者；來源：食安中心（列出軟體類為常見過敏原））,t,2026-10-30 10:50:34.1681+00,,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html
+番茄,蔬菜,caution,因人而異；部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC7463562））,t,2026-10-30 10:51:58.790328+00,組織胺:medium,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/
+紅蘿蔔,蔬菜,caution,與部分花粉有交叉過敏可能（多見於生食）（依據：花粉交叉；適用：已確診花粉相關食物過敏者；來源：花粉-食物過敏症候群綜述（Ann Allergy Asthma Immunol））,t,2026-10-30 10:52:30.830255+00,花粉交叉:medium,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext
+茄子,蔬菜,caution,因人而異；部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限）；來源：組織胺不耐受綜述（PMC7463562））,t,2026-10-30 10:52:03.190586+00,組織胺:medium,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/
+菠菜,蔬菜,caution,因人而異；部分低組織胺飲食列為須留意（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC7463562））,t,2026-10-30 10:51:48.242352+00,組織胺:medium,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/
