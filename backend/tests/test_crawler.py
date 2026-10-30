@@ -197,3 +197,53 @@ def test_import_writes_pending_review_and_queue():
     assert "published" not in ins[0].split("pending_review")[0].replace(
         "'pending_review'", "")
     assert any(q.startswith("insert into review_queue") for q in conn.queries)
+
+
+def test_parse_item_qty_first_form():
+    it = parse_item("1/2醋匙")
+    assert (it.name, it.qty, it.unit) == ("醋", 0.5, "匙")
+    it = parse_item("3根香蕉")
+    assert it.name == "香蕉" and it.qty == 3
+
+
+def test_parse_item_compound_and_mojibake():
+    it = parse_item("九層塔20克")
+    assert (it.name, it.qty, it.unit) == ("九層塔", 20, "克")
+    it = parse_item("四季豆200g")
+    assert (it.name, it.qty) == ("四季豆", 200)
+    it = parse_item("木?子葉20g")  # 亂碼原樣保留 → 不配對
+    assert "?" in it.name
+
+
+def test_unmatched_staple_goes_to_own_column_and_hints_still_scan():
+    """醬油 unmatched→unmatched_staples，但 allergen_hints 仍含大豆。"""
+    from app.crawler.hakka import RecipeRecord
+    from app.crawler.parse import ParsedItem
+    from app.crawler.pipeline import import_recipes
+
+    rec = RecipeRecord(
+        title="測試菜", description="", source_url="https://x#r-1",
+        tags=[], content_hash=content_hash("測試菜"),
+        items=[ParsedItem("雞胸肉100g", "雞胸肉", 100, "g")],
+        seasoning_items=[ParsedItem("醬油1大匙", "醬油", 1, "大匙")],
+    )
+    conn = FakeConn([(1, "雞胸肉", [])])
+    captured = {}
+
+    orig = FakeConn.execute
+
+    def spy(self, sql, params=None):
+        s = " ".join(str(sql).split()).lower()
+        if s.startswith("insert into recipe ") and params:
+            captured["params"] = params
+        return orig(self, sql, params)
+
+    import types
+    conn.execute = types.MethodType(spy, conn)
+    stats = import_recipes(conn, "s", "u", "l", [rec],
+                           keyword_map={"醬油": "大豆"}, staples={"醬油"})
+    assert stats.unmatched_items == 0 and stats.unmatched_staples == 1
+    params = captured["params"]
+    assert params[5] == []               # unmatched_ingredients empty
+    assert params[6] == ["醬油1大匙"]     # unmatched_staples
+    assert params[7] == ["大豆"]          # allergen_hints still hit

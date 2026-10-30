@@ -17,6 +17,7 @@ from pathlib import Path
 
 from app.crawler.allergens import load_keyword_map, scan_allergens
 from app.crawler.matcher import IngredientMatcher
+from app.crawler.parse import normalize
 
 _REPO = Path(__file__).resolve().parents[3]
 STAPLE_CSV = _REPO / "data" / "reference" / "staple_ingredients.csv"
@@ -45,6 +46,7 @@ class CrawlStats:
     parse_failed: int = 0
     matched_items: int = 0
     unmatched_items: int = 0
+    unmatched_staples: int = 0
     recipes_fully_matched: int = 0
     match_rate: float = 0.0
     top_unmatched: list[tuple[str, int]] = field(default_factory=list)
@@ -59,6 +61,7 @@ class CrawlStats:
             "parse_failed": self.parse_failed,
             "matched_items": self.matched_items,
             "unmatched_items": self.unmatched_items,
+            "unmatched_staples": self.unmatched_staples,
             "match_rate": round(self.match_rate, 4),
         }
 
@@ -97,16 +100,25 @@ def import_recipes(conn, source_name, source_url, license_, records,
             stats.parse_failed += 1
         matched: dict[int, list] = {}
         unmatched: list[str] = []
+        unmatched_staple: list[str] = []
         all_items = [*rec.items, *rec.seasoning_items]
         for it in all_items:
             iid = matcher.match(it.name)
             if iid is None:
-                unmatched.append(it.raw_text)
-                unmatched_names[it.name] = unmatched_names.get(it.name, 0) + 1
+                # staple condiments go to unmatched_staples: they do not
+                # block publication, but allergen_hints below still scans
+                # their raw text (醬油/蠔油/麵粉/芝麻油 risks are keyword-hit)
+                if normalize(it.name) in staples:
+                    unmatched_staple.append(it.raw_text)
+                else:
+                    unmatched.append(it.raw_text)
+                    unmatched_names[it.name] = (
+                        unmatched_names.get(it.name, 0) + 1)
             else:
                 matched.setdefault(iid, []).append(it)
         stats.matched_items += sum(len(v) for v in matched.values())
         stats.unmatched_items += len(unmatched)
+        stats.unmatched_staples += len(unmatched_staple)
         if not unmatched and not rec.parse_failed:
             stats.recipes_fully_matched += 1
         hints = scan_allergens([i.raw_text for i in all_items], keyword_map)
@@ -125,10 +137,11 @@ def import_recipes(conn, source_name, source_url, license_, records,
             rid = row[0]
             conn.execute(
                 "UPDATE recipe SET title=%s, description=%s, data_source_id=%s,"
-                " content_hash=%s, unmatched_ingredients=%s, allergen_hints=%s"
+                " content_hash=%s, unmatched_ingredients=%s,"
+                " unmatched_staples=%s, allergen_hints=%s"
                 " WHERE id=%s",
                 (rec.title, rec.description or None, ds_id, rec.content_hash,
-                 unmatched, hints, rid),
+                 unmatched, unmatched_staple, hints, rid),
             )
             conn.execute(
                 "DELETE FROM recipe_ingredient WHERE recipe_id=%s", (rid,))
@@ -138,16 +151,19 @@ def import_recipes(conn, source_name, source_url, license_, records,
             rid = conn.execute(
                 "INSERT INTO recipe (title, description, source_url,"
                 " data_source_id, status, content_hash, unmatched_ingredients,"
-                " allergen_hints) VALUES (%s,%s,%s,%s,'pending_review',%s,%s,%s)"
+                " unmatched_staples, allergen_hints)"
+                " VALUES (%s,%s,%s,%s,'pending_review',%s,%s,%s,%s)"
                 " RETURNING id",
                 (rec.title, rec.description or None, rec.source_url, ds_id,
-                 rec.content_hash, unmatched, hints),
+                 rec.content_hash, unmatched, unmatched_staple, hints),
             ).fetchone()[0]
             stats.inserted += 1
             conn.execute(
                 "INSERT INTO review_queue (entity_type, entity_id, status,"
                 " reviewer_note) VALUES ('recipe', %s, 'pending', %s)",
-                (rid, (f"unmatched={len(unmatched)}; allergen_hints="
+                (rid, (f"unmatched={len(unmatched)};"
+                       f"unmatched_staples={len(unmatched_staple)};"
+                       f"allergen_hints="
                        f"{','.join(hints) if hints else 'none'}")),
             )
 
@@ -161,7 +177,7 @@ def import_recipes(conn, source_name, source_url, license_, records,
                 " raw_text=EXCLUDED.raw_text, qty=EXCLUDED.qty,"
                 " unit=EXCLUDED.unit, is_staple=EXCLUDED.is_staple",
                 (rid, iid, "；".join(i.raw_text for i in its), qty, unit,
-                 any(i.name in staples for i in its)),
+                 any(normalize(i.name) in staples for i in its)),
             )
         for tag in rec.tags:
             conn.execute(
@@ -180,7 +196,9 @@ def write_report(records, stats: CrawlStats, path: str | Path = REPORT_MD) -> No
     lines = [
         "# 客家食譜配對報告（crawl-recipes --source hakka）", "",
         f"- 食譜總數：{stats.fetched}",
-        f"- 配對項目：{stats.matched_items}；未配對項目：{stats.unmatched_items}",
+        (f"- 配對項目：{stats.matched_items}；"
+         f"未配對項目：{stats.unmatched_items}（分母只算非 staple 項目）"),
+        f"- staple 未配對：{stats.unmatched_staples} 項",
         f"- 配對率：{stats.match_rate:.1%}",
         f"- 完全配對食譜：{stats.recipes_fully_matched}",
         f"- 解析失敗：{stats.parse_failed}", "",

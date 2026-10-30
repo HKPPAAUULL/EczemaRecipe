@@ -186,6 +186,7 @@ CREATE TABLE recipe (
     status                  recipe_status NOT NULL DEFAULT 'draft',
     eczema_friendly_score   numeric(5, 2) CHECK (eczema_friendly_score IS NULL OR (eczema_friendly_score >= 0 AND eczema_friendly_score <= 100)),
     unmatched_ingredients   text[] NOT NULL DEFAULT '{}',
+    unmatched_staples       text[] NOT NULL DEFAULT '{}',
     allergen_hints          text[] NOT NULL DEFAULT '{}',
     content_hash            text,
     created_at              timestamptz NOT NULL DEFAULT now(),
@@ -198,6 +199,7 @@ COMMENT ON COLUMN recipe.data_source_id IS '取代 PLAN.md §5 的 source_name �
 COMMENT ON COLUMN recipe.eczema_friendly_score IS '濕疹友善分數 0–100，配對排序＝覆蓋率×分數';
 COMMENT ON COLUMN recipe.status IS 'draft=自建草擬、pending_review=待人工審核、published=已發佈、rejected=退回';
 COMMENT ON COLUMN recipe.unmatched_ingredients IS '配對失敗的食材原文（不得丟棄或猜測）；非空時食譜不得公開（見 published_recipe）';
+COMMENT ON COLUMN recipe.unmatched_staples IS '常備調味料中配對失敗的食材原文（不影響 published_recipe；致敏風險由 allergen_hints 關鍵字掃描覆蓋）';
 COMMENT ON COLUMN recipe.allergen_hints IS '對全部食材原文（含未配對）做 allergen_keywords 掃描得到的過敏原名稱';
 COMMENT ON COLUMN recipe.content_hash IS '內容雜湊：增量更新判斷，未變則跳過';
 

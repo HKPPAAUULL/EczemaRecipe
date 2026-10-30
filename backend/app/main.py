@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 
-from app.api import allergens, categories, ingredients
+from app.api import allergens, categories, ingredients, recipes
 from app.config import Settings, load_settings
 
 
@@ -61,6 +61,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(ingredients.router)
     app.include_router(categories.router)
     app.include_router(allergens.router)
+    app.include_router(recipes.router)
     return app
 
 

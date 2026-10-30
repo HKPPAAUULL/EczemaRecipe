@@ -23,9 +23,22 @@ _SECTION_RE = re.compile(
     r"調味料\s*[:：](?P<sea>.*?)\s*[。．]?\s*3\s*[、.．]?\s*步驟",
     re.DOTALL,
 )
-_QTY_START = re.compile(r"[\d一二三四五六七八九十半兩]")
 _FRACTION_RE = re.compile(r"^(\d+)\s*/\s*(\d+)$")
 _PAREN_RE = re.compile(r"[（(][^）)]*[）)]")
+_QTY_TOKEN = (
+    r"(\d+\s*/\s*\d+|\d+(?:\.\d+)?(?:\s*[-–~]\s*\d+(?:\.\d+)?)?|"
+    r"[一二三四五六七八九]?十[一二三四五六七八九]?|[一二三四五六七八九兩半])"
+)
+# units observed in the hakka dataset; used to split qty-first items like
+# 「1/2醋匙」→ 醋 1/2 匙. Anything we cannot decompose stays unmatched.
+_UNIT_SUFFIXES = (
+    "大匙", "湯匙", "茶匙", "小匙", "毫升", "公克", "大碗", "小撮",
+    "斤", "兩", "克", "碗", "杯", "鍋", "個", "顆", "粒", "支", "朵",
+    "條", "片", "塊", "株", "把", "副", "隻", "張", "包", "根", "盒",
+    "付", "匙", "g", "ml", "cc", "撮", "段", "盒", "瓶",
+)
+_UNIT_SUFFIX_RE = re.compile(
+    f"(?:{'|'.join(sorted(_UNIT_SUFFIXES, key=len, reverse=True))})$")
 
 
 def normalize(s: str | None) -> str:
@@ -66,31 +79,56 @@ class ParsedRecipe:
         return [*self.materials, *self.seasonings]
 
 
+def _qty_value(qtytok: str) -> float | None:
+    fm = _FRACTION_RE.match(qtytok)
+    if fm:
+        return float(fm.group(1)) / float(fm.group(2))
+    if re.fullmatch(r"\d+(?:\.\d+)?", qtytok):
+        return float(qtytok)
+    if re.search(r"[-–~]", qtytok):
+        return None
+    return _cn_number(qtytok)
+
+
 def parse_item(text: str) -> ParsedItem:
     raw = text.strip().rstrip("。．、")
     body = _PAREN_RE.sub("", raw).strip() or raw
-    m = _QTY_START.search(body)
-    if m:
-        name = body[: m.start()].strip()
-        rest = body[m.start():].strip()
-        m2 = re.match(
-            r"(\d+\s*/\s*\d+|"
-            r"\d+(?:\.\d+)?(?:\s*[-–~]\s*\d+(?:\.\d+)?)?|"
-            r"[一二三四五六七八九]?十[一二三四五六七八九]?|[一二三四五六七八九兩半])",
-            rest,
-        )
-        qtytok, unit = (m2.group(1) if m2 else ""), rest[m2.end():].strip() if m2 else rest
-        qty: float | None = None
-        if _FRACTION_RE.match(qtytok):
-            a, b = _FRACTION_RE.match(qtytok).groups()  # type: ignore[union-attr]
-            qty = float(a) / float(b)
-        elif re.fullmatch(r"\d+(?:\.\d+)?", qtytok):
-            qty = float(qtytok)
-        elif re.search(r"[-–~]", qtytok):
-            qty = None  # range — keep raw_text only
-        else:
-            qty = _cn_number(qtytok)
-        return ParsedItem(raw, name or body, qty, unit or None)
+    # qty-first: leading arabic digit, e.g. 「1/2醋匙」→ 醋 1/2 匙 or
+    # 「3根香蕉」→ 香蕉 3 根. Chinese-numeral-led items are treated as names
+    # (九層塔/五花肉) — guessing is worse than leaving them unmatched.
+    if body[0].isdigit():
+        m2 = re.match(_QTY_TOKEN, body)
+        if m2:
+            qtytok, tail = m2.group(1), body[m2.end():].strip()
+            qty = _qty_value(qtytok)
+            pm = re.match(
+                f"(?:{'|'.join(sorted(_UNIT_SUFFIXES, key=len, reverse=True))})",
+                tail)
+            if pm and len(tail[pm.end():]) >= 1:  # qty+unit+name
+                return ParsedItem(raw, tail[pm.end():], qty, pm.group(0))
+            um = _UNIT_SUFFIX_RE.search(tail)
+            if um and len(tail[: um.start()]) >= 1:  # qty+name+unit
+                return ParsedItem(raw, tail[: um.start()], qty, um.group(0))
+            return ParsedItem(raw, tail or body, qty, None)
+    # name-first: first arabic digit splits name from qty+unit
+    md = re.search(r"\d", body)
+    if md:
+        name = body[: md.start()].strip()
+        rest = body[md.start():].strip()
+        m2 = re.match(_QTY_TOKEN, rest)
+        qtytok = m2.group(1) if m2 else ""
+        unit = rest[m2.end():].strip() if m2 else rest
+        return ParsedItem(raw, name or body, _qty_value(qtytok), unit or None)
+    # Chinese-numeral qty only when the tail is a unit （豬肚一副/香蕉三根）
+    for mm in re.finditer(r"[一二三四五六七八九十半兩]", body[1:]):
+        pos = mm.start() + 1
+        m2 = re.match(_QTY_TOKEN, body[pos:])
+        if not m2:
+            continue
+        tail = body[pos + m2.end():].strip()
+        if not tail or _UNIT_SUFFIX_RE.fullmatch(tail) or tail in _NO_QTY_UNITS:
+            return ParsedItem(
+                raw, body[:pos].strip(), _qty_value(m2.group(1)), tail or None)
     for u in _NO_QTY_UNITS:
         if body.endswith(u) and len(body) > len(u):
             return ParsedItem(raw, body[: -len(u)].strip(), None, u)

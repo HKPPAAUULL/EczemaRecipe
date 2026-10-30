@@ -213,3 +213,129 @@ def list_allergens(conn) -> list[dict]:
         "SELECT id, name_zh, name_en, type FROM allergen ORDER BY id"
     ).fetchall()
     return [dict(r) for r in rows]
+
+
+# ---------------------------------------------------------------------------
+# Recipes — matching & detail (v0.6.0)
+# ---------------------------------------------------------------------------
+
+_RECIPE_REL = {
+    True: ("(SELECT * FROM recipe WHERE status IN"
+           " ('draft','pending_review','published')) AS r"),
+    False: "published_recipe AS r",
+}
+
+
+def _allergen_map(conn, ingredient_ids):
+    """ingredient_id → [(id, name_zh, type, severity)]"""
+    if not ingredient_ids:
+        return {}
+    out: dict[int, list] = {}
+    for r in conn.execute(
+        """
+        SELECT ia.ingredient_id, a.id, a.name_zh, a.type, ia.severity
+          FROM ingredient_allergen ia
+          JOIN allergen a ON a.id = ia.allergen_id
+         WHERE ia.ingredient_id = ANY(%(ids)s)
+         ORDER BY a.id""",
+        {"ids": ingredient_ids},
+    ):
+        out.setdefault(r["ingredient_id"], []).append(
+            {"id": r["id"], "name_zh": r["name_zh"], "type": r["type"],
+             "severity": r["severity"]})
+    return out
+
+
+def get_ingredient_refs(conn, ids, include_drafts) -> dict[int, dict]:
+    """id → ref dict with allergens; only visible ingredients included."""
+    rel = INGREDIENT_RELATION[include_drafts]
+    rows = conn.execute(
+        f"SELECT id, name_zh, eczema_rating FROM {rel} "
+        "WHERE id = ANY(%(ids)s)",
+        {"ids": ids},
+    ).fetchall()
+    amap = _allergen_map(conn, [r["id"] for r in rows])
+    return {
+        r["id"]: {"id": r["id"], "name_zh": r["name_zh"],
+                  "eczema_rating": r["eczema_rating"],
+                  "rating_label": RATING_LABELS[r["eczema_rating"]],
+                  "allergens": amap.get(r["id"], [])}
+        for r in rows
+    }
+
+
+def list_recipe_candidates(conn, include_drafts, ingredient_ids):
+    """Recipe rows sharing >=1 non-staple matched ingredient with selection."""
+    rel = _RECIPE_REL[include_drafts]
+    return conn.execute(
+        f"""
+        SELECT r.*, ds.name AS source_name, ds.license AS source_license,
+               COALESCE((SELECT array_agg(t.tag ORDER BY t.tag)
+                         FROM recipe_tag t WHERE t.recipe_id = r.id), '{{}}')
+               AS tags
+          FROM {rel}
+          LEFT JOIN data_source ds ON ds.id = r.data_source_id
+         WHERE EXISTS (
+             SELECT 1 FROM recipe_ingredient ri
+             WHERE ri.recipe_id = r.id AND ri.is_staple = false
+               AND ri.ingredient_id = ANY(%(ids)s))
+         ORDER BY r.id""",
+        {"ids": ingredient_ids},
+    ).fetchall()
+
+
+def list_recipe_links(conn, recipe_ids):
+    """recipe_id → [(ingredient_id, name_zh, is_staple, raw_text, qty, unit, rating, rating_label)]"""
+    if not recipe_ids:
+        return {}
+    out: dict[int, list] = {}
+    for r in conn.execute(
+        """
+        SELECT ri.recipe_id, ri.ingredient_id, i.name_zh, ri.is_staple,
+               ri.raw_text, ri.qty, ri.unit, i.eczema_rating
+          FROM recipe_ingredient ri
+          JOIN ingredient i ON i.id = ri.ingredient_id
+         WHERE ri.recipe_id = ANY(%(ids)s)
+         ORDER BY ri.ingredient_id""",
+        {"ids": recipe_ids},
+    ):
+        out.setdefault(r["recipe_id"], []).append(r)
+    return out
+
+
+def list_recipe_allergens(conn, recipe_ids):
+    """recipe_id → {allergen_id: name_zh} union over matched ingredients."""
+    if not recipe_ids:
+        return {}
+    out: dict[int, dict] = {}
+    for r in conn.execute(
+        """
+        SELECT DISTINCT ri.recipe_id, a.id, a.name_zh
+          FROM recipe_ingredient ri
+          JOIN ingredient_allergen ia ON ia.ingredient_id = ri.ingredient_id
+          JOIN allergen a ON a.id = ia.allergen_id
+         WHERE ri.recipe_id = ANY(%(ids)s)""",
+        {"ids": recipe_ids},
+    ):
+        out.setdefault(r["recipe_id"], {})[r["id"]] = r["name_zh"]
+    return out
+
+
+def allergen_name_to_id(conn) -> dict[str, int]:
+    return {r["name_zh"]: r["id"]
+            for r in conn.execute("SELECT name_zh, id FROM allergen")}
+
+
+def get_recipe(conn, recipe_id, include_drafts):
+    rel = _RECIPE_REL[include_drafts]
+    return conn.execute(
+        f"""
+        SELECT r.*, ds.name AS source_name, ds.license AS source_license,
+               COALESCE((SELECT array_agg(t.tag ORDER BY t.tag)
+                         FROM recipe_tag t WHERE t.recipe_id = r.id), '{{}}')
+               AS tags
+          FROM {rel}
+          LEFT JOIN data_source ds ON ds.id = r.data_source_id
+         WHERE r.id = %(rid)s""",
+        {"rid": recipe_id},
+    ).fetchone()

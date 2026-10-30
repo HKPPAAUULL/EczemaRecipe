@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 RATING_LABELS = {
     "suitable": "一般適合",
@@ -98,3 +98,95 @@ class CategoryIngredientsResponse(BaseModel):
     limit: int
     offset: int
     items: list[IngredientListItem]
+
+
+class SuggestRequest(BaseModel):
+    ingredient_ids: list[int] = Field(min_length=1, max_length=30)
+    exclude_allergens: list[int] = Field(default_factory=list, max_length=20)
+    limit: int = Field(default=12, ge=1, le=30)
+    offset: int = Field(default=0, ge=0)
+
+
+class SelectedIngredientItem(BaseModel):
+    id: int
+    name_zh: str
+    eczema_rating: str
+    rating_label: str
+    allergens: list[IngredientAllergen]
+
+
+class SelectionWarning(BaseModel):
+    ingredient_id: int
+    name_zh: str
+    eczema_rating: str
+    reasons: list[str]
+    allergens: list[dict]
+
+
+class MatchedItem(BaseModel):
+    ingredient_id: int
+    name_zh: str
+
+
+class RecipeSuggestion(BaseModel):
+    id: int
+    title: str
+    description: str | None
+    cook_time: int | None
+    servings: int | None
+    source_url: str | None
+    source_name: str | None
+    license: str | None
+    tags: list[str]
+    coverage: float
+    matched: list[MatchedItem]
+    missing: list[str]
+    allergens: list[str]
+    allergen_warning: bool
+    trigger_ingredients: list[str]
+    unmatched_ingredients: list[str]
+    unknown_allergen_hints: list[str] | None = None
+    rank_score: float
+    draft: bool
+
+
+class SuggestResponse(BaseModel):
+    selected: list[SelectedIngredientItem]
+    warnings: list[SelectionWarning]
+    excluded_by_allergen_count: int
+    total: int
+    limit: int
+    offset: int
+    recipes: list[RecipeSuggestion]
+    disclaimer: str = DISCLAIMER
+
+
+class RecipeIngredientItem(BaseModel):
+    ingredient_id: int
+    name_zh: str
+    eczema_rating: str
+    rating_label: str
+    raw_text: str
+    qty: float | None
+    unit: str | None
+    is_staple: bool
+    allergens: list[IngredientAllergen]
+
+
+class RecipeDetailResponse(BaseModel):
+    id: int
+    title: str
+    description: str | None
+    cook_time: int | None
+    servings: int | None
+    source_url: str | None
+    source_name: str | None
+    license: str | None
+    tags: list[str]
+    ingredients: list[RecipeIngredientItem]
+    unmatched_ingredients: list[str]
+    unmatched_staples: list[str]
+    allergens: list[str]
+    allergen_warning: bool
+    draft: bool
+    disclaimer: str = DISCLAIMER

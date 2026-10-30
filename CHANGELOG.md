@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-10-30
+
+### Added
+
+- **Recipe suggest API**: `POST /api/recipes/suggest` (`backend/app/api/recipes.py`, pure logic `backend/app/recipe_matching.py`) — 以手上食材（1–30 個 id，去重）配對食譜，回傳 coverage（未配對項目計入分母）、matched/missing、過敏原聯集（ingredient_allergen ∪ allergen_hints）、`allergen_warning`、`trigger_ingredients`、確定性排序（rank=coverage×score/100，NULL→0.5）；`exclude_allergens` 硬排除並計數（不靜默）；無法對映的 hint 列 `unknown_allergen_hints`＋warning；`warnings` 列出 trigger 或帶過敏原的所選食材。
+- **`GET /api/recipes/{id}`** 詳情：已配對食材（raw_text/qty/unit/is_staple/allergens）、unmatched 清單、allergen union、draft 旗標、來源顯名與 license。
+- **`recipe.unmatched_staples`**（migration `0004`）：常備調味料配對失敗者不擋發佈（published_recipe 只排除 `unmatched_ingredients` 非空），其致敏風險仍由 `allergen_hints` 關鍵字掃描覆蓋。
+- **拆分器增強**：數量在前型（`1/2醋匙`→醋 1/2 匙、`3根香蕉`）、複合黏寫（`九層塔20克`、`五花300g`）；中文數字量詞需後接單位才算數（避免 `九層塔/五花肉` 誤拆）；亂碼字元原樣保留為 unmatched。
+- **同義詞新增**（`ingredient_synonyms.csv`，全部指向既有 canonical）：蔥段/蔥花/青蔥→蔥，薑末/薑絲/薑片/嫩薑→薑，蒜末/蒜蓉/蒜片→蒜頭，五花肉/五花→豬五花腩，蝦乾→蝦米，蘿蔔/菜頭→白蘿蔔，中卷/乾魷魚/魷魚乾→魷魚，雞腿/土雞腿→雞腿肉，鴨→鴨肉，低筋麵粉→麵粉。
+- **`data/reference/ingredients_to_add.md`**：人工審核用「建議新增食材」清單（名稱/建議分類/出現次數/備註）。
+- **測試**：`test_recipe_matching.py`（7 個純邏輯測試：coverage 口徑、排序確定性、兩路致敏排除、staple 致敏、未知 hint、warnings、draft 判定）；整合測試：兩種可見性、unmatched 擋發佈、staple 不擋、422/404、分頁、OpenAPI、migration 0003+0004↔schema 同步、不覆蓋人工狀態。
+
+### Changed
+
+- **配對報告口徑**：配對率分母只算非 staple 項目，另列「staple 未配對 N 項」。客家食譜重跑：189 matched / 96 unmatched / 25 staple-unmatched，配對率 56.1%→**66.3%**，完全配對食譜 0→2。
+- `recipe_ingredient` 的 `is_staple` 判定改用正規化後名稱比對。
+- review_queue 的 reviewer_note 加入 unmatched_staples 數量。
+
 ## [0.5.0] - 2026-10-30
 
 ### Added

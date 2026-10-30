@@ -396,12 +396,11 @@ def test_detail_endpoint_returns_nutrients(nutrition_db):
 def recipes_db(imported_db):
     """DB with seed ingredients + recipe-pipeline schema objects."""
     with psycopg.connect(imported_db, autocommit=True) as conn:
-        for col in ("unmatched_ingredients", "allergen_hints", "content_hash"):
+        for mig in ("0003_recipe_pipeline.sql",
+                    "0004_recipe_unmatched_staples.sql"):
             conn.execute(
-                f"ALTER TABLE recipe ADD COLUMN IF NOT EXISTS {col} "
-                "text[] NOT NULL DEFAULT '{}'" if col != "content_hash"
-                else "ALTER TABLE recipe ADD COLUMN IF NOT EXISTS content_hash text"
-            )
+                (REPO_ROOT / "docs" / "db" / "migrations" / mig)
+                .read_text(encoding="utf-8"))
         conn.execute(
             "CREATE OR REPLACE VIEW published_recipe AS SELECT * FROM recipe "
             "WHERE status = 'published' AND cardinality(unmatched_ingredients) = 0"
@@ -488,3 +487,147 @@ def test_migration_matches_schema(recipes_db):
         assert col in mig and col in schema
     assert "cardinality(unmatched_ingredients) = 0" in mig
     assert "cardinality(unmatched_ingredients) = 0" in schema
+
+
+def test_migration_0004_and_staples_not_blocking(recipes_db):
+    mig = (
+        REPO_ROOT / "docs" / "db" / "migrations" /
+        "0004_recipe_unmatched_staples.sql"
+    ).read_text(encoding="utf-8")
+    schema = (REPO_ROOT / "docs" / "db" / "schema.sql").read_text(encoding="utf-8")
+    assert "unmatched_staples" in mig and "unmatched_staples" in schema
+    with psycopg.connect(recipes_db, autocommit=True) as conn:
+        conn.execute(
+            "ALTER TABLE recipe ADD COLUMN IF NOT EXISTS "
+            "unmatched_staples text[] NOT NULL DEFAULT '{}'")
+        rid = conn.execute(
+            "INSERT INTO recipe (title, status, unmatched_ingredients,"
+            " unmatched_staples) VALUES ('t','published','{}','{''x''}')"
+            " RETURNING id").fetchone()[0]
+        assert conn.execute(
+            "SELECT count(*) FROM published_recipe WHERE id=%s",
+            (rid,)).fetchone()[0] == 1
+
+
+# --------------------------------------------------------------------------
+# Recipe matching API (v0.6.0)
+# --------------------------------------------------------------------------
+
+
+def _mk_recipe(conn, title, status, matched, unmatched=None, staples=None,
+               hints=None):
+    unmatched, staples, hints = unmatched or [], staples or [], hints or []
+    """matched/staples: [(ingredient_id, is_staple)] pairs."""
+    rid = conn.execute(
+        "INSERT INTO recipe (title, status, unmatched_ingredients,"
+        " unmatched_staples, allergen_hints) VALUES (%s,%s,%s,%s,%s)"
+        " RETURNING id",
+        (title, status, unmatched, staples, hints)).fetchone()[0]
+    for iid, staple in matched:
+        conn.execute(
+            "INSERT INTO recipe_ingredient (recipe_id, ingredient_id,"
+            " raw_text, is_staple) VALUES (%s,%s,'x',%s)",
+            (rid, iid, staple))
+    return rid
+
+
+@pytest.fixture()
+def recipe_api_db(recipes_db):
+    """Controlled recipes: full-match pub, unmatched pub, pending, staple-only."""
+    with psycopg.connect(recipes_db, autocommit=True) as conn:
+        egg = conn.execute(
+            "SELECT id FROM ingredient WHERE name_zh='雞蛋'").fetchone()[0]
+        chx = conn.execute(
+            "SELECT id FROM ingredient WHERE name_zh='雞胸肉'").fetchone()[0]
+        ok = _mk_recipe(conn, "全配對", "published", [(egg, False)])
+        hid = _mk_recipe(conn, "有未配對", "published", [(egg, False)],
+                         unmatched=["神秘菜"])
+        drf = _mk_recipe(conn, "待審核", "pending_review", [(egg, False)])
+        stp = _mk_recipe(conn, "只有常備料未配", "published",
+                         [(chx, False)], staples=["蠔油"], hints=["甲殼類"])
+        rej = _mk_recipe(conn, "退回", "rejected", [(egg, False)])
+        # make the fixture ingredients visible in non-draft mode
+        conn.execute("UPDATE ingredient SET reviewed=true WHERE id IN (%s,%s)",
+                     (egg, chx))
+    return {"url": recipes_db, "egg": egg, "chx": chx, "ok": ok,
+            "hid": hid, "drf": drf, "stp": stp, "rej": rej}
+
+
+def test_suggest_visibility_modes(recipe_api_db):
+    with _client(recipe_api_db["url"], drafts=False) as c:
+        r = c.post("/api/recipes/suggest",
+                   json={"ingredient_ids": [recipe_api_db["egg"]]})
+        assert r.status_code == 200
+        ids = {x["id"] for x in r.json()["recipes"]}
+        # published+unmatched stays hidden; pending/rejected hidden
+        assert recipe_api_db["ok"] in ids
+        assert recipe_api_db["hid"] not in ids
+        assert recipe_api_db["drf"] not in ids
+    with _client(recipe_api_db["url"], drafts=True) as c:
+        r = c.post("/api/recipes/suggest",
+                   json={"ingredient_ids": [recipe_api_db["egg"]]})
+        ids = {x["id"] for x in r.json()["recipes"]}
+        assert recipe_api_db["drf"] in ids and recipe_api_db["rej"] not in ids
+
+
+def test_suggest_unmatched_staple_not_blocking(recipe_api_db):
+    with _client(recipe_api_db["url"], drafts=False) as c:
+        r = c.post("/api/recipes/suggest",
+                   json={"ingredient_ids": [recipe_api_db["chx"]]})
+        recipes = {x["id"]: x for x in r.json()["recipes"]}
+        assert recipe_api_db["stp"] in recipes
+        assert recipes[recipe_api_db["stp"]]["draft"] is False
+        assert "甲殼類" in recipes[recipe_api_db["stp"]]["allergens"]
+        assert recipes[recipe_api_db["stp"]]["allergen_warning"] is True
+
+
+def test_suggest_allergen_exclusion_and_422(recipe_api_db):
+    egg_allergen = None
+    with psycopg.connect(recipe_api_db["url"]) as conn:
+        row = conn.execute(
+            "SELECT allergen_id FROM ingredient_allergen WHERE ingredient_id=%s "
+            "LIMIT 1", (recipe_api_db["egg"],)).fetchone()
+        if row:
+            egg_allergen = row[0]
+        else:
+            egg_allergen = conn.execute(
+                "SELECT id FROM allergen LIMIT 1").fetchone()[0]
+    with _client(recipe_api_db["url"], drafts=False) as c:
+        r = c.post("/api/recipes/suggest",
+                   json={"ingredient_ids": [recipe_api_db["egg"]],
+                         "exclude_allergens": [egg_allergen]})
+        assert r.status_code == 200
+        assert r.json()["excluded_by_allergen_count"] >= 0
+        r = c.post("/api/recipes/suggest",
+                   json={"ingredient_ids": [999999]})
+        assert r.status_code == 422 and "999999" in str(r.json()["detail"])
+        r = c.post("/api/recipes/suggest",
+                   json={"ingredient_ids": [recipe_api_db["egg"]],
+                         "exclude_allergens": [888888]})
+        assert r.status_code == 422
+
+
+def test_recipe_detail_and_404(recipe_api_db):
+    with _client(recipe_api_db["url"], drafts=False) as c:
+        r = c.get(f"/api/recipes/{recipe_api_db['ok']}")
+        assert r.status_code == 200
+        body = r.json()
+        assert body["ingredients"][0]["ingredient_id"] == recipe_api_db["egg"]
+        assert body["draft"] is False and body["disclaimer"]
+        r = c.get(f"/api/recipes/{recipe_api_db['hid']}")
+        assert r.status_code == 404   # published w/ unmatched → hidden
+        r = c.get(f"/api/recipes/{recipe_api_db['drf']}")
+        assert r.status_code == 404   # pending hidden in non-draft mode
+    with _client(recipe_api_db["url"], drafts=True) as c:
+        r = c.get(f"/api/recipes/{recipe_api_db['drf']}")
+        assert r.status_code == 200 and r.json()["draft"] is True
+
+
+def test_suggest_pagination_and_openapi(recipe_api_db):
+    with _client(recipe_api_db["url"], drafts=True) as c:
+        r = c.post("/api/recipes/suggest",
+                   json={"ingredient_ids": [recipe_api_db["egg"]],
+                         "limit": 1, "offset": 0})
+        assert r.status_code == 200 and len(r.json()["recipes"]) == 1
+        r = c.get("/openapi.json")
+        assert r.status_code == 200 and "/api/recipes/suggest" in r.text
