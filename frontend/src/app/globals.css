@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  /* canvas & surfaces (DESIGN.md: oatmeal linen + paper layering) */
+  --color-canvas: #f8f5ef;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f0f3f1;
+  --color-ink: #2f3a35;
+  --color-ink-muted: #64746b;
+  --color-line: #e3ddd3;
+  --color-primary: #5a7c6d;
+  --color-primary-dark: #426355;
+
+  /* suitability triage (RATING_CRITERIA three-level scale) */
+  --color-suitable: #4e8752;
+  --color-suitable-bg: #e8f5e9;
+  --color-caution: #d9822b;
+  --color-caution-bg: #fef3e2;
+  --color-trigger: #c85a54;
+  --color-trigger-bg: #fce8e6;
+
+  --shadow-card: 0 4px 20px -2px rgba(47, 58, 53, 0.05);
+  --shadow-lift: 0 10px 30px -4px rgba(47, 58, 53, 0.08);
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-noto-sans-tc), "Noto Sans TC", "PingFang TC",
+    "Microsoft JhengHei", system-ui, sans-serif;
+  letter-spacing: 0.015em;
+}
+
+/* leave room for the mobile bottom nav */
+main {
+  padding-bottom: 4.5rem;
+}
+@media (min-width: 768px) {
+  main {
+    padding-bottom: 2.5rem;
+  }
+}
