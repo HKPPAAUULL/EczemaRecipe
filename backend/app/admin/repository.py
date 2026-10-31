@@ -388,6 +388,10 @@ def get_recipe_detail(conn, rid: int) -> dict | None:
         (rid,)).fetchall()
     rec["publish_errors"] = rules.validate_publish(
         list(rec["unmatched_ingredients"]), rec["matched"])
+    union = set(rec["allergen_hints"] or [])
+    for m in rec["matched"]:
+        union.update(m["allergens"])
+    rec["allergen_union"] = sorted(union)
     return rec
 
 

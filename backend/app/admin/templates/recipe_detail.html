@@ -25,8 +25,9 @@
 </section>
 
 <section>
-<h2>致敏提示（allergen_hints，唯讀）</h2>
-<p>{% for h in rec.allergen_hints %}<span class="badge r-caution">{{ h }}</span> {% else %}<span class="muted">無</span>{% endfor %}</p>
+<h2>致敏提示（原文掃描＋已配對食材過敏原）</h2>
+<p>{% for h in rec.allergen_union %}<span class="badge r-caution">{{ h }}</span> {% else %}<span class="muted">無</span>{% endfor %}</p>
+<p class="muted" style="font-size:.85em">原文關鍵字掃描：{{ rec.allergen_hints | join('、') or '無' }}；已配對食材過敏原另見下表「過敏原」欄。</p>
 </section>
 
 <section>

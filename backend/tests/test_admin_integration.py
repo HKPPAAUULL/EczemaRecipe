@@ -368,6 +368,15 @@ def test_reject_resubmit_and_queue(db, client):
     assert f'href="/admin/recipes/{rid}"' in client.get("/admin/queue").text
 
 
+def test_recipe_detail_allergen_union(db, client):
+    iid = mk_ing(db, "梅乾菜", rating="caution", reason="x", reviewed=True,
+                 allergen="histamine")
+    rid = mk_recipe(db, matched=[iid], hints=["小麥"])
+    html = client.get(f"/admin/recipes/{rid}").text
+    assert html.count("組織胺") >= 2  # union badge + matched table
+    assert "小麥" in html
+
+
 def test_recipe_edit_and_validation(db, client):
     rid = mk_recipe(db)
     ok = post(client, f"/admin/recipes/{rid}/edit", description="簡介", score="88.5",
