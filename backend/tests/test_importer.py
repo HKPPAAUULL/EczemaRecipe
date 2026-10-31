@@ -248,7 +248,7 @@ def test_import_seed_rejects_missing_allergen_rows():
 
 def test_real_csv_parses_and_is_valid():
     rows = parse_seed_csv(SEED_CSV)
-    assert len(rows) == 163
+    assert len(rows) == 210
     # every caution/trigger carries a reason (parse_seed_csv already enforces)
     assert all(
         r.rating_reason
@@ -266,7 +266,7 @@ def test_real_csv_parses_and_is_valid():
 
 def test_real_csv_needs_senior_review_count():
     rows = parse_seed_csv(SEED_CSV)
-    assert sum(r.needs_senior_review for r in rows) == 73
+    assert sum(r.needs_senior_review for r in rows) == 120
 
 
 def test_real_csv_synonym_merge_reports_unmatched():

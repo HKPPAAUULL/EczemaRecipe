@@ -76,19 +76,19 @@ def _import(db_url, rows, unmatched, dry_run=False):
 def test_import_is_idempotent(fresh_db, seed_rows):
     rows, unmatched = seed_rows
     s1 = _import(fresh_db, rows, unmatched)
-    assert s1.inserted == 163
+    assert s1.inserted == 210
     assert s1.updated == 0
     with psycopg.connect(fresh_db) as conn:
         counts_after_first = _table_counts(conn)
 
     s2 = _import(fresh_db, rows, unmatched)
     assert s2.inserted == 0
-    assert s2.updated == 163
+    assert s2.updated == 210
     with psycopg.connect(fresh_db) as conn:
         counts_after_second = _table_counts(conn)
 
     assert counts_after_first == counts_after_second
-    assert counts_after_second["ingredient"] == 163
+    assert counts_after_second["ingredient"] == 210
 
 
 def test_reimport_never_overwrites_reviewed_ingredient(fresh_db, seed_rows):
@@ -261,7 +261,7 @@ def test_include_drafts_shows_everything(imported_db):
         cats_total = sum(
             c["ingredient_count"] for c in client.get("/api/categories").json()
         )
-        assert cats_total == 163
+        assert cats_total == 210
 
 
 def test_search_ranking_and_aliases(imported_db):

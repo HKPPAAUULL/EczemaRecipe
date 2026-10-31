@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.4] - 2026-10-31
+
+### Added
+
+- 批量處理客家食譜未配對食材：46 項新食材草稿（unrated／需資深審核），豬肚、豬肺、豬大腸、免治豬肉、土雞、鴨肉、鴨血、小魚乾、辣椒、秋葵、四季豆、竹筍、筍乾、酸菜、鹹菜、梅乾菜、福菜、荸薺、野蓮、過貓、紅蔥頭、九層塔、紫蘇、艾草、長豆、金桔、蓮霧、柿餅、木鱉子、豆干、春捲皮、鮮奶油、美乃滋（蛋過敏原標記）、桔醬、樹子醬、辣味露、鮮味露、雞高湯、吉士粉、蘇打粉、酥炸粉、仙草、枸杞；同義詞對應配對 38 項（香菜少許→香菜、豆鼓→豆豉、蛤蠣→蜆、吐司→白麵包等）；2 項非食材忽略（翡翠、盤飾）。食譜未配對食材歸零。
+- `scripts/fix_unmatched.py`：批量處理腳本（經 admin repository 函數，保留稽核與審核佇列）。
+- 種子 CSV 補入 47 項新食材；同義詞表補 54 組。
+
 ## [0.10.3] - 2026-10-31
 
 ### Added

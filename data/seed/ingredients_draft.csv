@@ -162,3 +162,50 @@
 飲品,紅茶,black tea,紅茶;奶茶底,caution,茶含水楊酸，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,港式奶茶另含奶，須分開評估
 飲品,咖啡,coffee,咖啡;coffee,unrated,資料不足：未找到可靠來源,,,true,
 飲品,菊花茶,chrysanthemum tea,菊花茶;菊花;杭菊,unrated,資料不足：菊科交叉過敏可能但未有已查證來源,,,true,
+蔬菜,辣椒,chili pepper,辣椒;紅辣椒;乾辣椒;乾辣椒段;辣椒末;辣椒碎;辣椒絲,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,九層塔,basil,九層塔;羅勒;金不換,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,四季豆,green bean,四季豆;敏豆;菜豆,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,大頭菜,kohlrabi,大頭菜;結頭菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,荸薺,water chestnut,荸薺;孛齊;馬蹄,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,酸菜,pickled mustard greens,酸菜;客家酸菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,鹹菜,salted mustard greens,鹹菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,梅乾菜,dried mustard greens,梅乾菜;梅干菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,福菜,hakka dried greens,福菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,筍乾,dried bamboo shoot,筍乾,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,竹筍,bamboo shoot,竹筍;筍;鮮筍;桶筍;筍絲,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,秋葵,okra,秋葵,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,野蓮,water snowflake,野蓮,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,過貓,vegetable fern,過貓;過貓菜;過溝菜蕨,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,紫蘇,shiso / perilla,紫蘇;紫蘇葉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,艾草,mugwort,艾草;艾草心,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,長豆,yardlong bean,長豆;豇豆;長豇豆;翼豆,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,長豆乾,dried yardlong bean,長豆乾,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,紅蔥頭,shallot,紅蔥頭;紅蔥酥;乾蔥頭,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,香菜,coriander / cilantro,香菜;芫荽;芫茜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,豬肚,pork stomach / tripe,豬肚,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,豬肺,pork lung,豬肺,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,豬大腸,pork large intestine,豬大腸;大腸;豬腸,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,免治豬肉,minced pork,免治豬肉;絞肉;豬絞肉;肉碎;豬肉碎;免治肉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,鹹豬肉,salted pork,鹹豬肉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,土雞,free-range chicken,土雞;土雞塊;放山雞,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,鴨血,duck blood,鴨血;鴨紅,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+海鮮,小魚乾,dried whitebait,小魚乾;丁香魚;小魚干,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+水果,木鱉子,gac fruit,木鱉子;木虌子;木鳖子,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+水果,金桔,kumquat,金桔;金橘,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+水果,蓮霧,wax apple,蓮霧,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+水果,柿餅,dried persimmon,柿餅,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+水果,紅棗乾,dried jujube,紅棗乾;紅棗;紅枣,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+穀物主食,春捲皮,spring roll wrapper,春捲皮;春卷皮,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蛋奶,鮮奶油,whipping cream,鮮奶油;淡奶油;忌廉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+豆類及豆製品,豆干,dried tofu,豆干;豆乾,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+調味料,美乃滋,mayonnaise,美乃滋;蛋黃醬;沙拉醬,unrated,資料不足：未找到可靠來源評估,蛋,,true,由後台未配對食材快速新增；見稽核記錄
+調味料,桔醬,kumquat sauce,桔醬;金桔醬;金橘醬,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+調味料,樹子醬,cordia seed paste,樹子醬;樹子;破布子,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+調味料,辣味露,chili sauce,辣味露;辣椒水,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+調味料,鮮味露,seasoning sauce,鮮味露,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+其他,仙草,mesona / grass jelly herb,仙草;涼粉草,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+其他,枸杞,goji berry,枸杞;枸杞子,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+其他,雞高湯,chicken stock,雞高湯;高湯;上湯,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+其他,吉士粉,custard powder,吉士粉;卡士達粉,unrated,資料不足：未找到可靠來源評估,奶,,true,由後台未配對食材快速新增；見稽核記錄
+其他,蘇打粉,baking soda,蘇打粉;梳打粉;小蘇打;小蘇打粉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+其他,酥炸粉,crispy fry mix,酥炸粉;炸粉,unrated,資料不足：未找到可靠來源評估,小麥,,true,由後台未配對食材快速新增；見稽核記錄
