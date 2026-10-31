@@ -94,6 +94,7 @@ canonical_zh,alias,region,note
 小棠菜,上海白菜,both,
 小棠菜,baby bok choy,both,
 通菜,空心菜,TW,
+通菜,空菜,both,客家食譜用語
 通菜,蕹菜,both,
 通菜,water spinach,both,
 莧菜,amaranth,both,
@@ -473,6 +474,7 @@ canonical_zh,alias,region,note
 花生,peanut,both,
 花生,groundnut,both,
 栗子,板栗,both,
+栗子,粟子,both,常見異寫
 栗子,甘栗,TW,
 栗子,chestnut,both,
 合桃,核桃,TW,
@@ -656,3 +658,4 @@ canonical_zh,alias,region,note
 雞腿肉,土雞腿,TW,同一食物
 鴨肉,鴨,both,同一食物
 麵粉,低筋麵粉,both,同一食物形態
+豬瘦肉,肉絲,both,港式食譜「肉絲」多指豬肉絲

@@ -16,6 +16,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from app.crawler.allergens import load_keyword_map, scan_allergens
+from app.crawler.base import content_hash
 from app.crawler.matcher import IngredientMatcher
 from app.crawler.parse import normalize
 
@@ -123,11 +124,22 @@ def import_recipes(conn, source_name, source_url, license_, records,
             stats.recipes_fully_matched += 1
         hints = scan_allergens([i.raw_text for i in all_items], keyword_map)
 
+        # Stored hash covers match OUTPUT as well as source fields: adding a
+        # synonym/staple/keyword changes match results and must re-write the
+        # row, not hit the unchanged-skip path.
+        stored_hash = content_hash(
+            rec.content_hash,
+            ",".join(str(i) for i in sorted(matched)),
+            "|".join(sorted(unmatched)),
+            "|".join(sorted(unmatched_staple)),
+            "|".join(sorted(hints)),
+        )
+
         row = conn.execute(
             "SELECT id, status, content_hash FROM recipe WHERE source_url=%s",
             (rec.source_url,),
         ).fetchone()
-        if row and row[2] == rec.content_hash:
+        if row and row[2] == stored_hash:
             stats.skipped_unchanged += 1
             continue
         if row and row[1] in ("published", "rejected"):
@@ -140,7 +152,7 @@ def import_recipes(conn, source_name, source_url, license_, records,
                 " content_hash=%s, unmatched_ingredients=%s,"
                 " unmatched_staples=%s, allergen_hints=%s"
                 " WHERE id=%s",
-                (rec.title, rec.description or None, ds_id, rec.content_hash,
+                (rec.title, rec.description or None, ds_id, stored_hash,
                  unmatched, unmatched_staple, hints, rid),
             )
             conn.execute(
@@ -155,7 +167,7 @@ def import_recipes(conn, source_name, source_url, license_, records,
                 " VALUES (%s,%s,%s,%s,'pending_review',%s,%s,%s,%s)"
                 " RETURNING id",
                 (rec.title, rec.description or None, rec.source_url, ds_id,
-                 rec.content_hash, unmatched, unmatched_staple, hints),
+                 stored_hash, unmatched, unmatched_staple, hints),
             ).fetchone()[0]
             stats.inserted += 1
             conn.execute(
