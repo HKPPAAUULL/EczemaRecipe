@@ -397,7 +397,43 @@ def recipes(request: Request, session: auth.Session = SESSION):
     return render(request, "recipes.html", session, rows=rows, nav="recipes",
                   f={"status": status, "unmatched": unmatched,
                      "original": original, "q": q},
-                  statuses=repo.RECIPE_STATUSES, pager=_pager(total, page, params))
+                  statuses=repo.RECIPE_STATUSES, pager=_pager(total, page, params),
+                  next_qs=_next_recipes(status, unmatched, original, q, page))
+
+
+def _next_recipes(status, unmatched, original, q, page) -> str:
+    params = {"status": status, "unmatched": "1" if unmatched else "",
+              "original": original, "q": q, "page": page}
+    clean = {k: v for k, v in params.items() if v not in (None, "")}
+    return "/admin/recipes" + ("?" + urlencode(clean) if clean else "")
+
+
+def _safe_recipes_next(raw: str) -> str:
+    ok = (raw.startswith("/admin/recipes") and not raw.startswith("//")
+          and "://" not in raw and "\\" not in raw and "\n" not in raw)
+    return raw if ok else "/admin/recipes"
+
+
+@router.post("/recipes/{rid}/quick-review")
+def recipe_quick_review(rid: int, request: Request,
+                        session: auth.Session = SESSION, form=FORM):
+    action = _text(form, "action")
+    next_url = _safe_recipes_next(_text(form, "next"))
+    if action not in ("publish", "resubmit"):
+        raise HTTPException(status_code=422, detail="invalid action")
+    with db_conn(request) as conn:
+        rec = repo.get_recipe(conn, rid)
+        if rec is None:
+            raise HTTPException(status_code=404, detail="not found")
+        title = rec["title"]
+        errors = repo.change_recipe_status(conn, rid, action, "")
+    if errors:
+        flash(request, session, *[f"{title}：{e}" for e in errors])
+    else:
+        flash(request, session,
+              f"{title} 已發佈。" if action == "publish"
+              else f"{title} 已重新送審（現已不公開）。")
+    return redirect(next_url)
 
 
 def _recipe_page(request, session, rid, errors=None, status=200, form=None):

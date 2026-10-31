@@ -154,10 +154,11 @@ class FakeResult:
 class FakeConn:
     """Records executed SQL; returns canned rows for the lookups import_seed makes."""
 
-    def __init__(self, categories, allergens, existing=None):
+    def __init__(self, categories, allergens, existing=None, reviewed=()):
         self.categories = categories  # [(id, name_zh)]
         self.allergens = allergens  # [(id, name_zh)]
         self.existing = existing or {}  # name_zh -> ingredient id
+        self.reviewed = set(reviewed)  # name_zh of human-reviewed rows
         self.queries = []
         self._next_iid = 100
 
@@ -168,9 +169,10 @@ class FakeConn:
             return FakeResult(self.categories)
         if s.startswith("select id, name_zh from allergen"):
             return FakeResult(self.allergens)
-        if s.startswith("select id from ingredient where name_zh"):
+        if s.startswith("select id, reviewed from ingredient where name_zh"):
             iid = self.existing.get(params[0])
-            return FakeResult([(iid,)] if iid else [])
+            return FakeResult(
+                [(iid, params[0] in self.reviewed)] if iid else [])
         if s.startswith("select id from data_source where name"):
             return FakeResult([(1,)])
         if "returning id" in s:
@@ -219,6 +221,20 @@ def test_import_seed_update_path_and_evidence_conflict():
     assert all("on conflict" in q for q in evidence_inserts)
 
 
+def test_import_seed_never_overwrites_reviewed_rows():
+    conn = FakeConn(
+        categories=[(1, "蛋奶")], allergens=[(1, "蛋")],
+        existing={"雞蛋": 7}, reviewed={"雞蛋"},
+    )
+    row = _row(urls=["https://www.cfs.gov.hk/a"])
+    summary = import_seed(conn, [row])
+    assert summary.skipped_reviewed == 1 and summary.updated == 0
+    dml = [q for q in conn.queries if q.startswith(("insert", "update", "delete"))]
+    assert len(dml) == 1 and dml[0].startswith("update ingredient set name_en")
+    for q in dml:
+        assert "eczema_rating" not in q and "rating_reason" not in q
+
+
 def test_import_seed_rejects_missing_allergen_rows():
     conn = FakeConn(categories=[(1, "蛋奶")], allergens=[])
     with pytest.raises(SeedValidationError, match="allergen"):
@@ -250,7 +266,7 @@ def test_real_csv_parses_and_is_valid():
 
 def test_real_csv_needs_senior_review_count():
     rows = parse_seed_csv(SEED_CSV)
-    assert sum(r.needs_senior_review for r in rows) == 71
+    assert sum(r.needs_senior_review for r in rows) == 73
 
 
 def test_real_csv_synonym_merge_reports_unmatched():

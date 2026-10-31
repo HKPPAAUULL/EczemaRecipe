@@ -172,7 +172,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 - [ ] ~~寫信徵詢授權~~（2026-10-30 用戶決定**不寄授權信**；改為持續尋找無需授權的來源，需授權的來源一律不爬，見 §4.5）。原清單：衞生署長者健康服務（ehsenq@dh.gov.hk）／衞生防護中心（可否擷取食材清單並附原文連結）、Cookpad（info-tw@cookpad.com）、愛料理、國民健康署
 - [ ] 補查未核實項目：國民健康署與 fae.moa.gov.tw 的 robots／條款、USDA 與 Open Food Facts 條款、醫院管理局食譜頁
 - [x] 食譜庫起步內容決定（2026-10-30）：第二輪來源搜尋（SOURCES.md D、E 級）找不到更多合格的開放來源；國家文化記憶庫食譜量太少（已核實約 11 道）不建管線；之後以自建原創食譜為主，現階段先建立網站
-- [ ] 人工審核 `data/seed/ingredients_draft.csv`（163 項草稿，71 項標 needs_senior_review，22 項 unrated）
+- [ ] 人工審核 `data/seed/ingredients_draft.csv`（163 項草稿，73 項標 needs_senior_review，22 項 unrated；牛腩、牛柳於 2026-10-31 改為 caution（衞生署學生健康服務））
 - [x] 以真實 Postgres 16 驗證 schema（CI 與本機 Docker 均已驗證）
 - [ ] 若日後有商業用途（廣告、會員），須重新檢視所有「非商業限定」來源
 - [x] Stitch 設計稿已匯出（`stitch_eczema_kitchen/`），審查結果見 `docs/DESIGN_REVIEW.md`；design token 於開始製作前端時抽取
@@ -203,6 +203,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-30 | v0.2.5 | 第二輪來源搜尋結論（D、E 級）：無更多合格開放食譜來源；用戶決定不建國家文化記憶庫管線，食譜日後自建 |
 | 2026-10-30 | v0.2.4 | v0.8.0：正式部署準備（prod compose、cloudflared profile、SEO、安全 header、BFF 限速、私隱頁） |
 | 2026-10-30 | v0.2.3 | v0.7.0：前端食譜配對／忌口設定（localStorage）／買餸清單；新增 `/admin` 審核介面（規則伺服器端強制）、`audit_log` 表；審核介面決定採 FastAPI 本機後台 |
+| 2026-10-31 | v0.10.1 | 食譜列表一鍵審核；匯入器保護已審核食材；牛肉評級改為 caution |
 | 2026-10-31 | v0.10.0 | 「傳統說法（中醫）」功能：`ingredient_tradition_note` 表＋migration 0007、`import-tradition` 匯入器（34 條、全部待審核）、詳情 API 回傳 reviewed 說法、/admin 逐條審核、前端 `TraditionNotes` 卡（非實證標示、不影響評級）＋ `InsufficientDataNotice`（unrated）；私隱頁移除聯絡方式 |
 | 2026-10-30 | v0.2.2 | v0.6.0：`POST /api/recipes/suggest`、`GET /api/recipes/{id}`（覆蓋率不計常備調味料、未配對項計入分母、過敏原硬排除並回報剔除數、排序＝覆蓋率×友善分數）；常備調味料未配對不再阻擋發佈（致敏改由關鍵字掃描覆蓋）；配對率 66.3% |
 | 2026-10-30 | v0.2.1 | 新增 §4.5：用戶決定不寄授權信，僅爬無需授權來源，持續尋找新來源；階段 4 開始（客家開放資料管線） |

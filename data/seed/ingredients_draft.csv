@@ -6,8 +6,8 @@
 肉類,豬五花腩,pork belly,五花肉;五花腩;腩肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,脂肪較高
 肉類,豬肝,pork liver,豬潤;豬肝,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,內臟；膽固醇及維他命A含量高，宜適量
 肉類,豬骨,pork bones,排骨;豬脊骨;豬骨,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
-肉類,牛腩,beef brisket,牛腩;牛肋條,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
-肉類,牛柳,beef tenderloin,牛里脊;牛排;牛肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
+肉類,牛腩,beef brisket,牛腩;牛肋條,caution,因人而異；衞生署列出牛肉蛋白質為濕疹可能成因之一（依據：食物蛋白／過敏原；適用：已知對牛肉或牛奶蛋白過敏、或進食後濕疹明顯惡化者；不建議未確診者盲目戒口；來源：衞生署學生健康服務）,,https://www.studenthealth.gov.hk/tc_chi/health/health_ophp/health_ophp_tet.html,true,衞生署僅列為可能成因，未註明證據等級；審核時留意不寫成戒口建議。傳統「發物」說法只放傳統說法卡，不屬評級理由
+肉類,牛柳,beef tenderloin,牛里脊;牛排;牛肉,caution,因人而異；衞生署列出牛肉蛋白質為濕疹可能成因之一（依據：食物蛋白／過敏原；適用：已知對牛肉或牛奶蛋白過敏、或進食後濕疹明顯惡化者；不建議未確診者盲目戒口；來源：衞生署學生健康服務）,,https://www.studenthealth.gov.hk/tc_chi/health/health_ophp/health_ophp_tet.html,true,衞生署僅列為可能成因，未註明證據等級；審核時留意不寫成戒口建議。傳統「發物」說法只放傳統說法卡，不屬評級理由
 肉類,羊肉,lamb / mutton,羊肉;羔羊,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
 肉類,鴨肉,duck,鴨;鴨肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,
 肉類,鵝肉,goose,鵝;燒鵝肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,

@@ -205,6 +205,7 @@ class ImportSummary:
     rows_total: int = 0
     inserted: int = 0
     updated: int = 0
+    skipped_reviewed: int = 0
     rating_counts: dict[str, int] = field(default_factory=dict)
     needs_senior_review: int = 0
     allergen_links: int = 0
@@ -216,6 +217,7 @@ class ImportSummary:
         lines = [
             f"import-seed summary{' (dry-run: rolled back)' if dry_run else ''}:",
             f"  rows: {self.rows_total} (inserted={self.inserted}, updated={self.updated})",
+            f"  reviewed rows: health fields left untouched ({self.skipped_reviewed})",
             "  ratings: "
             + ", ".join(
                 f"{k}={v}" for k, v in sorted(self.rating_counts.items())
@@ -283,8 +285,20 @@ def import_seed(conn, rows: list[SeedRow], unmatched_canonicals: int = 0) -> Imp
     )
     for r in rows:
         existing = conn.execute(
-            "SELECT id FROM ingredient WHERE name_zh = %s", (r.name_zh,)
+            "SELECT id, reviewed FROM ingredient WHERE name_zh = %s",
+            (r.name_zh,),
         ).fetchone()
+        if existing and existing[1]:
+            # human-reviewed content is never overwritten by a re-import;
+            # only non-health fields (names/aliases/category) are refreshed
+            conn.execute(
+                """UPDATE ingredient SET name_en = %s, aliases = %s,
+                       category_id = %s WHERE id = %s""",
+                (r.name_en or None, r.aliases,
+                 categories[r.category_zh], existing[0]),
+            )
+            summary.skipped_reviewed += 1
+            continue
         if existing:
             iid = existing[0]
             conn.execute(

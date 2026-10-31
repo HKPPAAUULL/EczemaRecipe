@@ -557,3 +557,89 @@ def test_quick_unreview_and_idempotent(db, client):
          action="unreview", next="/admin/ingredients")
     assert one(db, "SELECT count(*) FROM audit_log WHERE entity_id=%s"
                " AND action='unreview'", iid) == 1  # second is no-op
+
+
+def test_recipe_quick_publish_success(db, client, public):
+    iid = mk_ing(db, "白菜", reviewed=True)
+    rid = mk_recipe(db, "清炒白菜", matched=[iid])
+    r = post(client, f"/admin/recipes/{rid}/quick-review",
+             action="publish", next="/admin/recipes")
+    assert r.status_code == 303 and r.headers["location"] == "/admin/recipes"
+    assert one(db, "SELECT status FROM recipe WHERE id=%s", rid) == "published"
+    assert "publish" in audit_actions(db, "recipe", rid)
+    assert rid in [x[0] for x in db.execute(
+        "SELECT id FROM published_recipe WHERE id=%s", (rid,)).fetchall()]
+
+
+def test_recipe_quick_publish_blocked_unmatched(db, client):
+    iid = mk_ing(db, "白菜", reviewed=True)
+    rid = mk_recipe(db, "蝦米白菜", unmatched=["蝦米"], matched=[iid])
+    r = post(client, f"/admin/recipes/{rid}/quick-review",
+             action="publish", next="/admin/recipes")
+    assert r.status_code == 303
+    assert one(db, "SELECT status FROM recipe WHERE id=%s", rid) == "pending_review"
+    assert "publish" not in audit_actions(db, "recipe", rid)
+    assert "未配對" in client.get("/admin/recipes").text
+
+
+def test_recipe_quick_publish_blocked_unreviewed(db, client):
+    iid = mk_ing(db, "白菜", reviewed=False)
+    rid = mk_recipe(db, "清炒白菜", matched=[iid])
+    r = post(client, f"/admin/recipes/{rid}/quick-review",
+             action="publish", next="/admin/recipes")
+    assert r.status_code == 303
+    assert one(db, "SELECT status FROM recipe WHERE id=%s", rid) == "pending_review"
+    assert "publish" not in audit_actions(db, "recipe", rid)
+    assert "尚未審核" in client.get("/admin/recipes").text
+
+
+def test_recipe_quick_unpublish_and_resubmit(db, client):
+    iid = mk_ing(db, "白菜", reviewed=True)
+    rid = mk_recipe(db, "清炒白菜", status="published", matched=[iid])
+    r = post(client, f"/admin/recipes/{rid}/quick-review",
+             action="resubmit", next="/admin/recipes")
+    assert r.status_code == 303
+    assert one(db, "SELECT status FROM recipe WHERE id=%s", rid) == "pending_review"
+    assert db.execute("SELECT id FROM published_recipe WHERE id=%s",
+                      (rid,)).fetchone() is None
+    assert "resubmit" in audit_actions(db, "recipe", rid)
+    # rejected → resubmit works too
+    rid2 = mk_recipe(db, "被退回食譜", status="rejected", matched=[iid])
+    r = post(client, f"/admin/recipes/{rid2}/quick-review",
+             action="resubmit", next="/admin/recipes")
+    assert r.status_code == 303
+    assert one(db, "SELECT status FROM recipe WHERE id=%s", rid2) == "pending_review"
+
+
+def test_recipe_quick_invalid_action_and_404(db, client):
+    iid = mk_ing(db, "白菜", reviewed=True)
+    rid = mk_recipe(db, "清炒白菜", matched=[iid])
+    r = post(client, f"/admin/recipes/{rid}/quick-review",
+             action="reject", next="/admin/recipes")
+    assert r.status_code == 422
+    r = post(client, "/admin/recipes/999999/quick-review",
+             action="publish", next="/admin/recipes")
+    assert r.status_code == 404
+
+
+def test_recipe_quick_next_whitelist(db, client):
+    iid = mk_ing(db, "白菜", reviewed=True)
+    rid = mk_recipe(db, "清炒白菜", matched=[iid])
+    for bad in ["https://evil.example", "//evil.example",
+                r"/admin/recipes\evil", "/admin/recipes\nxx"]:
+        r = post(client, f"/admin/recipes/{rid}/quick-review",
+                 action="publish", next=bad)
+        assert r.status_code == 303
+        assert r.headers["location"] == "/admin/recipes", bad
+    good = "/admin/recipes?status=pending_review&page=2"
+    rid2 = mk_recipe(db, "第二食譜", matched=[iid])
+    r = post(client, f"/admin/recipes/{rid2}/quick-review",
+             action="publish", next=good)
+    assert r.status_code == 303 and r.headers["location"] == good
+
+
+def test_recipe_quick_unauthenticated(client):
+    client.cookies.clear()
+    r = client.post("/admin/recipes/1/quick-review",
+                    data={"action": "publish"})
+    assert r.status_code == 303  # require_session → login redirect

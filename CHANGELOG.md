@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.1] - 2026-10-31
+
+### Added
+
+- 食譜審核列表一鍵操作：`POST /admin/recipes/{id}/quick-review`，按狀態顯示「發佈」（pending_review/draft）／「取消發佈」（published→pending_review）／「重新送審」（rejected）；沿用詳情頁同一套發佈規則（未配對、未審核食材、至少一項非調味料）與稽核記錄；`next` 參數限 `/admin/recipes` 開頭防止開放式跳轉。
+
+### Changed
+
+- 牛腩、牛柳種子評級 suitable→caution（來源：衞生署學生健康服務濕疹頁；needs_senior_review=true；傳統「發物」說法仍只顯示於傳統說法卡）。
+- `import-seed` 不再覆寫已人工審核的食材（rating/reason/senior 標記/過敏原/證據保持不變，只更新 name_en/aliases/category；摘要列印 `reviewed rows … untouched`）。
+
+### Fixed
+
+- 食譜爬蟲 content_hash 現涵蓋配對輸出，同義詞／常備調味料變更會重新寫入。
+- CI 不再依賴 git-ignored `data/raw`（改用合成 fixture `backend/tests/fixtures/hakka_sample.json`）。
+- docker-compose api 唯讀掛載 `./data/reference`（修容器內 `/admin/recipes/import` 500）。
+- 新增 `frontend/public/.gitkeep`（修正全新 checkout 的 Docker build）。
+
 ## [0.10.0] - 2026-10-31
 
 ### Added

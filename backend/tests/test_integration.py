@@ -91,6 +91,28 @@ def test_import_is_idempotent(fresh_db, seed_rows):
     assert counts_after_second["ingredient"] == 163
 
 
+def test_reimport_never_overwrites_reviewed_ingredient(fresh_db, seed_rows):
+    import dataclasses
+
+    rows, unmatched = seed_rows
+    _import(fresh_db, rows, unmatched)
+    with psycopg.connect(fresh_db) as conn:
+        iid, rating, reason = conn.execute(
+            "SELECT id, eczema_rating::text, rating_reason FROM ingredient "
+            "WHERE name_zh = %s", (rows[0].name_zh,)).fetchone()
+        conn.execute("UPDATE ingredient SET reviewed = true, "
+                     "reviewed_at = now() WHERE id = %s", (iid,))
+    changed = [dataclasses.replace(
+        rows[0], eczema_rating="unrated", rating_reason="CHANGED",
+        needs_senior_review=True)] + list(rows[1:])
+    s = _import(fresh_db, changed, unmatched)
+    assert s.skipped_reviewed == 1
+    with psycopg.connect(fresh_db) as conn:
+        assert conn.execute(
+            "SELECT eczema_rating::text, rating_reason, reviewed FROM ingredient "
+            "WHERE id = %s", (iid,)).fetchone() == (rating, reason, True)
+
+
 def test_import_never_publishes_anything(fresh_db, seed_rows):
     rows, unmatched = seed_rows
     _import(fresh_db, rows, unmatched)
