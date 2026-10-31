@@ -31,6 +31,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      # reference CSVs (staples, allergen keywords) — read-only;
+      # container path must match _REPO/data/reference resolution (PLAN.md §4.2)
+      - ./data/reference:/data/reference:ro
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
 
