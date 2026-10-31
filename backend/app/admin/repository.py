@@ -484,6 +484,40 @@ def map_unmatched(conn, rid: int, item: str, ingredient_id: int, is_staple: bool
     return []
 
 
+def create_ingredient_for_unmatched(
+    conn, rid: int, item: str, name_zh: str, category_id: int, is_staple: bool
+) -> list[str]:
+    name_zh = name_zh.strip()
+    errors = []
+    if not name_zh or len(name_zh) > 60 or "\n" in name_zh or "\r" in name_zh:
+        errors.append("食材名稱須為 1–60 字且不含換行。")
+    if conn.execute(
+        "SELECT 1 FROM food_category WHERE id = %s", (category_id,)
+    ).fetchone() is None:
+        errors.append("請選擇分類。")
+    if errors:
+        return errors
+    rec = get_recipe(conn, rid, lock=True)
+    if rec is None:
+        return ["找不到食譜。"]
+    if item not in list(rec["unmatched_ingredients"]):
+        return ["找不到該未配對項目（可能已被處理）。"]
+    if conn.execute(
+        "SELECT 1 FROM ingredient WHERE name_zh = %s", (name_zh,)
+    ).fetchone():
+        return [f"已有同名食材「{name_zh}」，請改用「指定配對」。"]
+    aliases = [] if item == name_zh else [item]
+    iid = conn.execute(
+        "INSERT INTO ingredient (name_zh, aliases, category_id)"
+        " VALUES (%s, %s, %s) RETURNING id",
+        (name_zh, aliases, category_id),
+    ).fetchone()["id"]
+    audit(conn, "ingredient", iid, "create",
+          {"name_zh": name_zh, "aliases": aliases, "category_id": category_id,
+           "from_recipe": rid, "item": item})
+    return map_unmatched(conn, rid, item, iid, is_staple)
+
+
 def ignore_unmatched(conn, rid: int, item: str, reason: str) -> list[str]:
     reason = reason.strip()
     if not reason:

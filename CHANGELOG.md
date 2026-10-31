@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.3] - 2026-10-31
+
+### Added
+
+- 食譜詳情頁未配對食材區域加入「快速新增食材」：`POST /admin/recipes/{id}/unmatched/create-ingredient`，在展開的未配對項目內一鍵建立食材草稿（unrated／未審核）並即時配對；原文自動存為別名方便日後配對；同名食材擋下並提示改用「指定配對」；需選分類，可標調味料；新增與配對均寫入稽核記錄。
+
 ## [0.10.2] - 2026-10-31
 
 ### Changed

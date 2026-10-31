@@ -56,6 +56,15 @@
 <button type="submit">指定配對</button>
 {% else %}<span class="muted">找不到符合的食材。</span>{% endif %}
 </form>
+<details><summary>快速新增食材（建為未審核草稿並配對）</summary>
+<form method="post" action="/admin/recipes/{{ rec.id }}/unmatched/create-ingredient" class="filters">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="item" value="{{ item }}">
+<label>名稱 <input type="text" name="name_zh" value="{{ item }}" size="14" required maxlength="60"></label>
+<select name="category_id" required aria-label="分類"><option value="">選擇分類</option>{% for c in categories %}<option value="{{ c.id }}">{{ c.name_zh }}</option>{% endfor %}</select>
+<label><input type="checkbox" name="is_staple" value="1"> 調味料</label>
+<button type="submit" class="secondary">新增並配對</button></form>
+<p class="muted" style="font-size:.85em">新增後為未審核草稿；食譜發佈前須在食材詳情頁完成評級與審核。</p>
+</details>
 {% endif %}
 <form method="post" action="/admin/recipes/{{ rec.id }}/unmatched/ignore" class="filters">
 <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="item" value="{{ item }}">

@@ -275,6 +275,66 @@ def test_unmatched_map_ignore_staple_and_publish(db, client, public):
     assert one(db, "SELECT allergen_hints FROM recipe WHERE id=%s", rid) == ["蛋"]
 
 
+def test_unmatched_create_ingredient_quick_add(db, client):
+    cat = one(db, "SELECT id FROM food_category ORDER BY id LIMIT 1")
+    rid = mk_recipe(db, unmatched=["秋葵2條", "奇怪粉"], hints=[])
+    r = post(client, f"/admin/recipes/{rid}/unmatched/create-ingredient",
+             item="秋葵2條", name_zh="秋葵", category_id=cat)
+    assert r.status_code == 303
+    row = db.execute(
+        "SELECT id, eczema_rating, reviewed, aliases, category_id"
+        " FROM ingredient WHERE name_zh = '秋葵'").fetchone()
+    iid, rating, reviewed, aliases, cid = row
+    assert (rating, reviewed, aliases, cid) == ("unrated", False, ["秋葵2條"], cat)
+    link = db.execute(
+        "SELECT raw_text, is_staple FROM recipe_ingredient"
+        " WHERE recipe_id = %s AND ingredient_id = %s", (rid, iid)).fetchone()
+    assert link == ("秋葵2條", False)
+    assert db.execute(
+        "SELECT unmatched_ingredients FROM recipe WHERE id = %s", (rid,)
+    ).fetchone()[0] == ["奇怪粉"]
+    assert audit_actions(db, "ingredient", iid) == ["create"]
+    assert audit_actions(db, "recipe", rid) == ["map_unmatched"]
+
+
+def test_unmatched_create_ingredient_staple_and_same_name(db, client):
+    cat = one(db, "SELECT id FROM food_category ORDER BY id LIMIT 1")
+    rid = mk_recipe(db, unmatched=["孜然粉"], hints=[])
+    r = post(client, f"/admin/recipes/{rid}/unmatched/create-ingredient",
+             item="孜然粉", name_zh="孜然粉", category_id=cat, is_staple="1")
+    assert r.status_code == 303
+    iid, aliases = db.execute(
+        "SELECT id, aliases FROM ingredient WHERE name_zh = '孜然粉'").fetchone()
+    assert aliases == []
+    assert db.execute(
+        "SELECT is_staple FROM recipe_ingredient"
+        " WHERE recipe_id = %s AND ingredient_id = %s", (rid, iid)).fetchone()[0] is True
+
+
+def test_unmatched_create_ingredient_validation(db, client):
+    cat = one(db, "SELECT id FROM food_category ORDER BY id LIMIT 1")
+    mk_ing(db, "辣椒")
+    rid = mk_recipe(db, unmatched=["辣椒碎", "神秘粉"], hints=[])
+    base = f"/admin/recipes/{rid}/unmatched/create-ingredient"
+    # 同名已存在 → 提示改用指定配對
+    r = post(client, base, item="辣椒碎", name_zh="辣椒", category_id=cat)
+    assert r.status_code == 422 and "指定配對" in r.text
+    # 無效分類
+    assert post(client, base, item="辣椒碎", name_zh="辣椒碎", category_id=99999
+                ).status_code == 422
+    # 名稱為空
+    assert post(client, base, item="神秘粉", name_zh="  ", category_id=cat
+                ).status_code == 422
+    # item 已不在未配對列表
+    assert post(client, base, item="不存在", name_zh="新食材", category_id=cat
+                ).status_code == 422
+    # 全部失敗後未建立任何食材
+    assert one(db, "SELECT count(*) FROM ingredient") == 1
+    assert db.execute(
+        "SELECT unmatched_ingredients FROM recipe WHERE id = %s", (rid,)
+    ).fetchone()[0] == ["辣椒碎", "神秘粉"]
+
+
 def test_publish_requires_non_staple_and_reviewed(db, client):
     ing = mk_ing(db, "調味料食材", "suitable", reviewed=True)
     rid = mk_recipe(db, matched=[])

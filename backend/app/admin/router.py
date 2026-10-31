@@ -443,6 +443,7 @@ def _recipe_page(request, session, rid, errors=None, status=200, form=None):
     with db_conn(request) as conn:
         rec = _or_404(repo.get_recipe_detail(conn, rid))
         candidates = repo.search_ingredients(conn, q) if find else []
+        categories = repo.list_categories(conn)
     score = rec["eczema_friendly_score"]
     values = {
         "description": rec["description"] or "",
@@ -455,7 +456,7 @@ def _recipe_page(request, session, rid, errors=None, status=200, form=None):
                   "cook_time": _text(form, "cook_time"), "servings": _text(form, "servings")}
     return render(request, "recipe_detail.html", session, status=status, rec=rec,
                   values=values, find=find, q=q, candidates=candidates,
-                  errors=errors or [], nav="recipes")
+                  categories=categories, errors=errors or [], nav="recipes")
 
 
 # ---------------------------------------------------------------------------
@@ -754,6 +755,17 @@ def recipe_map(rid: int, request: Request,
             conn, rid, _text(form, "item"), _int(form.get("ingredient_id"), -1),
             form.get("is_staple") == "1")
     return _after_recipe_change(request, session, rid, errors, "已配對食材。")
+
+
+@router.post("/recipes/{rid}/unmatched/create-ingredient")
+def recipe_create_ingredient(rid: int, request: Request,
+                             session: auth.Session = SESSION,
+                             form=FORM):
+    with db_conn(request) as conn:
+        errors = repo.create_ingredient_for_unmatched(
+            conn, rid, _text(form, "item"), _text(form, "name_zh"),
+            _int(form.get("category_id"), -1), form.get("is_staple") == "1")
+    return _after_recipe_change(request, session, rid, errors, "已新增食材並配對。")
 
 
 @router.post("/recipes/{rid}/unmatched/ignore")
