@@ -73,6 +73,23 @@
 </section>
 
 <section>
+<h2>傳統說法（中醫）</h2>
+<p class="muted">非實證內容，獨立顯示且不影響評級；已審核的說法才會對外顯示。</p>
+<table><tr><th>標籤</th><th>內容</th><th>來源</th><th>狀態</th><th></th></tr>
+{% for t in ing.tradition_notes %}<tr>
+<td>{{ TRADITION_TAGS.get(t.tag, t.tag) }}</td>
+<td>{{ t.note }}</td>
+<td>{% if t.source_url %}<a href="{{ t.source_url }}" rel="noreferrer noopener" target="_blank">{{ t.source_title or t.source_url }}</a>{% else %}{{ t.source_title or '' }}{% endif %}</td>
+<td>{{ '已審核' if t.reviewed else '未審核' }}</td>
+<td>{% if t.reviewed %}
+<form method="post" action="/admin/ingredients/{{ ing.id }}/tradition/{{ t.id }}/unreview" class="inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="danger" type="submit">取消審核</button></form>
+{% else %}
+<form method="post" action="/admin/ingredients/{{ ing.id }}/tradition/{{ t.id }}/review" class="inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button type="submit">審核通過</button></form>
+{% endif %}</td></tr>
+{% else %}<tr><td colspan="5" class="muted">沒有傳統說法。</td></tr>{% endfor %}</table>
+</section>
+
+<section>
 <h2>營養資料（每 100g）</h2>
 <table><tr><th>成分</th><th>含量</th><th>來源</th></tr>
 {% for n in ing.nutrients %}<tr><td>{{ n.name }}</td><td>{{ n.amount_per_100g }} {{ n.unit }}</td>

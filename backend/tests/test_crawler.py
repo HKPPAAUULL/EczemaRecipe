@@ -1,12 +1,11 @@
 """Unit tests for the recipe crawl pipeline (DB-free where possible)."""
 
-from conftest import REPO_ROOT
-
 from app.crawler.allergens import load_keyword_map, scan_allergens
 from app.crawler.base import content_hash, stable_recipe_slug
 from app.crawler.matcher import IngredientMatcher
 from app.crawler.parse import parse_item, parse_practic
 from app.crawler.pipeline import load_staples
+from conftest import REPO_ROOT
 
 ALLERGEN_CSV = REPO_ROOT / "data" / "reference" / "allergen_keywords.csv"
 STAPLE_CSV = REPO_ROOT / "data" / "reference" / "staple_ingredients.csv"
@@ -169,14 +168,30 @@ def test_import_never_overwrites_manual_status():
     )
 
 
+def _first_run_hash(rec, ingredients, staples):
+    from app.crawler.pipeline import import_recipes
+
+    class Capture(FakeConn):
+        stored = None
+
+        def execute(self, sql, params=None):
+            s = " ".join(str(sql).split()).lower()
+            if s.startswith("insert into recipe "):
+                Capture.stored = params[4]
+            return super().execute(sql, params)
+
+    import_recipes(Capture(ingredients), "s", "u", "l", [rec],
+                   keyword_map={}, staples=staples)
+    return Capture.stored
+
+
 def test_import_skips_unchanged_hash():
     from app.crawler.pipeline import import_recipes
 
     rec = _rec()
-    conn = FakeConn(
-        [(1, "雞胸肉", []), (2, "鹽", [])],
-        existing={rec.source_url: (7, "pending_review", rec.content_hash)},
-    )
+    ings = [(1, "雞胸肉", []), (2, "鹽", [])]
+    h = _first_run_hash(rec, ings, set())
+    conn = FakeConn(ings, existing={rec.source_url: (7, "pending_review", h)})
     stats = import_recipes(conn, "s", "u", "l", [rec],
                            keyword_map={}, staples=set())
     assert stats.skipped_unchanged == 1
@@ -184,6 +199,18 @@ def test_import_skips_unchanged_hash():
         q.startswith(("insert into recipe ", "update recipe"))
         for q in conn.queries
     )
+
+
+def test_import_rewrites_when_match_vocabulary_changes():
+    from app.crawler.pipeline import import_recipes
+
+    rec = _rec()
+    ings = [(1, "雞胸肉", []), (2, "鹽", [])]
+    h = _first_run_hash(rec, ings, set())
+    conn = FakeConn(ings, existing={rec.source_url: (7, "pending_review", h)})
+    stats = import_recipes(conn, "s", "u", "l", [rec],
+                           keyword_map={}, staples={"未識別"})
+    assert stats.skipped_unchanged == 0 and stats.updated == 1
 
 
 def test_import_writes_pending_review_and_queue():

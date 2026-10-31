@@ -10,7 +10,6 @@ import re
 import textwrap
 
 import pytest
-
 from app.nutrition import (
     NUTRIENT_ORDER,
     NUTRIENT_WHITELIST,

@@ -40,4 +40,4 @@
 ## 5. 待辦
 - [ ] 清理 `stitch_eczema_kitchen/`：保留「食堂」版與 `DESIGN.md`，決定放 `design/` 目錄
 - [ ] 抽取 `tailwind.config` 設計 token（開始製作時進行）
-- [ ] 日後補一份「資料不足」與「傳統說法」元件的設計（Stitch 缺少）
+- [x] 日後補一份「資料不足」與「傳統說法」元件的設計（Stitch 缺少）— v0.10.0 以 `TraditionNotes`（中立色獨立卡）與 `InsufficientDataNotice` 實作

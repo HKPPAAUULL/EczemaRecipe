@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2026-10-31
+
+### Added
+
+- **傳統說法（中醫）功能**：新表 `ingredient_tradition_note`（schema.sql + migration `0007_tradition_notes.sql`；`tag` 分類：發物／黏滯難消化／溫熱／寒涼／平性／其他，每條須有來源、`reviewed=true` 才對外顯示）；`import-tradition` CLI 匯入 `data/seed/tradition_notes.csv`（34 條，精確名稱配對、永遠 `reviewed=false`、冪等且不改已審核狀態）；詳情 API 回傳 `tradition_notes`（公開模式只回已審核，drafts 模式附 `draft` 標記）。
+- **/admin 傳統說法審核**：食材詳情頁新增「傳統說法」區塊，逐條「審核通過／取消審核」（CSRF + 稽核記錄）。
+- **前端**：`TraditionNotes` 元件（獨立卡「傳統說法（非實證）」，中立色不影響評級、按標籤分組、來源外連、草稿附「待審核」標記）；`InsufficientDataNotice` 元件（`unrated` 食材顯示「資料不足」卡）。
+
+### Changed
+
+- 私隱政策頁移除聯絡方式（用戶決定；部署檢查表同步更新）。
+
 ## [0.9.1] - 2026-10-30
 
 ### Added

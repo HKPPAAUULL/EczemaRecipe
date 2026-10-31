@@ -1,7 +1,6 @@
 """Pure unit tests for the admin review rules (no DB)."""
 
 import pytest
-
 from app.admin import rules
 
 

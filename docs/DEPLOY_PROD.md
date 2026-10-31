@@ -47,7 +47,7 @@ Docker Desktop → Settings → 勾選「Start Docker Desktop when you sign in�
 
 ## 6. 上線前檢查表
 
-- [ ] `/privacy` 聯絡方式已填寫（現為「待站長填寫」）
+- [x] `/privacy` 不提供聯絡方式（v0.10.0 起移除，用戶決定）
 - [ ] `SITE_URL` 填真實網域
 - [ ] 以公網 IP/手機網絡訪問 `https://網域/admin` 應 404/403，確認 `/admin` 不可經隧道到達（只綁 127.0.0.1:8000）
 - [ ] `.env` 密碼與 `ADMIN_TOKEN` 已輪換為正式值

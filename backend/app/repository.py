@@ -116,6 +116,15 @@ def get_ingredient_detail(conn, ingredient_id: int, include_drafts: bool) -> dic
          ORDER BY n.name""",
         {"iid": ingredient_id},
     ).fetchall()
+    tradition = conn.execute(
+        """
+        SELECT tag, note, source_title, source_url, reviewed
+          FROM ingredient_tradition_note
+         WHERE ingredient_id = %(iid)s
+           AND (reviewed OR %(drafts)s)
+         ORDER BY id""",
+        {"iid": ingredient_id, "drafts": include_drafts},
+    ).fetchall()
 
     # 'unrated' must not leak draft rating guesses (RATING_CRITERIA §2)
     reason = row["rating_reason"] if rating != "unrated" else None
@@ -158,6 +167,16 @@ def get_ingredient_detail(conn, ingredient_id: int, include_drafts: bool) -> dic
                 "source": n["source"],
             }
             for n in nutrients
+        ],
+        "tradition_notes": [
+            {
+                "tag": t["tag"],
+                "note": t["note"],
+                "source_title": t["source_title"],
+                "source_url": t["source_url"],
+                "draft": not t["reviewed"],
+            }
+            for t in tradition
         ],
         "needs_senior_review": (
             row["needs_senior_review"] if include_drafts else None

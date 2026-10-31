@@ -63,6 +63,14 @@ export interface NutrientItem {
   source: string | null;
 }
 
+export interface TraditionNote {
+  tag: string;
+  note: string;
+  source_title: string | null;
+  source_url: string | null;
+  draft: boolean;
+}
+
 export interface IngredientDetail {
   id: number;
   name_zh: string;
@@ -75,6 +83,7 @@ export interface IngredientDetail {
   allergens: IngredientAllergen[];
   evidence: EvidenceItem[];
   nutrients: NutrientItem[];
+  tradition_notes: TraditionNote[];
   needs_senior_review: boolean | null;
   draft: boolean;
   disclaimer: string;
@@ -153,6 +162,8 @@ export async function getIngredient(id: number): Promise<IngredientDetail | null
     if (!isIngredientDetail(data)) {
       throw new ApiError("伺服器回應格式不正確");
     }
+    // tolerant: older backends may omit tradition_notes entirely
+    if (!Array.isArray(data.tradition_notes)) data.tradition_notes = [];
     return data;
   } catch (err) {
     if (err instanceof ApiError && err.status === 404) return null;

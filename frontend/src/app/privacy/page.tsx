@@ -19,7 +19,6 @@ export default function PrivacyPage() {
           <li>字體由本站自行提供（Next.js 自託管）。</li>
           <li>清除資料：「我的忌口」按「全部清除」；「買餸清單」按「清空」；或清除瀏覽器的本站資料。</li>
         </ul>
-        <p>聯絡方式：（待站長填寫）</p>
         <p>另見 <Link href="/about" className="font-medium text-primary hover:underline">關於本站與免責聲明</Link>。</p>
       </section>
     </div>

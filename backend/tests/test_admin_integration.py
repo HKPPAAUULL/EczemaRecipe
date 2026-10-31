@@ -3,12 +3,11 @@
 import os
 
 import pytest
-from conftest import REPO_ROOT, SCHEMA_SQL, SEED_SQL
-from fastapi.testclient import TestClient
-
 from app.admin import auth
 from app.config import Settings
 from app.main import create_app
+from conftest import REPO_ROOT, SCHEMA_SQL, SEED_SQL
+from fastapi.testclient import TestClient
 
 psycopg = pytest.importorskip("psycopg")
 TEST_URL = os.environ.get("TEST_DATABASE_URL")

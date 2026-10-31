@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AllergenTag from "@/components/AllergenTag";
+import InsufficientDataNotice from "@/components/InsufficientDataNotice";
 import NutrientTable from "@/components/NutrientTable";
 import RatingBadge from "@/components/RatingBadge";
+import TraditionNotes from "@/components/TraditionNotes";
 import WarningBanner from "@/components/WarningBanner";
 import AddToShoppingListButton from "@/components/AddToShoppingListButton";
 import { ApiError, getIngredient, type IngredientDetail } from "@/lib/api";
@@ -84,6 +86,8 @@ function DetailBody({ item }: { item: IngredientDetail }) {
         </WarningBanner>
       ) : null}
 
+      {item.eczema_rating === "unrated" ? <InsufficientDataNotice /> : null}
+
       <section aria-labelledby="allergen-h">
         <h2 id="allergen-h" className="text-lg font-semibold text-ink">
           致敏原
@@ -109,6 +113,8 @@ function DetailBody({ item }: { item: IngredientDetail }) {
           <NutrientTable nutrients={item.nutrients} />
         </div>
       </section>
+
+      <TraditionNotes notes={item.tradition_notes} />
 
       {item.evidence.length ? (
         <section aria-labelledby="evidence-h">

@@ -28,6 +28,14 @@ STATUS_LABELS = {
     "pending": "待處理",
     "approved": "已通過",
 }
+TRADITION_TAGS = {
+    "fawu": "發物",
+    "sticky": "黏滯難消化",
+    "warm_hot": "溫熱",
+    "cool": "寒涼",
+    "neutral": "平性",
+    "other": "其他",
+}
 SECURITY_HEADERS = {
     "Cache-Control": "no-store",
     "X-Frame-Options": "DENY",
@@ -43,6 +51,7 @@ _env.globals.update(
     STATUS_LABELS=STATUS_LABELS,
     RATINGS=rules.RATINGS,
     SEVERITIES=rules.SEVERITIES,
+    TRADITION_TAGS=TRADITION_TAGS,
     PAGE_SIZE=repo.PAGE_SIZE,
 )
 
@@ -351,6 +360,24 @@ def ingredient_unreview(iid: int, request: Request,
     with db_conn(request) as conn:
         errors = repo.set_ingredient_reviewed(conn, iid, False)
     return _after_ingredient_change(request, session, iid, errors, False, "已取消審核，現已不公開。")
+
+
+@router.post("/ingredients/{iid}/tradition/{note_id}/review")
+def tradition_review(iid: int, note_id: int, request: Request,
+                     session: auth.Session = SESSION, form=FORM):
+    with db_conn(request) as conn:
+        errors = repo.set_tradition_note_reviewed(conn, iid, note_id, True)
+    flash(request, session, *(errors or ["已標記為已審核，現已公開。"]))
+    return redirect(f"/admin/ingredients/{iid}")
+
+
+@router.post("/ingredients/{iid}/tradition/{note_id}/unreview")
+def tradition_unreview(iid: int, note_id: int, request: Request,
+                       session: auth.Session = SESSION, form=FORM):
+    with db_conn(request) as conn:
+        errors = repo.set_tradition_note_reviewed(conn, iid, note_id, False)
+    flash(request, session, *(errors or ["已取消審核，現已不公開。"]))
+    return redirect(f"/admin/ingredients/{iid}")
 
 
 @router.get("/recipes", response_class=HTMLResponse)

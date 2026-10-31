@@ -13,6 +13,8 @@ from conftest import REPO_ROOT, SCHEMA_SQL, SEED_CSV, SEED_SQL, SYNONYMS_CSV
 
 psycopg = pytest.importorskip("psycopg")
 
+from conftest import TRADITION_CSV
+
 TEST_URL = os.environ.get("TEST_DATABASE_URL")
 pytestmark = pytest.mark.skipif(
     not TEST_URL, reason="TEST_DATABASE_URL not set — integration tests skipped"
@@ -124,9 +126,8 @@ def test_import_rating_counts_match_csv(fresh_db, seed_rows):
 
 def test_health_endpoint(fresh_db, monkeypatch):
     monkeypatch.setenv("DATABASE_URL", fresh_db)
-    from fastapi.testclient import TestClient
-
     from app.main import create_app
+    from fastapi.testclient import TestClient
 
     with TestClient(create_app()) as client:
         resp = client.get("/health")
@@ -148,10 +149,9 @@ def imported_db(fresh_db, seed_rows):
 
 def _client(db_url, drafts=False):
     """Context-managed TestClient bound to db_url with the given visibility."""
-    from fastapi.testclient import TestClient
-
     from app.config import load_settings
     from app.main import create_app
+    from fastapi.testclient import TestClient
 
     settings = load_settings(
         {
@@ -308,6 +308,74 @@ def test_allergens_endpoint(imported_db):
         assert r.status_code == 200
         assert len(r.json()) == 13
         assert {a["name_zh"] for a in r.json()} >= {"蛋", "奶", "花粉交叉"}
+
+
+# --------------------------------------------------------------------------
+# 傳統說法 (v0.10.0)
+# --------------------------------------------------------------------------
+
+
+@pytest.fixture()
+def tradition_db(imported_db):
+    from app.tradition import parse_tradition_csv
+    from app.tradition import run_import as run_tradition_import
+
+    rows = parse_tradition_csv(TRADITION_CSV)
+    run_tradition_import(imported_db, rows)
+    return imported_db
+
+
+def test_tradition_import_idempotent_and_keeps_review(tradition_db):
+    from app.tradition import parse_tradition_csv
+    from app.tradition import run_import as run_tradition_import
+
+    with psycopg.connect(tradition_db) as conn:
+        n = conn.execute(
+            "SELECT count(*) FROM ingredient_tradition_note"
+        ).fetchone()[0]
+        assert n == 34
+        conn.execute(
+            "UPDATE ingredient_tradition_note SET reviewed = true WHERE id = "
+            "(SELECT id FROM ingredient_tradition_note LIMIT 1)"
+        )
+    s2 = run_tradition_import(tradition_db, parse_tradition_csv(TRADITION_CSV))
+    assert s2.inserted == 0
+    with psycopg.connect(tradition_db) as conn:
+        n2 = conn.execute(
+            "SELECT count(*) FROM ingredient_tradition_note"
+        ).fetchone()[0]
+        kept = conn.execute(
+            "SELECT count(*) FROM ingredient_tradition_note WHERE reviewed"
+        ).fetchone()[0]
+    assert n2 == 34
+    assert kept == 1  # re-import never un-reviews
+
+
+def test_tradition_notes_visibility(tradition_db):
+    _mark_reviewed(tradition_db, ["牛腩"])  # public mode requires a reviewed ingredient
+    iid = _ingredient_id(tradition_db, "牛腩")
+    # public mode: unreviewed notes are hidden entirely
+    with _client(tradition_db) as client:
+        d = client.get(f"/api/ingredients/{iid}").json()
+        assert d["tradition_notes"] == []
+    # drafts mode: notes visible with draft flag
+    with _client(tradition_db, drafts=True) as client:
+        d = client.get(f"/api/ingredients/{iid}").json()
+        assert len(d["tradition_notes"]) > 0
+        assert all(t["draft"] is True for t in d["tradition_notes"])
+        assert all("tag" in t for t in d["tradition_notes"])
+    # review one → public shows only that one, not as draft
+    with psycopg.connect(tradition_db) as conn:
+        conn.execute(
+            "UPDATE ingredient_tradition_note SET reviewed = true WHERE id = "
+            "(SELECT id FROM ingredient_tradition_note "
+            " WHERE ingredient_id = %s LIMIT 1)",
+            (iid,),
+        )
+    with _client(tradition_db) as client:
+        d = client.get(f"/api/ingredients/{iid}").json()
+        assert len(d["tradition_notes"]) == 1
+        assert d["tradition_notes"][0]["draft"] is False
 
 
 # --------------------------------------------------------------------------
@@ -654,7 +722,6 @@ def _author_import(db_url, rb=None, ib=None, dry_run=False):
     rb = RECIPES_CSV.encode() if rb is None else rb
     ib = ITEMS_CSV.encode() if ib is None else ib
     import psycopg
-
     from app.recipe_import import (
         build_context,
         import_to_db,

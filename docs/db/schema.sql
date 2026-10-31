@@ -172,6 +172,27 @@ COMMENT ON COLUMN evidence.source_type IS '建議值：pubmed、usda、cfs、tfd
 CREATE INDEX evidence_ingredient_idx ON evidence (ingredient_id);
 
 -- ---------------------------------------------------------------------------
+-- ingredient_tradition_note — 傳統說法（中醫觀點；DESIGN_REVIEW.md §4）
+-- ---------------------------------------------------------------------------
+CREATE TABLE ingredient_tradition_note (
+    id             bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    ingredient_id  bigint NOT NULL REFERENCES ingredient (id) ON DELETE CASCADE,
+    tag            text NOT NULL DEFAULT 'other'
+                   CHECK (tag IN ('fawu', 'sticky', 'warm_hot', 'cool', 'neutral', 'other')),
+    note           text NOT NULL CHECK (length(btrim(note)) > 0),
+    source_title   text,
+    source_url     text,
+    reviewed       boolean NOT NULL DEFAULT false,
+    created_at     timestamptz NOT NULL DEFAULT now(),
+    updated_at     timestamptz NOT NULL DEFAULT now(),
+    CHECK (source_title IS NOT NULL OR source_url IS NOT NULL),
+    UNIQUE (ingredient_id, note)
+);
+COMMENT ON TABLE ingredient_tradition_note IS '傳統說法（中醫觀點）：非實證內容，獨立顯示且不影響評級；每條須有來源（書名或網址），reviewed=true 才對外顯示';
+CREATE INDEX itn_ingredient_idx ON ingredient_tradition_note (ingredient_id);
+CREATE INDEX itn_reviewed_idx ON ingredient_tradition_note (ingredient_id) WHERE reviewed;
+
+-- ---------------------------------------------------------------------------
 -- recipe / recipe_ingredient / recipe_tag — 食譜（§5）
 -- ---------------------------------------------------------------------------
 CREATE TABLE recipe (
@@ -298,6 +319,7 @@ CREATE TRIGGER trg_ingredient_nutrient_updated_at BEFORE UPDATE ON ingredient_nu
 CREATE TRIGGER trg_allergen_updated_at           BEFORE UPDATE ON allergen            FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_ingredient_allergen_updated_at BEFORE UPDATE ON ingredient_allergen FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_evidence_updated_at           BEFORE UPDATE ON evidence            FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_itn_updated_at                BEFORE UPDATE ON ingredient_tradition_note FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_recipe_updated_at             BEFORE UPDATE ON recipe              FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_recipe_ingredient_updated_at  BEFORE UPDATE ON recipe_ingredient   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trg_recipe_tag_updated_at         BEFORE UPDATE ON recipe_tag          FOR EACH ROW EXECUTE FUNCTION set_updated_at();

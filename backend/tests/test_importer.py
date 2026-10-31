@@ -8,8 +8,6 @@ import re
 import textwrap
 
 import pytest
-from conftest import SEED_CSV, SEED_SQL, SYNONYMS_CSV
-
 from app.importer import (
     ALLERGEN_TOKEN_MAP,
     SeedRow,
@@ -21,6 +19,7 @@ from app.importer import (
     parse_seed_csv,
     validate_categories,
 )
+from conftest import SEED_CSV, SEED_SQL, SYNONYMS_CSV
 
 HEADER = (
     "category_zh,name_zh,name_en,aliases,eczema_rating,rating_reason,"

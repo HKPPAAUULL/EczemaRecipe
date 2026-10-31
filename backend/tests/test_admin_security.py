@@ -3,11 +3,10 @@
 import os
 
 import pytest
-from fastapi.testclient import TestClient
-
 from app.admin import auth
 from app.config import Settings, load_settings
 from app.main import create_app
+from fastapi.testclient import TestClient
 
 TOKEN = "unit-test-admin-token-123456"
 DB = os.environ.get("TEST_DATABASE_URL") or "postgresql://nobody@127.0.0.1:1/none"

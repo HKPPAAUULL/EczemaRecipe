@@ -129,6 +129,12 @@ def get_ingredient_detail(conn, iid: int) -> dict | None:
             WHERE iv.ingredient_id = %s ORDER BY n.name""",
         (iid,),
     ).fetchall()
+    ing["tradition_notes"] = conn.execute(
+        """SELECT id, tag, note, source_title, source_url, reviewed
+             FROM ingredient_tradition_note
+            WHERE ingredient_id = %s ORDER BY id""",
+        (iid,),
+    ).fetchall()
     ing["published_recipe_count"] = conn.execute(
         """SELECT count(*) AS n FROM recipe_ingredient ri
              JOIN published_recipe r ON r.id = ri.recipe_id WHERE ri.ingredient_id = %s""",
@@ -291,6 +297,24 @@ def set_ingredient_reviewed(conn, iid: int, reviewed: bool) -> list[str]:
         conn.execute(
             "UPDATE ingredient SET reviewed = false, reviewed_at = NULL WHERE id = %s", (iid,))
         audit(conn, "ingredient", iid, "unreview", {})
+    return []
+
+
+def set_tradition_note_reviewed(
+    conn, iid: int, note_id: int, reviewed: bool
+) -> list[str]:
+    row = conn.execute(
+        """UPDATE ingredient_tradition_note SET reviewed = %s
+             WHERE id = %s AND ingredient_id = %s RETURNING note""",
+        (reviewed, note_id, iid),
+    ).fetchone()
+    if row is None:
+        return ["找不到該傳統說法。"]
+    audit(
+        conn, "ingredient", iid,
+        "tradition_review" if reviewed else "tradition_unreview",
+        {"note_id": note_id, "note": row["note"][:80]},
+    )
     return []
 
 

@@ -170,6 +170,10 @@ USDA FoodData Central、Open Food Facts：**本輪未核實**（API key、用量
 |---|---|---|---|
 | TFDA 食品營養成分資料集 <https://data.gov.tw/dataset/8543>（衛生福利部食品藥物管理署，政府資料開放授權條款-第1版） | 食材每 100g 營養成分（`ingredient_nutrient`，經 `import-nutrition` 管線，見 `data/reference/nutrition_tfda.csv` 與配對報告） | v0.3.0（2026-10-30） | 網站「關於」頁資料來源段；`data_source.license` 記錄條款名稱 |
 | data.gov.tw 客家委員會「客家創意菜色及經典菜餚食譜(歷史資料)」 <https://data.gov.tw/dataset/147690>（政府資料開放授權條款-第1版） | 食譜標題＋拆分後食材＋簡述＋來源連結（`recipe`/`recipe_ingredient`，經 `crawl-recipes --source hakka`；不存步驟全文） | v0.5.0（2026-10-30） | 網站「關於」頁資料來源段（v0.4.0 已建）與 `data_source.license` |
+| 消費者委員會《選擇》第547期〈濕疹 中醫內外入手有療法〉 <https://www.consumer.org.hk/tc/article/547-eczema/547-eczema-daily-care> | 「傳統說法」食材備註來源（`ingredient_tradition_note`，經 `import-tradition`）；**只作傳統說法來源，不作評級依據** | v0.10.0（2026-10-31） | 每條說法附來源連結；用法限制見下 |
+| 衞生署中醫藥規管辦公室〈服藥忌口〉等頁面 <https://www.cmro.gov.hk/html/b5/useful_information/public_health/feature_articles/Knowledge_of_Taking_Chinese_Medicines_Precautions_and_Storage_Method.html>、<https://www.cmro.gov.hk/html/b5/useful_information/public_health/feature_articles/Health_Preservation_by_Food_in_CM.html> | 「傳統說法」食材備註來源（`ingredient_tradition_note`，經 `import-tradition`）；**只作傳統說法來源，不作評級依據** | v0.10.0（2026-10-31） | 每條說法附來源連結；用法限制見下 |
+
+**傳統說法來源用法限制**：以上兩個來源只摘錄短句重述（paraphrase）＋附連結，不複製全文；僅用於「傳統說法（非實證）」區塊，**不得用作濕疹評級依據**。轉載條款未正式核實 → 維持只重述短句＋連結的做法。
 
 ---
 

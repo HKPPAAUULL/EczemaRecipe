@@ -36,6 +36,14 @@ from app.nutrition import (
 from app.nutrition import (
     run_import as run_nutrition_import,
 )
+from app.tradition import (
+    DEFAULT_TRADITION_CSV,
+    TraditionValidationError,
+    parse_tradition_csv,
+)
+from app.tradition import (
+    run_import as run_tradition_import,
+)
 
 
 def _cmd_import_seed(args: argparse.Namespace) -> int:
@@ -179,6 +187,13 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--limit", type=int, default=None)
     c.add_argument("--dry-run", action="store_true")
     c.add_argument("--validate-only", action="store_true", help="parse+match only; no DB")
+    t = sub.add_parser(
+        "import-tradition",
+        help="import data/seed/tradition_notes.csv into the DB",
+    )
+    t.add_argument("--csv", default=str(DEFAULT_TRADITION_CSV), help="tradition notes CSV path")
+    t.add_argument("--dry-run", action="store_true", help="run in one transaction then roll back")
+    t.add_argument("--validate-only", action="store_true", help="validate CSV only; no DB needed")
     r = sub.add_parser("import-recipes", help="manual recipe CSV import")
     r.add_argument("--recipes", required=True, help="recipes.csv path")
     r.add_argument("--ingredients", required=True, help="recipe_ingredients.csv path")
@@ -192,12 +207,38 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_import_nutrition(args)
         if args.command == "crawl-recipes":
             return _cmd_crawl_recipes(args)
+        if args.command == "import-tradition":
+            return _cmd_import_tradition(args)
         if args.command == "import-recipes":
             return _cmd_import_recipes(args)
-    except (SeedValidationError, NutritionValidationError) as exc:
+    except (SeedValidationError, NutritionValidationError,
+            TraditionValidationError) as exc:
         print(f"validation error: {exc}", file=sys.stderr)
         return 1
     return 2
+
+
+def _cmd_import_tradition(args: argparse.Namespace) -> int:
+    csv_path = Path(args.csv)
+    if not csv_path.is_file():
+        print(f"error: CSV not found: {csv_path}", file=sys.stderr)
+        return 2
+    rows = parse_tradition_csv(csv_path)
+    if args.validate_only:
+        names = sorted({r.ingredient_zh for r in rows})
+        print(
+            f"validate-only OK: {len(rows)} rows parsed from {csv_path}; "
+            f"{len(names)} distinct ingredient names"
+        )
+        return 0
+    try:
+        database_url = get_database_url()
+    except RuntimeError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    summary = run_tradition_import(database_url, rows, dry_run=args.dry_run)
+    print(summary.format(dry_run=args.dry_run))
+    return 0
 
 
 def _cmd_import_recipes(args: argparse.Namespace) -> int:

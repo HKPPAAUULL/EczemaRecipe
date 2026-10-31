@@ -101,6 +101,7 @@ ingredient_allergen(ingredient_id, allergen_id, severity, note)
 evidence(id, ingredient_id, title, url, summary, source_type, year)
 recipe(id, title, description, cook_time, servings, image_url,
        source_url, source_name, status, eczema_friendly_score)
+ingredient_tradition_note(id, ingredient_id, tag, note, source_title, source_url, reviewed)  -- v0.10.0 傳統說法
 recipe_ingredient(recipe_id, ingredient_id, raw_text, qty, unit, is_staple)
 recipe_tag(recipe_id, tag)
 crawl_job(id, source, started_at, status, stats)
@@ -175,7 +176,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 - [x] 以真實 Postgres 16 驗證 schema（CI 與本機 Docker 均已驗證）
 - [ ] 若日後有商業用途（廣告、會員），須重新檢視所有「非商業限定」來源
 - [x] Stitch 設計稿已匯出（`stitch_eczema_kitchen/`），審查結果見 `docs/DESIGN_REVIEW.md`；design token 於開始製作前端時抽取
-- [ ] 設計傳統說法（中醫）資料表與「資料不足」「傳統說法」元件設計
+- [x] 設計傳統說法（中醫）資料表與「資料不足」「傳統說法」元件設計（v0.10.0：`ingredient_tradition_note` 表、`TraditionNotes`／`InsufficientDataNotice` 元件、後台逐條審核）
 - [ ] 決定繁中全文搜尋方案（別名表 + pg_trgm 是否足夠）
 - [x] 審核介面形式：FastAPI 伺服器端渲染 `/admin`，ADMIN_TOKEN 保護，僅限本機／內網，不經 Tunnel 公開（Tunnel ingress 只轉發前端）
 
@@ -202,6 +203,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-30 | v0.2.5 | 第二輪來源搜尋結論（D、E 級）：無更多合格開放食譜來源；用戶決定不建國家文化記憶庫管線，食譜日後自建 |
 | 2026-10-30 | v0.2.4 | v0.8.0：正式部署準備（prod compose、cloudflared profile、SEO、安全 header、BFF 限速、私隱頁） |
 | 2026-10-30 | v0.2.3 | v0.7.0：前端食譜配對／忌口設定（localStorage）／買餸清單；新增 `/admin` 審核介面（規則伺服器端強制）、`audit_log` 表；審核介面決定採 FastAPI 本機後台 |
+| 2026-10-31 | v0.10.0 | 「傳統說法（中醫）」功能：`ingredient_tradition_note` 表＋migration 0007、`import-tradition` 匯入器（34 條、全部待審核）、詳情 API 回傳 reviewed 說法、/admin 逐條審核、前端 `TraditionNotes` 卡（非實證標示、不影響評級）＋ `InsufficientDataNotice`（unrated）；私隱頁移除聯絡方式 |
 | 2026-10-30 | v0.2.2 | v0.6.0：`POST /api/recipes/suggest`、`GET /api/recipes/{id}`（覆蓋率不計常備調味料、未配對項計入分母、過敏原硬排除並回報剔除數、排序＝覆蓋率×友善分數）；常備調味料未配對不再阻擋發佈（致敏改由關鍵字掃描覆蓋）；配對率 66.3% |
 | 2026-10-30 | v0.2.1 | 新增 §4.5：用戶決定不寄授權信，僅爬無需授權來源，持續尋找新來源；階段 4 開始（客家開放資料管線） |
 | 2026-10-30 | v0.2 | v0.3.0 營養資料匯入（TFDA 開放資料，保守配對）；v0.4.0 前端骨架與食材查詢／食材庫／關於頁（Next.js 16、關閉 cacheComponents 以確保 404 狀態碼）；新增 §9 狀態更新 |

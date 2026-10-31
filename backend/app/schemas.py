@@ -67,6 +67,16 @@ class NutrientItem(BaseModel):
     source: str | None
 
 
+class TraditionNote(BaseModel):
+    """傳統說法（中醫觀點）：非實證，獨立顯示，不影響評級（DESIGN_REVIEW §4）。"""
+
+    tag: str
+    note: str
+    source_title: str | None
+    source_url: str | None
+    draft: bool = False
+
+
 class IngredientDetail(BaseModel):
     id: int
     name_zh: str
@@ -79,6 +89,7 @@ class IngredientDetail(BaseModel):
     allergens: list[IngredientAllergen]
     evidence: list[EvidenceItem]
     nutrients: list[NutrientItem]
+    tradition_notes: list[TraditionNote] = []
     needs_senior_review: bool | None = None
     draft: bool
     disclaimer: str = DISCLAIMER
