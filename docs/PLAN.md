@@ -204,6 +204,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-30 | v0.2.4 | v0.8.0：正式部署準備（prod compose、cloudflared profile、SEO、安全 header、BFF 限速、私隱頁） |
 | 2026-10-30 | v0.2.3 | v0.7.0：前端食譜配對／忌口設定（localStorage）／買餸清單；新增 `/admin` 審核介面（規則伺服器端強制）、`audit_log` 表；審核介面決定採 FastAPI 本機後台 |
 | 2026-10-31 | v0.10.1 | 食譜列表一鍵審核；匯入器保護已審核食材；牛肉評級改為 caution |
+| 2026-10-31 | v0.10.2 | 後台一鍵操作後以列錨點滾回原位置 |
 | 2026-10-31 | v0.10.0 | 「傳統說法（中醫）」功能：`ingredient_tradition_note` 表＋migration 0007、`import-tradition` 匯入器（34 條、全部待審核）、詳情 API 回傳 reviewed 說法、/admin 逐條審核、前端 `TraditionNotes` 卡（非實證標示、不影響評級）＋ `InsufficientDataNotice`（unrated）；私隱頁移除聯絡方式 |
 | 2026-10-30 | v0.2.2 | v0.6.0：`POST /api/recipes/suggest`、`GET /api/recipes/{id}`（覆蓋率不計常備調味料、未配對項計入分母、過敏原硬排除並回報剔除數、排序＝覆蓋率×友善分數）；常備調味料未配對不再阻擋發佈（致敏改由關鍵字掃描覆蓋）；配對率 66.3% |
 | 2026-10-30 | v0.2.1 | 新增 §4.5：用戶決定不寄授權信，僅爬無需授權來源，持續尋找新來源；階段 4 開始（客家開放資料管線） |

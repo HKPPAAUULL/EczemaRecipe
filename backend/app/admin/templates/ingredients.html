@@ -18,7 +18,7 @@
 <table style="min-width:760px">
 <tr><th>#</th><th>名稱</th><th>分類</th><th>評級</th><th>過敏原</th><th>狀態</th><th>審核資訊</th><th>操作</th></tr>
 {% for r in rows %}
-<tr><td>{{ r.id }}</td><td><a href="/admin/ingredients/{{ r.id }}">{{ r.name_zh }}</a></td><td>{{ r.category_name or '' }}</td>
+<tr id="row-{{ r.id }}"><td>{{ r.id }}</td><td><a href="/admin/ingredients/{{ r.id }}">{{ r.name_zh }}</a></td><td>{{ r.category_name or '' }}</td>
 <td><span class="badge r-{{ r.eczema_rating }}">{{ RATING_LABELS[r.eczema_rating] }}</span></td>
 <td>{{ r.allergens | join('、') }}</td>
 <td>{{ '已審核' if r.reviewed else '未審核' }}{% if r.needs_senior_review %} <span class="badge" style="background:#fff0c2">需資深審核</span>{% endif %}</td>
@@ -29,11 +29,11 @@
 {% if r.reviewed %}
 <span class="badge" style="background:#d8f0d8">已審核</span>
 <form method="post" action="/admin/ingredients/{{ r.id }}/quick-review" class="inline">
-<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="next" value="{{ next_qs }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="next" value="{{ next_qs }}#row-{{ r.id }}">
 <button type="submit" name="action" value="unreview" class="secondary" style="min-height:36px">取消審核</button></form>
 {% else %}
 <form method="post" action="/admin/ingredients/{{ r.id }}/quick-review" class="inline">
-<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="next" value="{{ next_qs }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="next" value="{{ next_qs }}#row-{{ r.id }}">
 <button type="submit" name="action" value="review" style="min-height:36px">審核</button></form>
 {% endif %}
 </td></tr>
