@@ -1,0 +1,26 @@
+[
+ {
+  "kind": "經典",
+  "classification": "炆",
+  "dishes_name": "測試白蘿蔔炆豬肉",
+  "creative": "-",
+  "specialty_dishes": "測試用合成資料。",
+  "practic": "1、材料：白蘿蔔1條、豬瘦肉200公克、神秘食材甲1份。2、調味料：鹽少許、米酒1大匙。3、作法：全部材料煮熟即可。"
+ },
+ {
+  "kind": "創意",
+  "classification": "炒",
+  "dishes_name": "測試番茄炒蛋",
+  "creative": "-",
+  "specialty_dishes": "測試用合成資料。",
+  "practic": "1、材料：番茄2個、雞蛋3個。2、調味料：鹽少許。3、作法：炒熟即可。"
+ },
+ {
+  "kind": "經典",
+  "classification": "蒸",
+  "dishes_name": "測試蒸南瓜",
+  "creative": "-",
+  "specialty_dishes": "測試用合成資料。",
+  "practic": "1、材料：南瓜300公克、神秘食材乙1份。2、調味料：鹽少許。3、作法：蒸熟即可。"
+ }
+]

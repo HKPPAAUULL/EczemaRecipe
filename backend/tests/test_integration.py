@@ -481,9 +481,13 @@ def recipes_db(imported_db):
 
 
 def _hakka_records(limit=None):
-    from app.crawler.hakka import DEFAULT_RAW, load_records
+    from pathlib import Path
 
-    return load_records(DEFAULT_RAW, limit=limit)
+    from app.crawler.hakka import load_records
+
+    # synthetic fixture: the real raw dataset is git-ignored and absent in CI
+    sample = Path(__file__).parent / "fixtures" / "hakka_sample.json"
+    return load_records(sample, limit=limit)
 
 
 def _crawl_import(db_url, records, dry_run=False):
