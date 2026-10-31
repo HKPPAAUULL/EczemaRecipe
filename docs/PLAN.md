@@ -157,9 +157,9 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 
 | 階段 | 內容 | 狀態 |
 |---|---|---|
-| 0. 準備 | 方案書、agents.md、Stitch 設計稿、確定來源站點合規清單 | 完成（授權徵詢信待寄） |
+| 0. 準備 | 方案書、agents.md、Stitch 設計稿、確定來源站點合規清單 | 完成（用戶決定不寄授權信） |
 | 1. 資料基礎 | DB schema、營養資料匯入、約 150 種常見食材人工評級種子資料 | 進行中（v0.1.0 骨架／種子匯入器；v0.3.0 TFDA 營養資料匯入，163 項中 76 項配對成功，其餘待人工複查 `data/reference/nutrition_match_report.md`） |
-| 2. 後端 API | 搜尋、詳情、分類、食譜配對 | 進行中（v0.2.0：食材搜尋／詳情／分類／過敏原 API 已完成；食譜配對待階段 4） |
+| 2. 後端 API | 搜尋、詳情、分類、食譜配對 | 完成（v0.2.x 食材 API；v0.6.0 食譜配對 suggest API 含致敏警示） |
 | 3. 前端 MVP | 首頁、食材查詢、分類庫（功能 1、3） | 進行中（v0.4.0 骨架／食材查詢／食材庫；v0.7.0 食譜配對頁、忌口設定、買餸清單） |
 | 4. 食譜 | 爬蟲＋標準化＋配對＋警示（功能 2） | 進行中（v0.5.0 客家食譜開放資料管線；v0.6.0 食譜配對與致敏警示 API；食譜前端頁與更多來源待做） |
 | 5. 審核與品質 | 簡易審核介面、爬蟲監控、測試 | 進行中（v0.7.0：`/admin` 審核介面已完成；爬蟲監控待做；食材／食譜待人工審核） |
@@ -172,7 +172,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 - [ ] 補查未核實項目：國民健康署與 fae.moa.gov.tw 的 robots／條款、USDA 與 Open Food Facts 條款、醫院管理局食譜頁
 - [x] 食譜庫起步內容決定（2026-10-30）：第二輪來源搜尋（SOURCES.md D、E 級）找不到更多合格的開放來源；國家文化記憶庫食譜量太少（已核實約 11 道）不建管線；之後以自建原創食譜為主，現階段先建立網站
 - [ ] 人工審核 `data/seed/ingredients_draft.csv`（163 項草稿，71 項標 needs_senior_review，22 項 unrated）
-- [ ] 以真實 Postgres 16 驗證 `docs/db/schema.sql`（目前只用 pglast 驗證語法）
+- [x] 以真實 Postgres 16 驗證 schema（CI 與本機 Docker 均已驗證）
 - [ ] 若日後有商業用途（廣告、會員），須重新檢視所有「非商業限定」來源
 - [x] Stitch 設計稿已匯出（`stitch_eczema_kitchen/`），審查結果見 `docs/DESIGN_REVIEW.md`；design token 於開始製作前端時抽取
 - [ ] 設計傳統說法（中醫）資料表與「資料不足」「傳統說法」元件設計
@@ -212,3 +212,4 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-29 | v0.1.4 | 收到 Stitch 設計稿；新增 `docs/DESIGN_REVIEW.md`。品牌定名「濕疹食堂 Eczema Kitchen」；中醫內容以「傳統說法」獨立標示且不影響評級；第一版只做核心功能；記錄設計稿須修正項目（捏造文獻、療效宣稱、Level 分級等） |
 | 2026-10-29 | v0.1.3 | 新增 `docs/RATING_CRITERIA.md` 評級準則、`docs/db/` schema 草稿、`data/seed/` 食材種子草稿、`data/reference/` 過敏原關鍵字與同義詞表；`docs/SOURCES.md` 完成條款核實 |
 | 2026-10-29 | v0.1.2 | 新增 `docs/SOURCES.md` 來源初步評估；食譜策略改為「政府開放資料＋自建原創食譜」優先，社群平台後置 |
+| 2026-10-31 | v0.9.2 | 同步另一部電腦的開發進度：更新 §9 階段狀態與 §10 待辦（目前仍待人工審核食材：13／163 已審核） |
