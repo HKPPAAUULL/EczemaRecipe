@@ -162,50 +162,50 @@
 飲品,紅茶,black tea,紅茶;奶茶底,caution,茶含水楊酸，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,港式奶茶另含奶，須分開評估
 飲品,咖啡,coffee,咖啡;coffee,unrated,資料不足：未找到可靠來源,,,true,
 飲品,菊花茶,chrysanthemum tea,菊花茶;菊花;杭菊,unrated,資料不足：菊科交叉過敏可能但未有已查證來源,,,true,
-蔬菜,辣椒,chili pepper,辣椒;紅辣椒;乾辣椒;乾辣椒段;辣椒末;辣椒碎;辣椒絲,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,九層塔,basil,九層塔;羅勒;金不換,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,四季豆,green bean,四季豆;敏豆;菜豆,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,大頭菜,kohlrabi,大頭菜;結頭菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,荸薺,water chestnut,荸薺;孛齊;馬蹄,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,酸菜,pickled mustard greens,酸菜;客家酸菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,鹹菜,salted mustard greens,鹹菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,梅乾菜,dried mustard greens,梅乾菜;梅干菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,福菜,hakka dried greens,福菜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,筍乾,dried bamboo shoot,筍乾,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,竹筍,bamboo shoot,竹筍;筍;鮮筍;桶筍;筍絲,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,秋葵,okra,秋葵,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,野蓮,water snowflake,野蓮,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,過貓,vegetable fern,過貓;過貓菜;過溝菜蕨,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,紫蘇,shiso / perilla,紫蘇;紫蘇葉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,艾草,mugwort,艾草;艾草心,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,長豆,yardlong bean,長豆;豇豆;長豇豆;翼豆,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,長豆乾,dried yardlong bean,長豆乾,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蔬菜,紅蔥頭,shallot,紅蔥頭;紅蔥酥;乾蔥頭,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,辣椒,chili pepper,辣椒;紅辣椒;乾辣椒;乾辣椒段;辣椒末;辣椒碎;辣椒絲,caution,辛香料水楊酸含量較高，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,九層塔,basil,九層塔;羅勒;金不換,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,四季豆,green bean,四季豆;敏豆;菜豆,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,大頭菜,kohlrabi,大頭菜;結頭菜,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,荸薺,water chestnut,荸薺;孛齊;馬蹄,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,酸菜,pickled mustard greens,酸菜;客家酸菜,caution,醃製發酵蔬菜組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,鹹菜,salted mustard greens,鹹菜,caution,醃製發酵蔬菜組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,梅乾菜,dried mustard greens,梅乾菜;梅干菜,caution,醃製發酵蔬菜組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,福菜,hakka dried greens,福菜,caution,醃製發酵蔬菜組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,筍乾,dried bamboo shoot,筍乾,caution,乾製醃漬蔬菜組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,竹筍,bamboo shoot,竹筍;筍;鮮筍;桶筍;筍絲,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,秋葵,okra,秋葵,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,野蓮,water snowflake,野蓮,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,過貓,vegetable fern,過貓;過貓菜;過溝菜蕨,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,紫蘇,shiso / perilla,紫蘇;紫蘇葉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,艾草,mugwort,艾草;艾草心,caution,艾屬植物與花粉-食物交叉反應有文獻記錄（mugwort–celery–spice syndrome），已確診相關花粉過敏者留意（依據：花粉交叉；證據有限；來源：花粉-食物過敏症候群綜述）,花粉交叉,https://www.annallergy.org/article/S1081-1206%2819%2930540-X/fulltext,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,長豆,yardlong bean,長豆;豇豆;長豇豆;翼豆,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+蔬菜,長豆乾,dried yardlong bean,長豆乾,caution,乾製蔬菜組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+蔬菜,紅蔥頭,shallot,紅蔥頭;紅蔥酥;乾蔥頭,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
 蔬菜,香菜,coriander / cilantro,香菜;芫荽;芫茜,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-肉類,豬肚,pork stomach / tripe,豬肚,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-肉類,豬肺,pork lung,豬肺,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-肉類,豬大腸,pork large intestine,豬大腸;大腸;豬腸,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-肉類,免治豬肉,minced pork,免治豬肉;絞肉;豬絞肉;肉碎;豬肉碎;免治肉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-肉類,鹹豬肉,salted pork,鹹豬肉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-肉類,土雞,free-range chicken,土雞;土雞塊;放山雞,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-肉類,鴨血,duck blood,鴨血;鴨紅,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-海鮮,小魚乾,dried whitebait,小魚乾;丁香魚;小魚干,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-水果,木鱉子,gac fruit,木鱉子;木虌子;木鳖子,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-水果,金桔,kumquat,金桔;金橘,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-水果,蓮霧,wax apple,蓮霧,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-水果,柿餅,dried persimmon,柿餅,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+肉類,豬肚,pork stomach / tripe,豬肚,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+肉類,豬肺,pork lung,豬肺,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+肉類,豬大腸,pork large intestine,豬大腸;大腸;豬腸,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+肉類,免治豬肉,minced pork,免治豬肉;絞肉;豬絞肉;肉碎;豬肉碎;免治肉,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+肉類,鹹豬肉,salted pork,鹹豬肉,caution,醃製肉類組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+肉類,土雞,free-range chicken,土雞;土雞塊;放山雞,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+肉類,鴨血,duck blood,鴨血;鴨紅,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+海鮮,小魚乾,dried whitebait,小魚乾;丁香魚;小魚干,caution,魚類製品，為常見食物過敏原之一；已確診魚類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,魚,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,由後台未配對食材快速新增；見稽核記錄
+水果,木鱉子,gac fruit,木鱉子;木虌子;木鳖子,unrated,資料不足：罕見食材，未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+水果,金桔,kumquat,金桔;金橘,caution,柑橘類，部分低組織胺飲食列為須留意，因人而異；組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+水果,蓮霧,wax apple,蓮霧,suitable,非常見過敏原；一般適合日常食用，個別人士仍可能過敏,,,false,由後台未配對食材快速新增；見稽核記錄
+水果,柿餅,dried persimmon,柿餅,caution,乾果或含亞硫酸鹽及水楊酸，敏感者留意（依據：水楊酸／亞硫酸鹽；適用：對水楊酸或亞硫酸鹽敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,由後台未配對食材快速新增；見稽核記錄
 水果,紅棗乾,dried jujube,紅棗乾;紅棗;紅枣,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-穀物主食,春捲皮,spring roll wrapper,春捲皮;春卷皮,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-蛋奶,鮮奶油,whipping cream,鮮奶油;淡奶油;忌廉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-豆類及豆製品,豆干,dried tofu,豆干;豆乾,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-調味料,美乃滋,mayonnaise,美乃滋;蛋黃醬;沙拉醬,unrated,資料不足：未找到可靠來源評估,蛋,,true,由後台未配對食材快速新增；見稽核記錄
-調味料,桔醬,kumquat sauce,桔醬;金桔醬;金橘醬,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-調味料,樹子醬,cordia seed paste,樹子醬;樹子;破布子,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-調味料,辣味露,chili sauce,辣味露;辣椒水,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-調味料,鮮味露,seasoning sauce,鮮味露,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
+穀物主食,春捲皮,spring roll wrapper,春捲皮;春卷皮,caution,小麥製品，為常見食物過敏原之一；已確診小麥過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,小麥,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,由後台未配對食材快速新增；見稽核記錄
+蛋奶,鮮奶油,whipping cream,鮮奶油;淡奶油;忌廉,caution,奶製品，為常見食物過敏原之一；已確診奶類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,奶,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,由後台未配對食材快速新增；見稽核記錄
+豆類及豆製品,豆干,dried tofu,豆干;豆乾,caution,大豆製品，為常見食物過敏原之一；已確診大豆過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,大豆,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,由後台未配對食材快速新增；見稽核記錄
+調味料,美乃滋,mayonnaise,美乃滋;蛋黃醬;沙拉醬,caution,含蛋，為常見食物過敏原之一；已確診蛋過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,蛋,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,由後台未配對食材快速新增；見稽核記錄
+調味料,桔醬,kumquat sauce,桔醬;金桔醬;金橘醬,caution,金桔（柑橘類）製品，部分低組織胺飲食列為須留意，因人而異；組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+調味料,樹子醬,cordia seed paste,樹子醬;樹子;破布子,caution,醃漬發酵調味品組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+調味料,辣味露,chili sauce,辣味露;辣椒水,caution,辣椒類調味品，辛香料水楊酸含量較高，只作留意（依據：水楊酸；適用：對水楊酸敏感者（證據有限）；來源：Swain 1985 食物水楊酸分析（PubMed））,高水楊酸,https://pubmed.ncbi.nlm.nih.gov/4019987,true,由後台未配對食材快速新增；見稽核記錄
+調味料,鮮味露,seasoning sauce,鮮味露,unrated,資料不足：成分因品牌而異，未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
 其他,仙草,mesona / grass jelly herb,仙草;涼粉草,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-其他,枸杞,goji berry,枸杞;枸杞子,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-其他,雞高湯,chicken stock,雞高湯;高湯;上湯,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-其他,吉士粉,custard powder,吉士粉;卡士達粉,unrated,資料不足：未找到可靠來源評估,奶,,true,由後台未配對食材快速新增；見稽核記錄
-其他,蘇打粉,baking soda,蘇打粉;梳打粉;小蘇打;小蘇打粉,unrated,資料不足：未找到可靠來源評估,,,true,由後台未配對食材快速新增；見稽核記錄
-其他,酥炸粉,crispy fry mix,酥炸粉;炸粉,unrated,資料不足：未找到可靠來源評估,小麥,,true,由後台未配對食材快速新增；見稽核記錄
+其他,枸杞,goji berry,枸杞;枸杞子,caution,茄科植物；有枸杞過敏及與桃、番茄等 LTP 交叉反應個案報告，食物過敏人士留意（依據：交叉反應；來源：PubMed 23101309）,花粉交叉,https://pubmed.ncbi.nlm.nih.gov/23101309/,true,由後台未配對食材快速新增；見稽核記錄
+其他,雞高湯,chicken stock,雞高湯;高湯;上湯,caution,長時間熬煮湯底組織胺或較高，建議少量（依據：組織胺；適用：已知組織胺不耐受者（證據有限，不建議盲目戒口）；來源：組織胺不耐受綜述（PMC））,高組織胺,https://pmc.ncbi.nlm.nih.gov/articles/PMC7463562/,true,由後台未配對食材快速新增；見稽核記錄
+其他,吉士粉,custard powder,吉士粉;卡士達粉,caution,通常含奶成分，為常見食物過敏原之一；已確診奶類過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,奶,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,由後台未配對食材快速新增；見稽核記錄
+其他,蘇打粉,baking soda,蘇打粉;梳打粉;小蘇打;小蘇打粉,suitable,非過敏原；一般適合,,,false,由後台未配對食材快速新增；見稽核記錄
+其他,酥炸粉,crispy fry mix,酥炸粉;炸粉,caution,通常含小麥粉，為常見食物過敏原之一；已確診小麥過敏者須避免，其他人可在觀察下少量嘗試（依據：過敏原；來源：食安中心）,小麥,https://www.cfs.gov.hk/english/consumer_zone/safefood_all/food_allergy.html,false,由後台未配對食材快速新增；見稽核記錄

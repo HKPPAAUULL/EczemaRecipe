@@ -266,7 +266,7 @@ def test_real_csv_parses_and_is_valid():
 
 def test_real_csv_needs_senior_review_count():
     rows = parse_seed_csv(SEED_CSV)
-    assert sum(r.needs_senior_review for r in rows) == 120
+    assert sum(r.needs_senior_review for r in rows) == 94
 
 
 def test_real_csv_synonym_merge_reports_unmatched():

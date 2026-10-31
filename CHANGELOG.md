@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.5] - 2026-10-31
+
+### Added
+
+- 為 46 項新建食材提供評級提案（`scripts/rate_new_ingredients.py`，全部保持未審核待人審）：20 項「一般適合」（內臟、鮮蔬、香草等非常見過敏原）、7 項九大過敏原「因人而異」＋食安中心來源（豆干大豆、鮮奶油/吉士粉奶、美乃滋蛋、酥炸粉/春捲皮小麥、小魚乾魚）、11 項醃製/發酵/乾製食品組織胺留意、3 項水楊酸留意（柿餅、辣椒、辣味露，Swain 1985）、2 項交叉反應（艾草花粉交叉、枸杞 LTP，PubMed 23101309）、3 項維持「資料不足」（木鱉子、仙草、鮮味露）。每項附原因與來源連結、過敏原連結；證據有限者標需資深審核。
+- 種子 CSV 同步評級提案與過敏原標記。
+
 ## [0.10.4] - 2026-10-31
 
 ### Added

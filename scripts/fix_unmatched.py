@@ -12,7 +12,7 @@ import psycopg
 from psycopg.rows import dict_row
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from app.admin import repository as repo  # noqa: E402
+from app.admin import repository as repo
 
 # kind: "new" → (canonical, category_id, is_staple, extra_aliases)
 #       "map" → (target_name, is_staple, extra_aliases_to_add)
