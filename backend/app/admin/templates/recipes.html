@@ -13,7 +13,10 @@
 <div><label for="q">搜尋標題</label><input type="search" id="q" name="q" value="{{ f.q }}"></div>
 <button type="submit">篩選</button>
 </form>
-<p><a href="/admin/recipes/import">匯入 CSV</a> ・ <a href="/admin/recipes/new">新增原創食譜</a></p>
+<p>
+<a href="/admin/recipes/import" class="btn-link">匯入 CSV</a>
+<a href="/admin/recipes/new" class="btn-link primary">新增原創食譜</a>
+</p>
 <div class="twrap"><table>
 <tr><th>#</th><th>標題</th><th>狀態</th><th>未配對</th><th>致敏提示</th><th>友善分數</th><th>操作</th></tr>
 {% for r in rows %}
