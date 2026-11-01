@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.4] - 2026-11-01
+
+### Fixed
+
+- 修復勾選忌口／加買餸清單後頁面卡死：`useLocalStorage` 的 `getSnapshot` 每次回傳 `JSON.parse` 的新陣列，React 判定 snapshot 已變而無限重渲染；現按原始字串快取 snapshot，同一資料永遠回傳同一 reference（影響全部 localStorage 功能：忌口、買餸清單、配對已選食材）。新增 React 層級回歸測試。
+
 ## [0.15.3] - 2026-11-01
 
 ### Changed

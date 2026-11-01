@@ -47,14 +47,26 @@ export function storageAvailable(): boolean {
 
 // useSyncExternalStore: SSR snapshot is always `fallback`; after hydration
 // the real value streams in, and `storage` events sync across tabs.
+// getSnapshot MUST return a stable reference — parse results are cached by
+// raw string, otherwise React sees a "changed" snapshot every call and
+// re-renders forever (page hangs).
+const _subs = new Map<string, (notify: () => void) => () => void>();
+const _snap = new Map<string, { raw: string | null; v: unknown }>();
+const _ssr = new Map<string, unknown>();
+
 function subscribe(key: string) {
-  return (notify: () => void) => {
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === null || e.key === key) notify();
+  let s = _subs.get(key);
+  if (!s) {
+    s = (notify: () => void) => {
+      const onStorage = (e: StorageEvent) => {
+        if (e.key === null || e.key === key) notify();
+      };
+      window.addEventListener("storage", onStorage);
+      return () => window.removeEventListener("storage", onStorage);
     };
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  };
+    _subs.set(key, s);
+  }
+  return s;
 }
 
 export function useLocalStorage<T>(
@@ -63,8 +75,18 @@ export function useLocalStorage<T>(
 ): [T, (v: T) => boolean] {
   const value = useSyncExternalStore(
     subscribe(key),
-    () => readJson(key, fallback),
-    () => fallback
+    () => {
+      const raw = window.localStorage.getItem(key);
+      const hit = _snap.get(key);
+      if (hit && hit.raw === raw) return hit.v as T;
+      const v = raw === null ? fallback : readJson(key, fallback);
+      _snap.set(key, { raw, v });
+      return v;
+    },
+    () => {
+      if (!_ssr.has(key)) _ssr.set(key, fallback);
+      return _ssr.get(key) as T;
+    }
   );
   const set = useCallback(
     (v: T) => {
