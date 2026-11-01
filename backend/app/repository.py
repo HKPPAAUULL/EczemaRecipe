@@ -289,12 +289,20 @@ _RECIPE_SORT = {
 }
 
 
-def list_recipes(conn, include_drafts, limit, offset, sort="newest"):
-    """All visible recipes → (total, rows). sort: newest|popular."""
+def list_recipes(conn, include_drafts, limit, offset, sort="newest",
+                 ingredient_id=None):
+    """All visible recipes → (total, rows). sort: newest|popular.
+    ingredient_id filters to recipes linked to that ingredient."""
     rel = _RECIPE_REL[include_drafts]
     order = _RECIPE_SORT.get(sort, _RECIPE_SORT["newest"])
+    where, params = "true", {"limit": limit, "offset": offset}
+    if ingredient_id is not None:
+        where = ("EXISTS (SELECT 1 FROM recipe_ingredient ri"
+                 " WHERE ri.recipe_id = r.id AND ri.ingredient_id = %(iid)s)")
+        params["iid"] = ingredient_id
     total = conn.execute(
-        f"SELECT count(*) AS n FROM {rel}").fetchone()["n"]
+        f"SELECT count(*) AS n FROM {rel} WHERE {where}",
+        params).fetchone()["n"]
     rows = conn.execute(
         f"""
         SELECT r.*, ds.name AS source_name, ds.license AS source_license,
@@ -310,9 +318,10 @@ def list_recipes(conn, include_drafts, limit, offset, sort="newest"):
                             count(*) FILTER (WHERE vote = -1) AS dislikes
                        FROM recipe_vote GROUP BY recipe_id) v
                  ON v.recipe_id = r.id
+         WHERE {where}
          ORDER BY {order}
          LIMIT %(limit)s OFFSET %(offset)s""",
-        {"limit": limit, "offset": offset},
+        params,
     ).fetchall()
     return total, rows
 

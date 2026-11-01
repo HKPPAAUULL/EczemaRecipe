@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import AllergenTag from "@/components/AllergenTag";
 import InsufficientDataNotice from "@/components/InsufficientDataNotice";
 import NutrientTable from "@/components/NutrientTable";
 import RatingBadge from "@/components/RatingBadge";
+import RecipeBrowseCard from "@/components/RecipeBrowseCard";
 import TraditionNotes from "@/components/TraditionNotes";
 import WarningBanner from "@/components/WarningBanner";
 import AddToShoppingListButton from "@/components/AddToShoppingListButton";
-import { ApiError, getIngredient, type IngredientDetail } from "@/lib/api";
+import {
+  ApiError,
+  getIngredient,
+  getRecipes,
+  type IngredientDetail,
+} from "@/lib/api";
 
 async function fetchDetail(id: string) {
   const numeric = Number(id);
@@ -37,6 +44,52 @@ export async function generateMetadata({
     title: `${item.name_zh} — ${item.rating_label}`,
     description: `${item.name_zh} 的濕疹適合度評級、致敏原與營養成分。`,
   };
+}
+
+async function RelatedRecipes({ ingredientId }: { ingredientId: number }) {
+  let data;
+  try {
+    data = await getRecipes({
+      ingredient: ingredientId,
+      limit: 4,
+      sort: "popular",
+    });
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return (
+        <WarningBanner title="暫時無法載入相關食譜">
+          {err.message}，請稍後再試。
+        </WarningBanner>
+      );
+    }
+    throw err;
+  }
+  if (!data.recipes.length) {
+    return (
+      <p className="mt-3 rounded-xl bg-surface-alt px-4 py-6 text-center text-sm text-ink-muted">
+        暫時未有使用此食材的食譜。
+      </p>
+    );
+  }
+  return (
+    <>
+      <ul className="mt-3 grid gap-4 md:grid-cols-2">
+        {data.recipes.map((r) => (
+          <li key={r.id}>
+            <RecipeBrowseCard r={r} />
+          </li>
+        ))}
+      </ul>
+      <p className="mt-3 text-sm">
+        <Link
+          href={`/recipes?ingredient=${ingredientId}`}
+          className="font-medium text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          瀏覽全部 {data.total} 道食譜 →
+        </Link>
+      </p>
+    </>
+  );
 }
 
 function DetailBody({ item }: { item: IngredientDetail }) {
@@ -115,6 +168,19 @@ function DetailBody({ item }: { item: IngredientDetail }) {
       </section>
 
       <TraditionNotes notes={item.tradition_notes} />
+
+      <section aria-labelledby="recipes-h">
+        <h2 id="recipes-h" className="text-lg font-semibold text-ink">
+          相關食譜
+        </h2>
+        <Suspense
+          fallback={
+            <p className="mt-3 py-8 text-center text-ink-muted">載入中…</p>
+          }
+        >
+          <RelatedRecipes ingredientId={item.id} />
+        </Suspense>
+      </section>
 
       {item.evidence.length ? (
         <section aria-labelledby="evidence-h">

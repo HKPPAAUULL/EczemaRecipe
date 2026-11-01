@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.0] - 2026-11-01
+
+### Added
+
+- 食材詳情頁新增「相關食譜」區：顯示使用該食材的食譜卡片（按讚好排序，最多 4 道）＋「瀏覽全部 N 道食譜」連結。`GET /api/recipes` 新增 `ingredient` 篩選參數；`/recipes` 頁支援 `?ingredient=` 篩選（顯示食材名稱橫額＋清除連結，分頁保留篩選）。
+
 ## [0.14.0] - 2026-11-01
 
 ### Added

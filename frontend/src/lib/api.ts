@@ -193,12 +193,18 @@ export function getAllergens() {
 }
 
 export function getRecipes(
-  opts: { limit?: number; offset?: number; sort?: "newest" | "popular" } = {}
+  opts: {
+    limit?: number;
+    offset?: number;
+    sort?: "newest" | "popular";
+    ingredient?: number;
+  } = {}
 ) {
   const params = new URLSearchParams();
   params.set("limit", String(opts.limit ?? 12));
   params.set("offset", String(opts.offset ?? 0));
   if (opts.sort) params.set("sort", opts.sort);
+  if (opts.ingredient) params.set("ingredient", String(opts.ingredient));
   return apiGet<import("./recipes").RecipeListResponse>(
     `/api/recipes?${params}`
   );

@@ -4,7 +4,12 @@ import { Suspense } from "react";
 import RecipesClient from "@/components/RecipesClient";
 import RecipeBrowseCard from "@/components/RecipeBrowseCard";
 import WarningBanner from "@/components/WarningBanner";
-import { ApiError, getAllergens, getRecipes } from "@/lib/api";
+import {
+  ApiError,
+  getAllergens,
+  getIngredient,
+  getRecipes,
+} from "@/lib/api";
 import { pageWindow } from "@/lib/navigation";
 
 export const metadata: Metadata = {
@@ -17,14 +22,28 @@ const PAGE_SIZE = 12;
 async function AllRecipes({
   searchParams,
 }: {
-  searchParams: Promise<{ offset?: string }>;
+  searchParams: Promise<{ offset?: string; ingredient?: string }>;
 }) {
-  const { offset } = await searchParams;
+  const { offset, ingredient } = await searchParams;
   const parsed = Number.parseInt(offset ?? "0", 10);
   const current = Number.isInteger(parsed) && parsed > 0 ? parsed : 0;
+  const iid = Number(ingredient);
+  const ingredientId =
+    ingredient !== undefined && Number.isInteger(iid) && iid > 0
+      ? iid
+      : null;
+  let filterName: string | null = null;
+  if (ingredientId !== null) {
+    filterName = (await getIngredient(ingredientId).catch(() => null))
+      ?.name_zh ?? null;
+  }
   let data;
   try {
-    data = await getRecipes({ limit: PAGE_SIZE, offset: current });
+    data = await getRecipes({
+      limit: PAGE_SIZE,
+      offset: current,
+      ingredient: ingredientId ?? undefined,
+    });
   } catch (err) {
     if (err instanceof ApiError) {
       return (
@@ -35,16 +54,47 @@ async function AllRecipes({
     }
     throw err;
   }
+  const pageQs = (o: number) =>
+    `/recipes?${new URLSearchParams({
+      offset: String(o),
+      ...(ingredientId !== null
+        ? { ingredient: String(ingredientId) }
+        : {}),
+    })}`;
   if (!data.recipes.length) {
     return (
-      <p className="rounded-xl bg-surface-alt px-4 py-6 text-center text-sm text-ink-muted">
-        未有食譜。
-      </p>
+      <>
+        {ingredientId !== null && (
+          <p className="rounded-xl bg-surface-alt px-4 py-3 text-sm text-ink">
+            篩選：含「{filterName ?? `食材 ${ingredientId}`}」
+            <Link
+              href="/recipes"
+              className="ml-2 text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              清除
+            </Link>
+          </p>
+        )}
+        <p className="rounded-xl bg-surface-alt px-4 py-6 text-center text-sm text-ink-muted">
+          未有食譜。
+        </p>
+      </>
     );
   }
   const w = pageWindow(data.total, data.limit, data.offset);
   return (
     <>
+      {ingredientId !== null && (
+        <p className="rounded-xl bg-surface-alt px-4 py-3 text-sm text-ink">
+          篩選：含「{filterName ?? `食材 ${ingredientId}`}」的食譜
+          <Link
+            href="/recipes"
+            className="ml-2 text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            清除
+          </Link>
+        </p>
+      )}
       <p className="text-sm text-ink-muted">
         共 {data.total} 道食譜（第 {w.page}/{w.pages} 頁）
       </p>
@@ -59,7 +109,7 @@ async function AllRecipes({
         <div className="mt-4 flex justify-center gap-3">
           {w.hasPrev ? (
             <Link
-              href={`/recipes?offset=${w.prevOffset}`}
+              href={pageQs(w.prevOffset ?? 0)}
               className="inline-flex min-h-[44px] items-center rounded-full border border-line px-4 text-sm"
             >
               上一頁
@@ -71,7 +121,7 @@ async function AllRecipes({
           )}
           {w.hasNext ? (
             <Link
-              href={`/recipes?offset=${w.nextOffset}`}
+              href={pageQs(w.nextOffset ?? 0)}
               className="inline-flex min-h-[44px] items-center rounded-full border border-line px-4 text-sm"
             >
               下一頁
@@ -90,7 +140,7 @@ async function AllRecipes({
 export default async function RecipesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ offset?: string }>;
+  searchParams: Promise<{ offset?: string; ingredient?: string }>;
 }) {
   let allergenNames: Record<number, string> = {};
   try {

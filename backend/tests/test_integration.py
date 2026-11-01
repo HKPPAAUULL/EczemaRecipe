@@ -819,7 +819,22 @@ def test_recipe_list_endpoint(recipe_api_db):
         assert top["likes"] == 2 and top["dislikes"] == 0
         r = c.get("/api/recipes?sort=bogus")
         assert r.status_code == 422
+        # ingredient filter: egg → only ok (hid unmatched, drf pending)
+        r = c.get(f"/api/recipes?ingredient={recipe_api_db['egg']}")
+        ids = {x["id"] for x in r.json()["recipes"]}
+        assert ids == {recipe_api_db["ok"]}
+        r = c.get("/api/recipes?ingredient=999999")
+        assert r.status_code == 200 and r.json()["total"] == 0
+        r = c.get("/api/recipes?ingredient=0")
+        assert r.status_code == 422
+        r = c.get("/api/recipes?ingredient=abc")
+        assert r.status_code == 422
     with _client(recipe_api_db["url"], drafts=True) as c:
+        r = c.get(f"/api/recipes?ingredient={recipe_api_db['egg']}")
+        ids = {x["id"] for x in r.json()["recipes"]}
+        assert ids == {recipe_api_db["ok"], recipe_api_db["hid"],
+                       recipe_api_db["drf"]}
+        r = c.get("/api/recipes")
         r = c.get("/api/recipes")
         ids = {x["id"] for x in r.json()["recipes"]}
         assert recipe_api_db["drf"] in ids
