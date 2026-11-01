@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.10] - 2026-11-01
+
+### Changed
+
+- `docs/deploy.md`：補上與 PocketTCM 共存部署——部署機已有 Flask（:8081）＋本地管理 named tunnel `pockettcm`；首選路徑為同一 tunnel 加第二個 hostname ingress（置於 catch-all 404 前）＋`tunnel route dns`，並標明 :8081 與既有 cloudflared 進程不得停止、端口規劃無衝突。
+
 ## [0.21.9] - 2026-11-01
 
 ### Added
