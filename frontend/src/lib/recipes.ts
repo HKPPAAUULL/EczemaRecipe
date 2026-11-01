@@ -55,6 +55,32 @@ export interface SuggestResponse {
   disclaimer: string;
 }
 
+export interface RecipeListItem {
+  id: number;
+  title: string;
+  description: string | null;
+  cook_time: number | null;
+  servings: number | null;
+  source_url: string | null;
+  source_name: string | null;
+  license: string | null;
+  tags: string[];
+  allergens: string[];
+  allergen_warning: boolean;
+  trigger_ingredients: string[];
+  unmatched_ingredients: string[];
+  draft: boolean;
+  is_original: boolean;
+}
+
+export interface RecipeListResponse {
+  total: number;
+  limit: number;
+  offset: number;
+  recipes: RecipeListItem[];
+  disclaimer: string;
+}
+
 export interface RecipeIngredientItem {
   ingredient_id: number;
   name_zh: string;

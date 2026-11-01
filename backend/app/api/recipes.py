@@ -3,7 +3,7 @@ allergen warnings (safety-critical logic lives in app.recipe_matching).
 GET /api/recipes/{id} — recipe detail.
 """
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Query, Request
 
 from app import repository
 from app.deps import db_conn, include_drafts
@@ -17,6 +17,7 @@ from app.recipe_matching import (
 )
 from app.schemas import (
     RecipeDetailResponse,
+    RecipeListResponse,
     SuggestRequest,
     SuggestResponse,
 )
@@ -49,6 +50,41 @@ def _facts(row, links, allergen_union):
             if l["eczema_rating"] == "trigger"],
         is_original=bool(row["is_original"]),
     )
+
+
+@router.get("", response_model=RecipeListResponse)
+def list_all(request: Request,
+             limit: int = Query(default=12, ge=1, le=30),
+             offset: int = Query(default=0, ge=0)):
+    drafts = include_drafts(request)
+    with db_conn(request) as conn:
+        total, rows = repository.list_recipes(conn, drafts, limit, offset)
+        rids = [r["id"] for r in rows]
+        links = repository.list_recipe_links(conn, rids)
+        aunion = repository.list_recipe_allergens(conn, rids)
+    recipes = []
+    for row in rows:
+        union = sorted(
+            set(aunion.get(row["id"], {}).values())
+            | set(row["allergen_hints"] or []))
+        triggers = [l["name_zh"] for l in links.get(row["id"], [])
+                    if l["eczema_rating"] == "trigger"]
+        recipes.append({
+            "id": row["id"], "title": row["title"],
+            "description": row["description"], "cook_time": row["cook_time"],
+            "servings": row["servings"], "source_url": row["source_url"],
+            "source_name": row["source_name"],
+            "license": row["source_license"], "tags": list(row["tags"] or []),
+            "allergens": union,
+            "allergen_warning": bool(union) or bool(triggers),
+            "trigger_ingredients": triggers,
+            "unmatched_ingredients": list(row["unmatched_ingredients"] or []),
+            "draft": row["status"] != "published"
+                     or bool(row["unmatched_ingredients"]),
+            "is_original": bool(row["is_original"]),
+        })
+    return RecipeListResponse(
+        total=total, limit=limit, offset=offset, recipes=recipes)
 
 
 @router.post("/suggest", response_model=SuggestResponse)

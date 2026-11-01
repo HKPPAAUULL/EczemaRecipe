@@ -192,6 +192,17 @@ export function getAllergens() {
   return apiGet<AllergenItem[]>("/api/allergens");
 }
 
+export function getRecipes(
+  opts: { limit?: number; offset?: number } = {}
+) {
+  const params = new URLSearchParams();
+  params.set("limit", String(opts.limit ?? 12));
+  params.set("offset", String(opts.offset ?? 0));
+  return apiGet<import("./recipes").RecipeListResponse>(
+    `/api/recipes?${params}`
+  );
+}
+
 export async function getRecipe(id: number): Promise<import("./recipes").RecipeDetail | null> {
   try {
     const data = await apiGet<import("./recipes").RecipeDetail>(

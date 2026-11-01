@@ -162,6 +162,32 @@ class RecipeSuggestion(BaseModel):
     is_original: bool = False
 
 
+class RecipeListItem(BaseModel):
+    id: int
+    title: str
+    description: str | None
+    cook_time: int | None
+    servings: int | None
+    source_url: str | None
+    source_name: str | None
+    license: str | None
+    tags: list[str]
+    allergens: list[str]
+    allergen_warning: bool
+    trigger_ingredients: list[str]
+    unmatched_ingredients: list[str]
+    draft: bool
+    is_original: bool = False
+
+
+class RecipeListResponse(BaseModel):
+    total: int
+    limit: int
+    offset: int
+    recipes: list[RecipeListItem]
+    disclaimer: str = DISCLAIMER
+
+
 class SuggestResponse(BaseModel):
     selected: list[SelectedIngredientItem]
     warnings: list[SelectionWarning]

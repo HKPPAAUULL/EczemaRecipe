@@ -283,6 +283,26 @@ def get_ingredient_refs(conn, ids, include_drafts) -> dict[int, dict]:
     }
 
 
+def list_recipes(conn, include_drafts, limit, offset):
+    """All visible recipes, newest first → (total, rows)."""
+    rel = _RECIPE_REL[include_drafts]
+    total = conn.execute(
+        f"SELECT count(*) AS n FROM {rel}").fetchone()["n"]
+    rows = conn.execute(
+        f"""
+        SELECT r.*, ds.name AS source_name, ds.license AS source_license,
+               COALESCE((SELECT array_agg(t.tag ORDER BY t.tag)
+                         FROM recipe_tag t WHERE t.recipe_id = r.id), '{{}}')
+               AS tags
+          FROM {rel}
+          LEFT JOIN data_source ds ON ds.id = r.data_source_id
+         ORDER BY r.id DESC
+         LIMIT %(limit)s OFFSET %(offset)s""",
+        {"limit": limit, "offset": offset},
+    ).fetchall()
+    return total, rows
+
+
 def list_recipe_candidates(conn, include_drafts, ingredient_ids):
     """Recipe rows sharing >=1 non-staple matched ingredient with selection."""
     rel = _RECIPE_REL[include_drafts]

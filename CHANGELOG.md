@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - 2026-11-01
+
+### Added
+
+- 食譜配對頁下方新增「所有食譜」瀏覽區：`GET /api/recipes` 分頁列表端點（倒序、附過敏原聯集／誘因食材／草稿標示，遵循 `published_recipe` 可見性與 `INCLUDE_DRAFTS`），前端 `RecipeBrowseCard` 卡片網格（無覆蓋率率欄位）＋ `?offset=` 分頁連結。
+
 ## [0.11.0] - 2026-11-01
 
 ### Changed

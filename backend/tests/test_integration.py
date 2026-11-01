@@ -729,6 +729,43 @@ def test_suggest_pagination_and_openapi(recipe_api_db):
         assert r.status_code == 200 and "/api/recipes/suggest" in r.text
 
 
+def test_recipe_list_endpoint(recipe_api_db):
+    with _client(recipe_api_db["url"], drafts=False) as c:
+        r = c.get("/api/recipes")
+        assert r.status_code == 200
+        body = r.json()
+        ids = {x["id"] for x in body["recipes"]}
+        assert body["total"] == len(ids)
+        assert recipe_api_db["ok"] in ids
+        assert recipe_api_db["stp"] in ids
+        # published w/ unmatched, pending, rejected all hidden
+        assert recipe_api_db["hid"] not in ids
+        assert recipe_api_db["drf"] not in ids
+        assert recipe_api_db["rej"] not in ids
+        items = {x["id"]: x for x in body["recipes"]}
+        stp = items[recipe_api_db["stp"]]
+        assert "甲殼類" in stp["allergens"]
+        assert stp["allergen_warning"] is True
+        assert stp["draft"] is False
+        assert items[recipe_api_db["ok"]]["unmatched_ingredients"] == []
+        # newest first
+        assert [x["id"] for x in body["recipes"]] == sorted(ids, reverse=True)
+        r = c.get("/api/recipes?limit=1&offset=1")
+        assert r.status_code == 200 and len(r.json()["recipes"]) == 1
+        assert r.json()["limit"] == 1 and r.json()["offset"] == 1
+        r = c.get("/api/recipes?limit=999")
+        assert r.status_code == 422
+    with _client(recipe_api_db["url"], drafts=True) as c:
+        r = c.get("/api/recipes")
+        ids = {x["id"] for x in r.json()["recipes"]}
+        assert recipe_api_db["drf"] in ids
+        assert recipe_api_db["hid"] in ids
+        assert recipe_api_db["rej"] not in ids
+        items = {x["id"]: x for x in r.json()["recipes"]}
+        assert items[recipe_api_db["drf"]]["draft"] is True
+        assert items[recipe_api_db["hid"]]["draft"] is True
+
+
 # --------------------------------------------------------------------------
 # Recipe authoring import (v0.9.0)
 # --------------------------------------------------------------------------
