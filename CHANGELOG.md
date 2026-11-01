@@ -10,11 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - 首頁「推薦食譜」改為每次載入隨機抽 6 道（之前係讚好數最高 4 道）：`GET /api/recipes` 新增 `sort=random`（SQL `ORDER BY RANDOM()`），前端 `getRecipes` 加 `"random"` 類型；卡片網格加大屏幕三欄。配對頁「所有食譜」同食材頁相關食譜維持原有排序不變。
-
-## [0.17.0] - 2026-11-01
-
-### Changed
-
 - 首頁寫死嘅「常用查詢」改為「最近查詢」：每次用 SearchBox 搜尋食材會記落瀏覽器 localStorage（`ek:v1:recent-searches`，最新排先、去重、上限 8 條），首頁以 chip 顯示並可直接再搜；附「清除」掣。無記錄時唔顯示。純函數＋元件測試覆蓋。
 
 ## [0.16.0] - 2026-11-01
