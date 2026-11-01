@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.0] - 2026-11-01
+
+### Added
+
+- 食譜匯出快照（`data/export/current_recipes.md`：62 道含食材；`data/export/ingredient_library.md`：210 項含評級同審核狀態）＋ `docs/RECIPE_GEN_PROMPT.md`——可直接貼給有上網能力嘅 AI 嘅完整創作指令：上網搵參考 → 15 道原創濕疹友善食譜、唔准同現有 62 道重複／高度相似、完整 CSV 格式規格（禁用詞、欄位限制、`||` 步驟分隔、is_staple 規則）、可用食材名單同現有食譜標題已嵌入。
+
 ## [0.19.2] - 2026-11-01
 
 ### Removed
