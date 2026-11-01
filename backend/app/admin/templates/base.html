@@ -67,6 +67,8 @@ a.btn-link.primary:hover{background:var(--primary-dark);color:#fff}
 .muted{color:var(--ink-muted)}
 .filters{display:flex;gap:.8rem;flex-wrap:wrap;align-items:end;margin:.8rem 0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
 .filters label{margin-top:0}
+.filters > div:has(input[type=search]){flex:1 1 220px}
+.filters input[type=search]{width:100%}
 .pager{display:flex;gap:.5rem;align-items:center;margin:1rem 0;font-size:.9rem}
 .pager a{padding:.35rem .8rem;border:1px solid var(--primary);border-radius:8px;color:var(--primary);text-decoration:none}
 .pager a:hover{background:#eef3ef}
