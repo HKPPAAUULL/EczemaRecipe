@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.1] - 2026-11-01
+
+### Changed
+
+- 食譜卡片（`RecipeBrowseCard`、`RecipeCard`）整張可點：標題連結改為 stretched-link 覆蓋整卡，hover 有陰影回饋、鍵盤 focus 有外框；卡內來源連結與「加入清單」按鈕墊高 z-index 維持可獨立點擊。
+
 ## [0.15.0] - 2026-11-01
 
 ### Added

@@ -7,12 +7,12 @@ import { coverageText, type RecipeSuggestion } from "@/lib/recipes";
 
 export default function RecipeCard({ r }: { r: RecipeSuggestion }) {
   return (
-    <article className="rounded-2xl bg-surface p-4 shadow-card ring-1 ring-line md:p-5">
+    <article className="relative rounded-2xl bg-surface p-4 shadow-card ring-1 ring-line transition-shadow hover:shadow-lift md:p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="text-base font-bold text-ink">
           <Link
             href={`/recipes/${r.id}`}
-            className="hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="after:absolute after:inset-0 after:rounded-2xl after:content-[''] hover:text-primary focus:outline-none focus-visible:after:ring-2 focus-visible:after:ring-primary"
           >
             {r.title}
             {r.is_original && (
@@ -78,7 +78,7 @@ export default function RecipeCard({ r }: { r: RecipeSuggestion }) {
           </p>
           <ul className="mt-1.5 flex flex-wrap gap-1.5">
             {r.missing.map((m) => (
-              <li key={m} className="inline-flex items-center gap-1">
+              <li key={m} className="relative z-10 inline-flex items-center gap-1">
                 <span className="rounded bg-surface-alt px-1.5 py-0.5 text-xs text-ink">
                   {m}
                 </span>
@@ -98,7 +98,7 @@ export default function RecipeCard({ r }: { r: RecipeSuggestion }) {
             href={r.source_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="relative z-10 text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {r.source_name ?? r.source_url}
           </a>
