@@ -112,6 +112,8 @@ export interface RecipeDetail {
   steps: string[];
   notes: string | null;
   is_original: boolean;
+  likes: number;
+  dislikes: number;
   disclaimer: string;
 }
 

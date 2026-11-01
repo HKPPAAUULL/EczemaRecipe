@@ -360,6 +360,43 @@ def list_recipe_allergens(conn, recipe_ids):
     return out
 
 
+def upsert_recipe_vote(conn, recipe_id, voter_key, vote):
+    """vote in {-1, 0, 1}; 0 removes the voter's row."""
+    if vote == 0:
+        conn.execute(
+            "DELETE FROM recipe_vote"
+            " WHERE recipe_id = %(r)s AND voter_key = %(k)s",
+            {"r": recipe_id, "k": voter_key})
+    else:
+        conn.execute(
+            """
+            INSERT INTO recipe_vote (recipe_id, voter_key, vote)
+            VALUES (%(r)s, %(k)s, %(v)s)
+            ON CONFLICT (recipe_id, voter_key)
+            DO UPDATE SET vote = EXCLUDED.vote, updated_at = now()""",
+            {"r": recipe_id, "k": voter_key, "v": vote})
+
+
+def get_recipe_votes(conn, recipe_id, voter_key=None):
+    """→ {"likes", "dislikes", "my_vote" (0 when absent/unknown)}"""
+    row = conn.execute(
+        """
+        SELECT count(*) FILTER (WHERE vote = 1)  AS likes,
+               count(*) FILTER (WHERE vote = -1) AS dislikes
+          FROM recipe_vote WHERE recipe_id = %(r)s""",
+        {"r": recipe_id}).fetchone()
+    my = 0
+    if voter_key:
+        m = conn.execute(
+            "SELECT vote FROM recipe_vote"
+            " WHERE recipe_id = %(r)s AND voter_key = %(k)s",
+            {"r": recipe_id, "k": voter_key}).fetchone()
+        if m:
+            my = m["vote"]
+    return {"likes": row["likes"], "dislikes": row["dislikes"],
+            "my_vote": my}
+
+
 def allergen_name_to_id(conn) -> dict[str, int]:
     return {r["name_zh"]: r["id"]
             for r in conn.execute("SELECT name_zh, id FROM allergen")}

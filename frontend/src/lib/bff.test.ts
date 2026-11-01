@@ -5,7 +5,12 @@ import {
   exclusionNotice,
   coverageText,
 } from "./recipes";
-import { validateSearchQuery, validateSuggestBody } from "./bff";
+import {
+  isValidVoterKey,
+  validateSearchQuery,
+  validateSuggestBody,
+  validateVoteBody,
+} from "./bff";
 
 describe("bff validation", () => {
   it("search query bounds", () => {
@@ -42,6 +47,30 @@ describe("bff validation", () => {
     const v = validateSuggestBody({ ingredient_ids: [1, 2] });
     expect(v.ok).toBe(true);
     expect(v.ok && (v.value as { limit: number }).limit).toBe(12);
+  });
+
+  it("voter key and vote body validation", () => {
+    expect(isValidVoterKey("abcd1234-efgh")).toBe(true);
+    expect(isValidVoterKey("short")).toBe(false);
+    expect(isValidVoterKey("x".repeat(65))).toBe(false);
+    expect(isValidVoterKey("has space here1")).toBe(false);
+    expect(validateVoteBody(null).ok).toBe(false);
+    expect(
+      validateVoteBody({ voter_key: "abcd1234-efgh", vote: 1 }).ok
+    ).toBe(true);
+    expect(
+      validateVoteBody({ voter_key: "abcd1234-efgh", vote: -1 }).ok
+    ).toBe(true);
+    expect(
+      validateVoteBody({ voter_key: "abcd1234-efgh", vote: 0 }).ok
+    ).toBe(true);
+    expect(
+      validateVoteBody({ voter_key: "abcd1234-efgh", vote: 2 }).ok
+    ).toBe(false);
+    expect(
+      validateVoteBody({ voter_key: "short", vote: 1 }).ok
+    ).toBe(false);
+    expect(validateVoteBody({ vote: 1 }).ok).toBe(false);
   });
 });
 

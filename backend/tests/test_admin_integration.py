@@ -29,6 +29,9 @@ def db():
             else "SELECT 1"
         )
         conn.execute(
+            (REPO_ROOT / "docs/db/migrations/0008_recipe_votes.sql").read_text(encoding="utf-8")
+        )
+        conn.execute(
             "TRUNCATE evidence, ingredient_allergen, ingredient_nutrient, recipe_tag,"
             " recipe_ingredient, recipe, ingredient, review_queue, audit_log"
             " RESTART IDENTITY CASCADE"
@@ -626,6 +629,23 @@ def test_quick_unreview_and_idempotent(db, client):
          action="unreview", next="/admin/ingredients")
     assert one(db, "SELECT count(*) FROM audit_log WHERE entity_id=%s"
                " AND action='unreview'", iid) == 1  # second is no-op
+
+
+def test_trending_page(db, client):
+    rid = mk_recipe(db, "受歡迎食譜", status="published")
+    mk_recipe(db, "無票食譜")
+    db.execute(
+        "INSERT INTO recipe_vote (recipe_id, voter_key, vote)"
+        " VALUES (%s,'voter-aaaa-01',1),(%s,'voter-bbbb-02',1),"
+        "        (%s,'voter-cccc-03',-1)",
+        (rid, rid, rid))
+    r = client.get("/admin/trending")
+    assert r.status_code == 200
+    body = r.text
+    assert "食譜趨勢" in body
+    assert body.index("受歡迎食譜") < body.index("無票食譜")
+    assert "67%" in body  # 2 likes / 3 votes
+    assert "食譜趨勢" in client.get("/admin").text or "/admin/trending" in body
 
 
 def test_recipe_quick_publish_success(db, client, public):

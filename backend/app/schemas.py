@@ -188,6 +188,18 @@ class RecipeListResponse(BaseModel):
     disclaimer: str = DISCLAIMER
 
 
+class RecipeVoteRequest(BaseModel):
+    voter_key: str = Field(min_length=8, max_length=64,
+                           pattern=r"^[A-Za-z0-9_-]+$")
+    vote: int = Field(ge=-1, le=1)
+
+
+class RecipeVoteResponse(BaseModel):
+    likes: int
+    dislikes: int
+    my_vote: int
+
+
 class SuggestResponse(BaseModel):
     selected: list[SelectedIngredientItem]
     warnings: list[SelectionWarning]
@@ -230,4 +242,6 @@ class RecipeDetailResponse(BaseModel):
     steps: list[str] = []
     notes: str | None = None
     is_original: bool = False
+    likes: int = 0
+    dislikes: int = 0
     disclaimer: str = DISCLAIMER

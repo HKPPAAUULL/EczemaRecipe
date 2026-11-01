@@ -489,7 +489,8 @@ def recipes_db(imported_db):
     """DB with seed ingredients + recipe-pipeline schema objects."""
     with psycopg.connect(imported_db, autocommit=True) as conn:
         for mig in ("0003_recipe_pipeline.sql",
-                    "0004_recipe_unmatched_staples.sql"):
+                    "0004_recipe_unmatched_staples.sql",
+                    "0008_recipe_votes.sql"):
             conn.execute(
                 (REPO_ROOT / "docs" / "db" / "migrations" / mig)
                 .read_text(encoding="utf-8"))
@@ -727,6 +728,53 @@ def test_suggest_pagination_and_openapi(recipe_api_db):
         assert r.status_code == 200 and len(r.json()["recipes"]) == 1
         r = c.get("/openapi.json")
         assert r.status_code == 200 and "/api/recipes/suggest" in r.text
+
+
+def test_recipe_votes(recipe_api_db):
+    ok, drf = recipe_api_db["ok"], recipe_api_db["drf"]
+    key = "testvoter-key-0001"
+    with _client(recipe_api_db["url"], drafts=False) as c:
+        r = c.get(f"/api/recipes/{ok}/votes")
+        assert r.status_code == 200
+        assert r.json() == {"likes": 0, "dislikes": 0, "my_vote": 0}
+        # hidden recipe → 404 both ways
+        assert c.get(f"/api/recipes/{drf}/votes").status_code == 404
+        assert c.post(f"/api/recipes/{drf}/votes",
+                      json={"voter_key": key, "vote": 1}).status_code == 404
+        # validation
+        assert c.post(f"/api/recipes/{ok}/votes",
+                      json={"voter_key": "short", "vote": 1}
+                      ).status_code == 422
+        assert c.post(f"/api/recipes/{ok}/votes",
+                      json={"voter_key": key, "vote": 5}).status_code == 422
+        # like
+        r = c.post(f"/api/recipes/{ok}/votes",
+                   json={"voter_key": key, "vote": 1})
+        assert r.json() == {"likes": 1, "dislikes": 0, "my_vote": 1}
+        # duplicate like stays one row
+        r = c.post(f"/api/recipes/{ok}/votes",
+                   json={"voter_key": key, "vote": 1})
+        assert r.json()["likes"] == 1
+        # second voter
+        r = c.post(f"/api/recipes/{ok}/votes",
+                   json={"voter_key": "othervoter-key-1", "vote": 1})
+        assert r.json()["likes"] == 2
+        # switch to dislike
+        r = c.post(f"/api/recipes/{ok}/votes",
+                   json={"voter_key": key, "vote": -1})
+        assert r.json() == {"likes": 1, "dislikes": 1, "my_vote": -1}
+        # GET reflects own vote; unknown/invalid voter → my_vote 0
+        r = c.get(f"/api/recipes/{ok}/votes?voter={key}")
+        assert r.json()["my_vote"] == -1
+        r = c.get(f"/api/recipes/{ok}/votes?voter=nope")
+        assert r.json()["my_vote"] == 0
+        # retract
+        r = c.post(f"/api/recipes/{ok}/votes",
+                   json={"voter_key": key, "vote": 0})
+        assert r.json() == {"likes": 1, "dislikes": 0, "my_vote": 0}
+        # detail response carries totals
+        r = c.get(f"/api/recipes/{ok}")
+        assert r.json()["likes"] == 1 and r.json()["dislikes"] == 0
 
 
 def test_recipe_list_endpoint(recipe_api_db):

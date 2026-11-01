@@ -263,6 +263,18 @@ CREATE TABLE recipe_tag (
 );
 COMMENT ON TABLE recipe_tag IS '食譜標籤（如「清蒸」「低組織胺」「快煮」），供篩選';
 
+CREATE TABLE recipe_vote (
+    id          bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    recipe_id   bigint NOT NULL REFERENCES recipe (id) ON DELETE CASCADE,
+    voter_key   text NOT NULL,
+    vote        smallint NOT NULL CHECK (vote IN (-1, 1)),
+    created_at  timestamptz NOT NULL DEFAULT now(),
+    updated_at  timestamptz NOT NULL DEFAULT now(),
+    UNIQUE (recipe_id, voter_key)
+);
+CREATE INDEX recipe_vote_recipe_idx ON recipe_vote (recipe_id);
+COMMENT ON TABLE recipe_vote IS '匿名食譜投票：voter_key 為瀏覽器 localStorage 產生的不透明鍵；vote=1 讚好、-1 不讚好';
+
 -- ---------------------------------------------------------------------------
 -- crawl_job / review_queue — 管線與審核（§5）
 -- ---------------------------------------------------------------------------

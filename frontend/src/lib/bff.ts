@@ -62,3 +62,36 @@ export function validateSuggestBody(raw: unknown): Validation {
 }
 
 export const BODY_LIMIT = MAX_BODY_BYTES;
+
+const VOTER_KEY_RE = /^[A-Za-z0-9_-]{8,64}$/;
+
+export function isValidVoterKey(v: unknown): v is string {
+  return typeof v === "string" && VOTER_KEY_RE.test(v);
+}
+
+export interface VoteBody {
+  voter_key: string;
+  vote: number;
+}
+
+export function validateVoteBody(raw: unknown): Validation {
+  if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
+    return { ok: false, status: 400, error: "body 格式不正確" };
+  }
+  const b = raw as Record<string, unknown>;
+  if (!isValidVoterKey(b.voter_key)) {
+    return { ok: false, status: 400, error: "voter_key 格式不正確" };
+  }
+  if (
+    !Number.isInteger(b.vote) ||
+    (b.vote as number) < -1 ||
+    (b.vote as number) > 1
+  ) {
+    return { ok: false, status: 400, error: "vote 須為 -1、0 或 1" };
+  }
+  const value: VoteBody = {
+    voter_key: b.voter_key,
+    vote: b.vote as number,
+  };
+  return { ok: true, value };
+}

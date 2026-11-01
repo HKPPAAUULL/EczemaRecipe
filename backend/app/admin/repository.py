@@ -349,6 +349,27 @@ def list_recipes(
     return total, rows
 
 
+def list_recipe_vote_stats(conn, page: int) -> tuple[int, list[dict]]:
+    """All non-rejected recipes with like/dislike totals, most-liked first."""
+    total = conn.execute(
+        "SELECT count(*) AS n FROM recipe WHERE status != 'rejected'"
+    ).fetchone()["n"]
+    rows = conn.execute(
+        f"""
+        SELECT r.id, r.title, r.status, r.is_original,
+               count(v.id) FILTER (WHERE v.vote = 1)  AS likes,
+               count(v.id) FILTER (WHERE v.vote = -1) AS dislikes,
+               max(v.updated_at) AS last_vote_at
+          FROM recipe r
+          LEFT JOIN recipe_vote v ON v.recipe_id = r.id
+         WHERE r.status != 'rejected'
+         GROUP BY r.id, r.title, r.status, r.is_original
+         ORDER BY likes DESC, dislikes ASC, r.id
+         LIMIT {PAGE_SIZE} OFFSET {_offset(page)}""",
+    ).fetchall()
+    return total, rows
+
+
 def get_recipe(conn, rid: int, lock: bool = False) -> dict | None:
     return conn.execute(
         "SELECT * FROM recipe WHERE id = %s" + (" FOR UPDATE" if lock else ""), (rid,)

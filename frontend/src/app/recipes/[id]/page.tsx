@@ -5,6 +5,7 @@ import AllergenTag from "@/components/AllergenTag";
 import RatingBadge from "@/components/RatingBadge";
 import WarningBanner from "@/components/WarningBanner";
 import AddAllToShoppingList from "@/components/AddAllToShoppingList";
+import LikeButtons from "@/components/LikeButtons";
 import { ApiError, getRecipe } from "@/lib/api";
 
 export async function generateMetadata({
@@ -88,6 +89,13 @@ export default async function RecipeDetailPage({
             ))}
           </div>
         )}
+        <div className="mt-4 border-t border-line pt-4">
+          <LikeButtons
+            recipeId={item.id}
+            initialLikes={item.likes}
+            initialDislikes={item.dislikes}
+          />
+        </div>
       </header>
 
       {item.allergen_warning && (

@@ -42,6 +42,7 @@ pre{white-space:pre-wrap;margin:0}
 <a href="/admin" class="{{ 'on' if nav == 'dashboard' }}">儀表板</a>
 <a href="/admin/ingredients" class="{{ 'on' if nav == 'ingredients' }}">食材審核</a>
 <a href="/admin/recipes" class="{{ 'on' if nav == 'recipes' }}">食譜審核</a>
+<a href="/admin/trending" class="{{ 'on' if nav == 'trending' }}">食譜趨勢</a>
 <a href="/admin/queue" class="{{ 'on' if nav == 'queue' }}">待處理佇列</a>
 <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="secondary" type="submit">登出</button></form>
 </header>

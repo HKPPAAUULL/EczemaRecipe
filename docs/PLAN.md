@@ -209,6 +209,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-31 | v0.10.4 | 批量處理客家食譜未配對食材，新增 46 項食材草稿；未配對歸零 |
 | 2026-10-31 | v0.10.5 | 為新建食材提出評級（附來源與過敏原連結），待人審 |
 | 2026-10-31 | v0.10.6 | 修後台致敏提示漏顯示已配對食材過敏原 |
+| 2026-11-01 | v0.13.0 | 食譜匿名讚好投票（`recipe_vote` 表、`GET/POST /api/recipes/{id}/votes`、食譜頁 LikeButtons、BFF 代理）；後台 `/admin/trending` 食譜趨勢頁 |
 | 2026-11-01 | v0.12.0 | 食譜配對頁下方顯示所有食譜（`GET /api/recipes` 分頁列表＋卡片網格） |
 | 2026-11-01 | v0.11.0 | 食材查詢合併入食材庫頁（`/categories` 頂部搜尋，`?q=` 顯示結果）；`/ingredients` 308 重定向至 `/categories`；導航、首頁、sitemap 同步 |
 | 2026-11-01 | v0.10.7 | 傳統說法標註擴充 35 條（發物、燥熱、平性、涼性） |

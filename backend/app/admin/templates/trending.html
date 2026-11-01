@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}食譜趨勢{% endblock %}
+{% block body %}
+<h1>食譜趨勢</h1>
+<p class="muted">匿名投票統計（讚好／不讚好），按讚好數排序；退回的食譜不列出。</p>
+<table>
+<tr><th>#</th><th>標題</th><th>狀態</th><th>👍</th><th>👎</th><th>淨分</th><th>好評率</th><th>最近投票</th></tr>
+{% for r in rows %}
+{% set total = r.likes + r.dislikes %}
+<tr id="row-{{ r.id }}"><td>{{ r.id }}</td><td><a href="/admin/recipes/{{ r.id }}">{{ r.title }}</a>{% if r.is_original %} <span class="badge">原創</span>{% endif %}</td>
+<td>{{ STATUS_LABELS[r.status] }}</td>
+<td>{{ r.likes }}</td><td>{{ r.dislikes }}</td>
+<td>{{ r.likes - r.dislikes }}</td>
+<td>{% if total %}{{ (r.likes * 100 / total) | round(0) | int }}%{% else %}—{% endif %}</td>
+<td class="muted">{% if r.last_vote_at %}{{ r.last_vote_at.strftime('%Y-%m-%d %H:%M') }}{% else %}—{% endif %}</td></tr>
+{% else %}<tr><td colspan="8" class="muted">沒有食譜。</td></tr>{% endfor %}
+</table>
+{% include "pager.html" %}
+{% endblock %}

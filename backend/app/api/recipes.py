@@ -18,6 +18,8 @@ from app.recipe_matching import (
 from app.schemas import (
     RecipeDetailResponse,
     RecipeListResponse,
+    RecipeVoteRequest,
+    RecipeVoteResponse,
     SuggestRequest,
     SuggestResponse,
 )
@@ -140,6 +142,32 @@ def suggest(payload: SuggestRequest, request: Request):
     )
 
 
+@router.get("/{recipe_id}/votes", response_model=RecipeVoteResponse)
+def get_votes(recipe_id: int, request: Request, voter: str | None = None):
+    drafts = include_drafts(request)
+    with db_conn(request) as conn:
+        row = repository.get_recipe(conn, recipe_id, drafts)
+        if row is None:
+            raise HTTPException(status_code=404, detail="recipe not found")
+        key = voter if voter and 8 <= len(voter) <= 64 else None
+        return RecipeVoteResponse(
+            **repository.get_recipe_votes(conn, recipe_id, key))
+
+
+@router.post("/{recipe_id}/votes", response_model=RecipeVoteResponse)
+def cast_vote(recipe_id: int, payload: RecipeVoteRequest, request: Request):
+    drafts = include_drafts(request)
+    with db_conn(request) as conn:
+        row = repository.get_recipe(conn, recipe_id, drafts)
+        if row is None:
+            raise HTTPException(status_code=404, detail="recipe not found")
+        repository.upsert_recipe_vote(
+            conn, recipe_id, payload.voter_key, payload.vote)
+        return RecipeVoteResponse(
+            **repository.get_recipe_votes(
+                conn, recipe_id, payload.voter_key))
+
+
 @router.get("/{recipe_id}", response_model=RecipeDetailResponse)
 def detail(recipe_id: int, request: Request):
     drafts = include_drafts(request)
@@ -151,6 +179,7 @@ def detail(recipe_id: int, request: Request):
         aunion = repository.list_recipe_allergens(conn, [recipe_id])
         amap = repository._allergen_map(
             conn, [l["ingredient_id"] for l in links.get(recipe_id, [])])
+        votes = repository.get_recipe_votes(conn, recipe_id)
     ingredients = [
         {"ingredient_id": l["ingredient_id"], "name_zh": l["name_zh"],
          "eczema_rating": l["eczema_rating"],
@@ -177,4 +206,5 @@ def detail(recipe_id: int, request: Request):
         draft=row["status"] != "published" or bool(row["unmatched_ingredients"]),
         steps=list(row["steps"] or []), notes=row["notes"],
         is_original=bool(row["is_original"]),
+        likes=votes["likes"], dislikes=votes["dislikes"],
     )

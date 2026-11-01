@@ -414,6 +414,15 @@ def _safe_recipes_next(raw: str) -> str:
     return raw if ok else "/admin/recipes"
 
 
+@router.get("/trending", response_class=HTMLResponse)
+def trending(request: Request, session: auth.Session = SESSION):
+    page = _page(request)
+    with db_conn(request) as conn:
+        total, rows = repo.list_recipe_vote_stats(conn, page)
+    return render(request, "trending.html", session, rows=rows,
+                  nav="trending", pager=_pager(total, page, {}))
+
+
 @router.post("/recipes/{rid}/quick-review")
 def recipe_quick_review(rid: int, request: Request,
                         session: auth.Session = SESSION, form=FORM):

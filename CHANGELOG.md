@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - 2026-11-01
+
+### Added
+
+- 食譜讚好／不讚好投票：`recipe_vote` 表（migration 0008，`voter_key` 匿名識別＋每食譜每鍵一票）；`GET/POST /api/recipes/{id}/votes`（vote=1/-1 投票、0 收回，回傳總數與本人票）；食譜詳情 API 附 `likes`/`dislikes`；前端食譜頁 `LikeButtons`（localStorage 產生匿名鍵，可改票/收回）＋ BFF 代理路由（驗證 voter_key 與 vote、限速）。
+- 後台 `/admin/trending`「食譜趨勢」：所有非退回食譜的讚好統計（👍/👎/淨分/好評率/最近投票），按讚好數排序，主導航新增入口。
+
 ## [0.12.0] - 2026-11-01
 
 ### Added
