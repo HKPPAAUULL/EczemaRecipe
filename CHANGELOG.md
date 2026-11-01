@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.11] - 2026-11-01
+
+### Changed
+
+- 首頁功能入口 mobile 簡化：一行 4 個緊湊掣（icon＋標題，隱藏簡介與「進入 →」），`grid-cols-4`；sm 以上回復原本卡版。
+
+### Fixed
+
+- 評級說明 badge 喺 flex row 被擠成直排（逐字斷行）：`RatingBadge` 加 `shrink-0 whitespace-nowrap`，全站 badge 喺 flex 佈局都唔會再被壓縮。
+
 ## [0.21.10] - 2026-11-01
 
 ### Changed

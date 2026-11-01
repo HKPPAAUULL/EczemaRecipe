@@ -113,22 +113,24 @@ export default function Home() {
 
       <section
         aria-label="功能入口"
-        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-cols-4 gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4"
       >
         {ENTRIES.map((e) => (
           <Link
             key={e.href}
             href={e.href}
-            className="rounded-2xl bg-surface p-5 shadow-card ring-1 ring-line transition-shadow hover:shadow-lift focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="rounded-2xl bg-surface p-2.5 text-center shadow-card ring-1 ring-line transition-shadow hover:shadow-lift focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:p-5 sm:text-left"
           >
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary sm:h-11 sm:w-11">
               {e.icon}
             </span>
-            <h2 className="mt-3 text-lg font-semibold text-ink">{e.title}</h2>
-            <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+            <h2 className="mt-1.5 text-xs font-semibold text-ink sm:mt-3 sm:text-lg">
+              {e.title}
+            </h2>
+            <p className="mt-1.5 hidden text-sm leading-relaxed text-ink-muted sm:block">
               {e.desc}
             </p>
-            <span className="mt-3 inline-block text-sm font-medium text-primary">
+            <span className="mt-3 hidden text-sm font-medium text-primary sm:inline-block">
               進入 →
             </span>
           </Link>

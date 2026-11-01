@@ -47,7 +47,7 @@ export default function RatingBadge({
   const meta = ratingMeta(rating);
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full font-medium ring-1 ring-inset ${meta.bg} ${meta.text} ${meta.ring} ${
+      className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full font-medium ring-1 ring-inset ${meta.bg} ${meta.text} ${meta.ring} ${
         large ? "px-4 py-1.5 text-base" : "px-3 py-1 text-sm"
       }`}
     >
