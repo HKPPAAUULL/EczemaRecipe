@@ -13,21 +13,53 @@ const ENTRIES = [
     href: "/recipes",
     title: "食譜配對",
     desc: "選擇手上食材，配對合適食譜並按你的忌口排除。",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M8.1 2a1 1 0 0 0-1 1v6.1a3 3 0 0 0 2 2.8V21a1 1 0 1 0 2 0v-9.1a3 3 0 0 0 2-2.8V3a1 1 0 1 0-2 0v6a1 1 0 1 1-2 0V3a1 1 0 0 0-1-1Zm8.9 0a4 4 0 0 0-4 4v4.6a1 1 0 0 0 1 1H16V21a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1Z"
+        />
+      </svg>
+    ),
   },
   {
     href: "/categories",
     title: "食材庫",
     desc: "搜尋或按分類瀏覽食材的濕疹適合度評級、致敏原與營養成分。",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z"
+        />
+      </svg>
+    ),
   },
   {
     href: "/settings",
     title: "我的忌口",
     desc: "設定致敏原忌口，配對自動排除（只存於你的瀏覽器）。",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M12 2 4.5 4.8v6.4c0 4.6 3.2 8 7.5 10.3 4.3-2.3 7.5-5.7 7.5-10.3V4.8L12 2Zm3.5 8.4-4.2 4.2a.8.8 0 0 1-1.1 0l-2-2a.8.8 0 0 1 1.1-1.1l1.4 1.4 3.7-3.7a.8.8 0 1 1 1.1 1.2Z"
+        />
+      </svg>
+    ),
   },
   {
     href: "/shopping",
     title: "買餸清單",
     desc: "記低要買的食材，可複製或列印（只存於你的瀏覽器）。",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M7 4h10a1 1 0 0 1 1 1v15.2a.6.6 0 0 1-.92.5L12 17.8l-5.08 2.9a.6.6 0 0 1-.92-.5V5a1 1 0 0 1 1-1Zm1.5 4a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5h-7Zm0 4a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5h-7Z"
+        />
+      </svg>
+    ),
   },
 ];
 
@@ -81,7 +113,7 @@ export default function Home() {
 
       <section
         aria-label="功能入口"
-        className="grid gap-4 md:grid-cols-3 lg:grid-cols-5"
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
       >
         {ENTRIES.map((e) => (
           <Link
@@ -89,7 +121,10 @@ export default function Home() {
             href={e.href}
             className="rounded-2xl bg-surface p-5 shadow-card ring-1 ring-line transition-shadow hover:shadow-lift focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <h2 className="text-lg font-semibold text-primary">{e.title}</h2>
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              {e.icon}
+            </span>
+            <h2 className="mt-3 text-lg font-semibold text-ink">{e.title}</h2>
             <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
               {e.desc}
             </p>

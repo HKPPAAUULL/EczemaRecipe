@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.19.0] - 2026-11-01
+
+### Changed
+
+- 首頁「功能入口」喺 desktop 填滿成個內容闊度：格仔由 `lg:grid-cols-5`（四張卡留空一格）改為 `lg:grid-cols-4`、中型屏幕 `sm:grid-cols-2`；每張卡加咗 icon tile（`bg-primary/10` 圓角方塊＋功能圖示），標題改用主文字色令層次更清。
+
 ## [0.18.0] - 2026-11-01
 
 ### Changed
