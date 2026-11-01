@@ -10,6 +10,8 @@ from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urlencode
 
+import psycopg
+import psycopg_pool
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 from jinja2 import Environment, FileSystemLoader
@@ -81,10 +83,22 @@ def setup_admin(app: FastAPI) -> None:
 def render(request: Request, name: str, session: auth.Session | None = None,
            status: int = 200, **ctx) -> HTMLResponse:
     flashes = []
+    nav_counts: dict[str, int] = {}
     if session is not None:
         flashes = request.app.state.admin_flash.pop(session.nonce, [])
+        try:  # one small query for the nav badges; never block rendering
+            pool = getattr(request.app.state, "pool", None)
+            if pool is not None:
+                with pool.connection() as conn:
+                    c = repo.dashboard_counts(conn)
+                nav_counts = {"ingredients": c["ing_unreviewed"],
+                              "recipes": c["rec_pending"],
+                              "queue": c["queue_pending"]}
+        except (psycopg.Error, psycopg_pool.PoolError, OSError, RuntimeError):
+            pass
     html = _env.get_template(name).render(
-        csrf=session.csrf if session else "", flashes=flashes, logged_in=session is not None,
+        csrf=session.csrf if session else "", flashes=flashes,
+        logged_in=session is not None, nav_counts=nav_counts,
         **ctx,
     )
     return HTMLResponse(html, status_code=status)

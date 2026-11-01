@@ -3,7 +3,7 @@
 {% block body %}
 <p><a href="/admin/recipes">← 食譜列表</a></p>
 <h1>{{ rec.title }}</h1>
-<p><span class="badge">{{ STATUS_LABELS[rec.status] }}</span>
+<p><span class="st st-{{ rec.status }}">{{ STATUS_LABELS[rec.status] }}</span>
 {% if rec.is_original %}<span class="badge">原創</span> <a href="/admin/recipes/{{ rec.id }}/content">編輯內容</a>{% endif %}
 來源：{% if rec.source_url %}<a href="{{ rec.source_url }}" rel="noreferrer noopener" target="_blank">{{ rec.source_url }}</a>{% else %}—{% endif %}
 ／ {{ rec.source_name or '未登記來源' }}｜授權：{{ rec.source_license or '—' }}
@@ -94,7 +94,7 @@
 
 <section>
 <h2>審核記錄</h2>
-{% for q in rec.queue %}<div><span class="badge">{{ STATUS_LABELS[q.status] }}</span> {{ q.created_at.strftime('%Y-%m-%d %H:%M') }}<pre>{{ q.reviewer_note or '' }}</pre></div>{% else %}<p class="muted">無。</p>{% endfor %}
+{% for q in rec.queue %}<div><span class="st st-{{ q.status }}">{{ STATUS_LABELS[q.status] }}</span> {{ q.created_at.strftime('%Y-%m-%d %H:%M') }}<pre>{{ q.reviewer_note or '' }}</pre></div>{% else %}<p class="muted">無。</p>{% endfor %}
 <h2>最近操作</h2>
 <table>{% for a in rec.audit %}<tr><td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td><td>{{ a.action }}</td><td><pre>{{ a.detail | tojson }}</pre></td></tr>{% else %}<tr><td class="muted">尚無記錄。</td></tr>{% endfor %}</table>
 </section>

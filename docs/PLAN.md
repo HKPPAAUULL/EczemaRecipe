@@ -209,6 +209,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-31 | v0.10.4 | 批量處理客家食譜未配對食材，新增 46 項食材草稿；未配對歸零 |
 | 2026-10-31 | v0.10.5 | 為新建食材提出評級（附來源與過敏原連結），待人審 |
 | 2026-10-31 | v0.10.6 | 修後台致敏提示漏顯示已配對食材過敏原 |
+| 2026-11-01 | v0.21.0 | 後台 UI 翻新：現代化 base 樣式、sticky 導航＋待辦數字 badge（重用 dashboard_counts）、狀態彩色 pill、`.twrap` 可捲表格、`tr:target` 錨點高亮 |
 | 2026-11-01 | v0.20.0 | 食譜/食材匯出快照（`data/export/`）＋ `docs/RECIPE_GEN_PROMPT.md`：交給外部 AI 產出原創食譜 CSV 再經 `/admin/recipes/import` 匯入的流程 |
 | 2026-11-01 | v0.18.0 | 首頁推薦食譜改為每次載入隨機 6 道（`?sort=random`）；「常用查詢」改為「最近查詢」（`ek:v1:recent-searches`，去重上限 8＋清除） |
 | 2026-11-01 | v0.16.0 | 導航「買餸清單」tab 顯示未買項數目 badge（desktop header＋mobile bottom nav icon 右上角，`ShoppingBadge` 元件） |

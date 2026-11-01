@@ -14,11 +14,11 @@
 <button type="submit">篩選</button>
 </form>
 <p><a href="/admin/recipes/import">匯入 CSV</a> ・ <a href="/admin/recipes/new">新增原創食譜</a></p>
-<table>
+<div class="twrap"><table>
 <tr><th>#</th><th>標題</th><th>狀態</th><th>未配對</th><th>致敏提示</th><th>友善分數</th><th>操作</th></tr>
 {% for r in rows %}
-<tr id="row-{{ r.id }}"><td>{{ r.id }}</td><td><a href="/admin/recipes/{{ r.id }}">{{ r.title }}</a>{% if r.is_original %} <span class="badge">原創</span>{% endif %}</td><td>{{ STATUS_LABELS[r.status] }}</td>
-<td>{{ r.unmatched_count or '' }}</td><td>{{ r.hint_count or '' }}</td><td>{{ r.eczema_friendly_score if r.eczema_friendly_score is not none else '' }}</td>
+<tr id="row-{{ r.id }}"><td>{{ r.id }}</td><td><a href="/admin/recipes/{{ r.id }}">{{ r.title }}</a>{% if r.is_original %} <span class="badge">原創</span>{% endif %}</td><td><span class="st st-{{ r.status }}">{{ STATUS_LABELS[r.status] }}</span></td>
+<td>{% if r.unmatched_count %}<span class="st st-rejected">{{ r.unmatched_count }}</span>{% endif %}</td><td>{{ r.hint_count or '' }}</td><td>{{ r.eczema_friendly_score if r.eczema_friendly_score is not none else '' }}</td>
 <td>
 {% if r.status == 'published' %}
 <form method="post" action="/admin/recipes/{{ r.id }}/quick-review" class="inline">
@@ -36,6 +36,6 @@
 {% endif %}
 </td></tr>
 {% else %}<tr><td colspan="7" class="muted">沒有符合的食譜。</td></tr>{% endfor %}
-</table>
+</table></div>
 {% include "pager.html" %}
 {% endblock %}

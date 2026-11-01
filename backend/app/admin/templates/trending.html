@@ -3,17 +3,17 @@
 {% block body %}
 <h1>食譜趨勢</h1>
 <p class="muted">匿名投票統計（讚好／不讚好），按讚好數排序；退回的食譜不列出。</p>
-<table>
+<div class="twrap"><table>
 <tr><th>#</th><th>標題</th><th>狀態</th><th>👍</th><th>👎</th><th>淨分</th><th>好評率</th><th>最近投票</th></tr>
 {% for r in rows %}
 {% set total = r.likes + r.dislikes %}
 <tr id="row-{{ r.id }}"><td>{{ r.id }}</td><td><a href="/admin/recipes/{{ r.id }}">{{ r.title }}</a>{% if r.is_original %} <span class="badge">原創</span>{% endif %}</td>
-<td>{{ STATUS_LABELS[r.status] }}</td>
+<td><span class="st st-{{ r.status }}">{{ STATUS_LABELS[r.status] }}</span></td>
 <td>{{ r.likes }}</td><td>{{ r.dislikes }}</td>
-<td>{{ r.likes - r.dislikes }}</td>
+<td><strong class="{{ 'r-trigger' if r.likes - r.dislikes < 0 else '' }}" style="border-radius:6px;padding:.05rem .4rem">{{ r.likes - r.dislikes }}</strong></td>
 <td>{% if total %}{{ (r.likes * 100 / total) | round(0) | int }}%{% else %}—{% endif %}</td>
 <td class="muted">{% if r.last_vote_at %}{{ r.last_vote_at.strftime('%Y-%m-%d %H:%M') }}{% else %}—{% endif %}</td></tr>
 {% else %}<tr><td colspan="8" class="muted">沒有食譜。</td></tr>{% endfor %}
-</table>
+</table></div>
 {% include "pager.html" %}
 {% endblock %}

@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.0] - 2026-11-01
+
+### Changed
+
+- 後台 UI 全面翻新：現代化樣式（設計 token、柔和陰影卡片、圓角）、sticky 頂部導航、表格改為無格線橫線款＋行 hover＋溢出可捲（`.twrap`）、狀態改彩色 pill（`.st-*`）、登入頁置中卡片、儀表板卡加色條＋警示色、分頁連結改按鈕款、`tr:target` 高亮（配合行錨點跳轉）、表單 focus 有外框。
+
+### Added
+
+- 頂部導航顯示待辦數字 badge：食材審核（未審核數）、食譜審核（待審＋草稿數）、待處理佇列——重用 `dashboard_counts` 單一查詢，DB 異常時靜靜略過唔影響頁面。
+
 ## [0.20.0] - 2026-11-01
 
 ### Added

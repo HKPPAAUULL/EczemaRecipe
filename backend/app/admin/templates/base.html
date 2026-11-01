@@ -6,44 +6,88 @@
 <meta name="robots" content="noindex, nofollow">
 <title>{% block title %}後台{% endblock %} · 濕疹食堂後台</title>
 <style>
-body{font:15px/1.6 system-ui,"Noto Sans TC","Microsoft JhengHei",sans-serif;margin:0;color:#222;background:#f6f7f5}
-header{background:#2f5d50;color:#fff;padding:.5rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
-header a{color:#fff;text-decoration:none;padding:.2rem .5rem;border-radius:4px}
-header a.on,header a:hover{background:rgba(255,255,255,.2)}
+:root{
+  --ink:#1f2a26; --ink-muted:#5b6b63; --line:#dfe5df; --primary:#2f5d50;
+  --primary-dark:#254a40; --canvas:#f3f5f2; --surface:#fff;
+  --ok-bg:#e6f4e6; --ok-line:#a9d4a9; --warn-bg:#fff6dd; --warn-line:#e0c98a;
+  --err-bg:#fde8e8; --err-line:#dda0a0; --danger:#a33;
+}
+*{box-sizing:border-box}
+body{font:15px/1.6 system-ui,"Noto Sans TC","Microsoft JhengHei",sans-serif;margin:0;color:var(--ink);background:var(--canvas)}
+header{position:sticky;top:0;z-index:20;background:var(--primary);color:#fff;padding:.55rem 1.5rem;display:flex;gap:.35rem;align-items:center;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+header .brand{font-weight:700;font-size:1.05rem;margin-right:1rem;letter-spacing:.02em}
+header a{color:#fff;text-decoration:none;padding:.35rem .7rem;border-radius:999px;font-size:.92rem;display:inline-flex;align-items:center;gap:.3rem}
+header a.on,header a:hover{background:rgba(255,255,255,.18)}
+header .nb{display:inline-flex;min-width:1.35rem;height:1.35rem;padding:0 .3rem;align-items:center;justify-content:center;border-radius:999px;background:#f2c94c;color:#3d3005;font-size:.75rem;font-weight:700}
 header form{margin-left:auto}
-main{max-width:1100px;margin:1rem auto;padding:0 1rem}
-h1{font-size:1.4rem}h2{font-size:1.1rem;margin-top:1.6rem;border-bottom:1px solid #ccd;padding-bottom:.2rem}
-table{border-collapse:collapse;width:100%;background:#fff}
-th,td{border:1px solid #dde;padding:.35rem .6rem;text-align:left;vertical-align:top}
-th{background:#eef1ee}
-section,.card{background:#fff;border:1px solid #dde;border-radius:6px;padding:.8rem 1rem;margin:.8rem 0}
-label{display:block;margin:.4rem 0 .1rem;font-weight:600}
-input[type=text],input[type=url],input[type=password],input[type=number],input[type=search],select,textarea{padding:.3rem .4rem;border:1px solid #99a;border-radius:4px;font:inherit;max-width:100%}
-textarea{width:100%;box-sizing:border-box}
-button{padding:.3rem .9rem;border:1px solid #2f5d50;background:#2f5d50;color:#fff;border-radius:4px;cursor:pointer;font:inherit}
-button.secondary{background:#fff;color:#2f5d50}
-button.danger{background:#a33;border-color:#a33}
+header button{font-size:.85rem;padding:.25rem .8rem}
+main{max-width:1160px;margin:1.2rem auto;padding:0 1rem 3rem}
+h1{font-size:1.45rem;margin:.2rem 0 .8rem}
+h2{font-size:1.08rem;margin:0 0 .8rem;color:var(--primary-dark);border-bottom:1px solid var(--line);padding-bottom:.45rem}
+section,.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem 1.2rem;margin:.9rem 0;box-shadow:0 1px 2px rgba(31,42,38,.05)}
+table{border-collapse:collapse;width:100%;background:var(--surface)}
+th,td{padding:.5rem .65rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:#eef2ee;color:var(--primary-dark);font-size:.85rem;font-weight:700;white-space:nowrap}
+tbody tr:hover td{background:#f7f9f6}
+tr:target td{background:#fdf0c2;transition:background 1.5s ease-out}
+.twrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:.8rem 0}
+.twrap table{min-width:720px}
+.twrap th:first-child,.twrap td:first-child{padding-left:1rem}
+.twrap th:last-child,.twrap td:last-child{padding-right:1rem}
+.twrap tr:last-child td{border-bottom:none}
+label{display:block;margin:.5rem 0 .15rem;font-weight:600}
+input[type=text],input[type=url],input[type=password],input[type=number],input[type=search],select,textarea{padding:.4rem .55rem;border:1px solid #b9c4ba;border-radius:6px;font:inherit;max-width:100%;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--primary);outline-offset:0;border-color:var(--primary)}
+textarea{width:100%}
+button{padding:.45rem 1rem;border:1px solid var(--primary);background:var(--primary);color:#fff;border-radius:8px;cursor:pointer;font:inherit}
+button:hover{background:var(--primary-dark)}
+button.secondary{background:#fff;color:var(--primary)}
+button.secondary:hover{background:#eef3ef}
+button.danger{background:var(--danger);border-color:var(--danger)}
+button.danger:hover{background:#8c2b2b}
+button:disabled{opacity:.55;cursor:not-allowed}
 .inline{display:inline}
-.err{background:#fde8e8;border:1px solid #d99;border-radius:6px;padding:.5rem 1rem;margin:.8rem 0}
-.ok{background:#e6f4e6;border:1px solid #9c9;border-radius:6px;padding:.5rem 1rem;margin:.8rem 0}
-.warn{background:#fff6dd;border:1px solid #dc9;border-radius:6px;padding:.5rem 1rem;margin:.8rem 0}
-.badge{display:inline-block;padding:0 .5rem;border-radius:1em;font-size:.85em;border:1px solid #999;background:#eee}
-.r-suitable{background:#d8f0d8}.r-caution{background:#fff0c2}.r-trigger{background:#f8d0d0}.r-unrated{background:#e8e8e8}
-.muted{color:#667}.filters{display:flex;gap:.6rem;flex-wrap:wrap;align-items:end;margin:.6rem 0}
-.pager a,.pager span{margin-right:.6rem}
-.cards{display:flex;gap:1rem;flex-wrap:wrap}.cards .card{flex:1 1 220px}.big{font-size:2rem;font-weight:700}
-pre{white-space:pre-wrap;margin:0}
+.err{background:var(--err-bg);border:1px solid var(--err-line);border-radius:8px;padding:.6rem 1rem;margin:.8rem 0}
+.ok{background:var(--ok-bg);border:1px solid var(--ok-line);border-radius:8px;padding:.6rem 1rem;margin:.8rem 0}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:8px;padding:.6rem 1rem;margin:.8rem 0}
+.badge{display:inline-block;padding:.1rem .55rem;border-radius:999px;font-size:.82em;border:1px solid #b9c4ba;background:#eef1ee;white-space:nowrap}
+.r-suitable{background:#d8f0d8;border-color:#9ec79e}
+.r-caution{background:#fff0c2;border-color:#dcc069}
+.r-trigger{background:#f8d0d0;border-color:#d98f8f}
+.r-unrated{background:#e8e8e8}
+.st{display:inline-block;padding:.1rem .6rem;border-radius:999px;font-size:.82em;font-weight:600;white-space:nowrap}
+.st-published,.st-approved{background:#d8f0d8;color:#1e5c2e}
+.st-pending_review,.st-pending{background:#fff0c2;color:#6b4e00}
+.st-draft{background:#e4e8e4;color:#4a554e}
+.st-rejected{background:#f8d0d0;color:#8c2b2b}
+.muted{color:var(--ink-muted)}
+.filters{display:flex;gap:.8rem;flex-wrap:wrap;align-items:end;margin:.8rem 0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
+.filters label{margin-top:0}
+.pager{display:flex;gap:.5rem;align-items:center;margin:1rem 0;font-size:.9rem}
+.pager a{padding:.35rem .8rem;border:1px solid var(--primary);border-radius:8px;color:var(--primary);text-decoration:none}
+.pager a:hover{background:#eef3ef}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin:1rem 0}
+.cards .card{margin:0;border-left:4px solid var(--primary)}
+.cards .card.warn-c{border-left-color:#d9a62e}
+.big{font-size:2.2rem;font-weight:700;color:var(--primary-dark);line-height:1.15}
+details{margin:.4rem 0}
+summary{cursor:pointer}
+pre{white-space:pre-wrap;margin:0;font-family:inherit;font-size:.85em}
+code{background:#eef1ee;padding:.05rem .3rem;border-radius:4px}
+a{color:var(--primary)}
+a:hover{color:var(--primary-dark)}
+@media (max-width:720px){header{padding:.5rem .8rem}main{padding:0 .7rem 2.5rem}h1{font-size:1.2rem}}
 </style>
 </head>
 <body>
 {% if logged_in %}
 <header>
-<strong>濕疹食堂後台</strong>
+<span class="brand">濕疹食堂後台</span>
 <a href="/admin" class="{{ 'on' if nav == 'dashboard' }}">儀表板</a>
-<a href="/admin/ingredients" class="{{ 'on' if nav == 'ingredients' }}">食材審核</a>
-<a href="/admin/recipes" class="{{ 'on' if nav == 'recipes' }}">食譜審核</a>
+<a href="/admin/ingredients" class="{{ 'on' if nav == 'ingredients' }}">食材審核{% if nav_counts.ingredients %}<span class="nb">{{ nav_counts.ingredients }}</span>{% endif %}</a>
+<a href="/admin/recipes" class="{{ 'on' if nav == 'recipes' }}">食譜審核{% if nav_counts.recipes %}<span class="nb">{{ nav_counts.recipes }}</span>{% endif %}</a>
 <a href="/admin/trending" class="{{ 'on' if nav == 'trending' }}">食譜趨勢</a>
-<a href="/admin/queue" class="{{ 'on' if nav == 'queue' }}">待處理佇列</a>
+<a href="/admin/queue" class="{{ 'on' if nav == 'queue' }}">待處理佇列{% if nav_counts.queue %}<span class="nb">{{ nav_counts.queue }}</span>{% endif %}</a>
 <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="secondary" type="submit">登出</button></form>
 </header>
 {% endif %}

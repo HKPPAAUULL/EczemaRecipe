@@ -5,8 +5,8 @@
 <h1>{{ ing.name_zh }} <small class="muted">{{ ing.name_en or '' }}</small></h1>
 <p>
 <span class="badge r-{{ ing.eczema_rating }}">{{ RATING_LABELS[ing.eczema_rating] }}</span>
-{% if ing.reviewed %}<span class="badge">已審核 {{ ing.reviewed_at.strftime('%Y-%m-%d %H:%M') if ing.reviewed_at }}</span>{% else %}<span class="badge">未審核</span>{% endif %}
-{% if ing.needs_senior_review %}<span class="badge">需資深審核</span>{% endif %}
+{% if ing.reviewed %}<span class="st st-approved">已審核 {{ ing.reviewed_at.strftime('%Y-%m-%d %H:%M') if ing.reviewed_at }}</span>{% else %}<span class="st st-pending">未審核</span>{% endif %}
+{% if ing.needs_senior_review %}<span class="badge" style="background:#fff0c2">需資深審核</span>{% endif %}
 分類：{{ ing.category_name or '—' }}
 </p>
 {% if ing.published_recipe_count %}<div class="warn">此食材被 {{ ing.published_recipe_count }} 個已發佈食譜使用；更改評級／取消審核前請留意。</div>{% endif %}
@@ -80,7 +80,7 @@
 <td>{{ TRADITION_TAGS.get(t.tag, t.tag) }}</td>
 <td>{{ t.note }}</td>
 <td>{% if t.source_url %}<a href="{{ t.source_url }}" rel="noreferrer noopener" target="_blank">{{ t.source_title or t.source_url }}</a>{% else %}{{ t.source_title or '' }}{% endif %}</td>
-<td>{{ '已審核' if t.reviewed else '未審核' }}</td>
+<td><span class="st {{ 'st-approved' if t.reviewed else 'st-pending' }}">{{ '已審核' if t.reviewed else '未審核' }}</span></td>
 <td>{% if t.reviewed %}
 <form method="post" action="/admin/ingredients/{{ ing.id }}/tradition/{{ t.id }}/unreview" class="inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="danger" type="submit">取消審核</button></form>
 {% else %}
