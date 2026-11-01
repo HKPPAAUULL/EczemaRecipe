@@ -24,6 +24,11 @@ export default function RecipeBrowseCard({ r }: { r: RecipeListItem }) {
             </span>
           )}
         </h3>
+        {r.likes > 0 && (
+          <span className="rounded-full bg-surface-alt px-2.5 py-1 text-xs text-ink-muted">
+            👍 {r.likes}
+          </span>
+        )}
       </div>
       {r.description && (
         <p className="mt-1.5 line-clamp-2 text-sm text-ink-muted">

@@ -71,6 +71,8 @@ export interface RecipeListItem {
   unmatched_ingredients: string[];
   draft: boolean;
   is_original: boolean;
+  likes: number;
+  dislikes: number;
 }
 
 export interface RecipeListResponse {

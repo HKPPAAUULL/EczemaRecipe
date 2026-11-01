@@ -803,6 +803,22 @@ def test_recipe_list_endpoint(recipe_api_db):
         assert r.json()["limit"] == 1 and r.json()["offset"] == 1
         r = c.get("/api/recipes?limit=999")
         assert r.status_code == 422
+        # popularity sort: stp 2 likes, ok 1 like → stp first
+        with psycopg.connect(recipe_api_db["url"], autocommit=True) as conn:
+            conn.execute(
+                "INSERT INTO recipe_vote (recipe_id, voter_key, vote)"
+                " VALUES (%(r)s,'kv-000001',1),(%(r)s,'kv-000002',1),"
+                "        (%(o)s,'kv-000003',1)",
+                {"r": recipe_api_db["stp"], "o": recipe_api_db["ok"]})
+        r = c.get("/api/recipes?sort=popular")
+        assert r.status_code == 200
+        body = r.json()
+        first_two = [x["id"] for x in body["recipes"][:2]]
+        assert first_two == [recipe_api_db["stp"], recipe_api_db["ok"]]
+        top = body["recipes"][0]
+        assert top["likes"] == 2 and top["dislikes"] == 0
+        r = c.get("/api/recipes?sort=bogus")
+        assert r.status_code == 422
     with _client(recipe_api_db["url"], drafts=True) as c:
         r = c.get("/api/recipes")
         ids = {x["id"] for x in r.json()["recipes"]}

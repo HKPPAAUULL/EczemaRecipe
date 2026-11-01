@@ -57,10 +57,13 @@ def _facts(row, links, allergen_union):
 @router.get("", response_model=RecipeListResponse)
 def list_all(request: Request,
              limit: int = Query(default=12, ge=1, le=30),
-             offset: int = Query(default=0, ge=0)):
+             offset: int = Query(default=0, ge=0),
+             sort: str = Query(default="newest",
+                               pattern="^(newest|popular)$")):
     drafts = include_drafts(request)
     with db_conn(request) as conn:
-        total, rows = repository.list_recipes(conn, drafts, limit, offset)
+        total, rows = repository.list_recipes(
+            conn, drafts, limit, offset, sort)
         rids = [r["id"] for r in rows]
         links = repository.list_recipe_links(conn, rids)
         aunion = repository.list_recipe_allergens(conn, rids)
@@ -84,6 +87,7 @@ def list_all(request: Request,
             "draft": row["status"] != "published"
                      or bool(row["unmatched_ingredients"]),
             "is_original": bool(row["is_original"]),
+            "likes": row["likes"], "dislikes": row["dislikes"],
         })
     return RecipeListResponse(
         total=total, limit=limit, offset=offset, recipes=recipes)

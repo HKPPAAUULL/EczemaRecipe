@@ -283,9 +283,16 @@ def get_ingredient_refs(conn, ids, include_drafts) -> dict[int, dict]:
     }
 
 
-def list_recipes(conn, include_drafts, limit, offset):
-    """All visible recipes, newest first → (total, rows)."""
+_RECIPE_SORT = {
+    "newest": "r.id DESC",
+    "popular": "likes DESC, dislikes ASC, r.id DESC",
+}
+
+
+def list_recipes(conn, include_drafts, limit, offset, sort="newest"):
+    """All visible recipes → (total, rows). sort: newest|popular."""
     rel = _RECIPE_REL[include_drafts]
+    order = _RECIPE_SORT.get(sort, _RECIPE_SORT["newest"])
     total = conn.execute(
         f"SELECT count(*) AS n FROM {rel}").fetchone()["n"]
     rows = conn.execute(
@@ -293,10 +300,17 @@ def list_recipes(conn, include_drafts, limit, offset):
         SELECT r.*, ds.name AS source_name, ds.license AS source_license,
                COALESCE((SELECT array_agg(t.tag ORDER BY t.tag)
                          FROM recipe_tag t WHERE t.recipe_id = r.id), '{{}}')
-               AS tags
+               AS tags,
+               COALESCE(v.likes, 0) AS likes,
+               COALESCE(v.dislikes, 0) AS dislikes
           FROM {rel}
           LEFT JOIN data_source ds ON ds.id = r.data_source_id
-         ORDER BY r.id DESC
+          LEFT JOIN (SELECT recipe_id,
+                            count(*) FILTER (WHERE vote = 1)  AS likes,
+                            count(*) FILTER (WHERE vote = -1) AS dislikes
+                       FROM recipe_vote GROUP BY recipe_id) v
+                 ON v.recipe_id = r.id
+         ORDER BY {order}
          LIMIT %(limit)s OFFSET %(offset)s""",
         {"limit": limit, "offset": offset},
     ).fetchall()

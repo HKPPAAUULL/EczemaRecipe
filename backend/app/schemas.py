@@ -178,6 +178,8 @@ class RecipeListItem(BaseModel):
     unmatched_ingredients: list[str]
     draft: bool
     is_original: bool = False
+    likes: int = 0
+    dislikes: int = 0
 
 
 class RecipeListResponse(BaseModel):

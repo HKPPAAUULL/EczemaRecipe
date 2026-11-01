@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import SearchBox from "@/components/SearchBox";
 import RatingBadge from "@/components/RatingBadge";
+import RecipeBrowseCard from "@/components/RecipeBrowseCard";
+import WarningBanner from "@/components/WarningBanner";
+import { ApiError, getRecipes } from "@/lib/api";
 import { RATING_META } from "@/lib/rating";
 import { buildSearchHref } from "@/lib/navigation";
 
@@ -33,6 +37,38 @@ const ENTRIES = [
     desc: "記低要買的食材，可複製或列印（只存於你的瀏覽器）。",
   },
 ];
+
+async function RecommendedRecipes() {
+  let data;
+  try {
+    data = await getRecipes({ limit: 4, sort: "popular" });
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return (
+        <WarningBanner title="暫時無法載入推薦食譜">
+          {err.message}，請稍後再試。
+        </WarningBanner>
+      );
+    }
+    throw err;
+  }
+  if (!data.recipes.length) {
+    return (
+      <p className="rounded-xl bg-surface-alt px-4 py-6 text-center text-sm text-ink-muted">
+        未有食譜。
+      </p>
+    );
+  }
+  return (
+    <ul className="grid gap-4 md:grid-cols-2">
+      {data.recipes.map((r) => (
+        <li key={r.id}>
+          <RecipeBrowseCard r={r} />
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default function Home() {
   return (
@@ -80,6 +116,29 @@ export default function Home() {
             </span>
           </Link>
         ))}
+      </section>
+
+      <section aria-labelledby="rec-h">
+        <div className="flex items-center justify-between gap-3">
+          <h2 id="rec-h" className="text-lg font-semibold text-ink">
+            推薦食譜
+          </h2>
+          <Link
+            href="/recipes"
+            className="inline-flex min-h-[36px] items-center rounded-full bg-primary px-4 text-sm font-medium text-white hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            食譜配對 →
+          </Link>
+        </div>
+        <div className="mt-4">
+          <Suspense
+            fallback={
+              <p className="py-8 text-center text-ink-muted">載入中…</p>
+            }
+          >
+            <RecommendedRecipes />
+          </Suspense>
+        </div>
       </section>
 
       <section

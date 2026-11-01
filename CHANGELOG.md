@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0] - 2026-11-01
+
+### Added
+
+- 首頁新增「推薦食譜」區：按受歡迎程度（讚好數）排序顯示 4 道食譜卡片，標題旁有「食譜配對 →」小按鈕直達配對頁。`GET /api/recipes` 新增 `sort` 參數（`newest`/`popular`）並在列表項附 `likes`/`dislikes`；`RecipeBrowseCard` 有讚好數徽章。
+
 ## [0.13.0] - 2026-11-01
 
 ### Added
