@@ -65,6 +65,7 @@
 - `docs/RATING_CRITERIA.md` — 食材濕疹評級準則（評級唯一標準）
 - `docs/DEPLOY_LOCAL.md` — 本機 Docker 測試部署步驟（可在新機重現）
 - `docs/DEPLOY_PROD.md` — 正式部署（prod override、Cloudflare Tunnel、上線檢查表）
+- `docs/deploy.md` — 部署執行手冊（寫俾部署電腦上的 AI agent：所需資料、執行順序、閘口、硬性規則）
 - `docs/db/` — PostgreSQL schema 與初始資料
 - `data/seed/`、`data/reference/` — 食材種子草稿、過敏原關鍵字、同義詞表（草稿須人工審核）
 - `CHANGELOG.md` — 版本更新記錄（開始建站時建立）

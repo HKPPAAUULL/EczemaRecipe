@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.9] - 2026-11-01
+
+### Added
+
+- `docs/deploy.md`：給部署電腦上 AI agent 的部署執行手冊——開工前需向用戶取得的資料、環境前置檢查、分步執行順序（含每步閘口）、硬性規則（不 down -v、不公網開 /admin、不 commit 密鑰）、驗收回報清單與回滾指引；`AGENTS.md` 文件索引同步收錄。
+
 ## [0.21.8] - 2026-11-01
 
 ### Changed
