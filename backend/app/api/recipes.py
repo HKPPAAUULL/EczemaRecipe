@@ -59,7 +59,7 @@ def list_all(request: Request,
              limit: int = Query(default=12, ge=1, le=30),
              offset: int = Query(default=0, ge=0),
              sort: str = Query(default="newest",
-                               pattern="^(newest|popular)$"),
+                               pattern="^(newest|popular|random)$"),
              ingredient: int | None = Query(default=None, ge=1)):
     drafts = include_drafts(request)
     with db_conn(request) as conn:

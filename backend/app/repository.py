@@ -286,12 +286,13 @@ def get_ingredient_refs(conn, ids, include_drafts) -> dict[int, dict]:
 _RECIPE_SORT = {
     "newest": "r.id DESC",
     "popular": "likes DESC, dislikes ASC, r.id DESC",
+    "random": "RANDOM()",
 }
 
 
 def list_recipes(conn, include_drafts, limit, offset, sort="newest",
                  ingredient_id=None):
-    """All visible recipes → (total, rows). sort: newest|popular.
+    """All visible recipes → (total, rows). sort: newest|popular|random.
     ingredient_id filters to recipes linked to that ingredient."""
     rel = _RECIPE_REL[include_drafts]
     order = _RECIPE_SORT.get(sort, _RECIPE_SORT["newest"])

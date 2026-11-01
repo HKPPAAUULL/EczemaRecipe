@@ -12,6 +12,7 @@ import { useCallback, useSyncExternalStore } from "react";
 
 export const ALLERGEN_KEY = "ek:v1:allergen-exclusions";
 export const SHOPPING_KEY = "ek:v1:shopping-list";
+export const RECENT_KEY = "ek:v1:recent-searches";
 
 export function readJson<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;

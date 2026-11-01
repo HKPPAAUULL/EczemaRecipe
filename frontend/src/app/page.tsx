@@ -4,16 +4,9 @@ import SearchBox from "@/components/SearchBox";
 import RatingBadge from "@/components/RatingBadge";
 import RecipeBrowseCard from "@/components/RecipeBrowseCard";
 import WarningBanner from "@/components/WarningBanner";
+import RecentSearches from "@/components/RecentSearches";
 import { ApiError, getRecipes } from "@/lib/api";
 import { RATING_META } from "@/lib/rating";
-import { buildSearchHref } from "@/lib/navigation";
-
-const QUICK_LINKS = [
-  { label: "奶", href: buildSearchHref("奶") },
-  { label: "蛋", href: buildSearchHref("蛋") },
-  { label: "蔬菜", href: "/categories" },
-  { label: "水果", href: "/categories" },
-];
 
 const ENTRIES = [
   {
@@ -41,7 +34,7 @@ const ENTRIES = [
 async function RecommendedRecipes() {
   let data;
   try {
-    data = await getRecipes({ limit: 4, sort: "popular" });
+    data = await getRecipes({ limit: 6, sort: "random" });
   } catch (err) {
     if (err instanceof ApiError) {
       return (
@@ -60,7 +53,7 @@ async function RecommendedRecipes() {
     );
   }
   return (
-    <ul className="grid gap-4 md:grid-cols-2">
+    <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {data.recipes.map((r) => (
         <li key={r.id}>
           <RecipeBrowseCard r={r} />
@@ -83,18 +76,7 @@ export default function Home() {
         <div className="mx-auto mt-6 max-w-xl">
           <SearchBox large />
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
-          <span className="text-ink-muted">常用查詢：</span>
-          {QUICK_LINKS.map((l) => (
-            <Link
-              key={l.label}
-              href={l.href}
-              className="rounded-full bg-surface px-3.5 py-1.5 text-ink ring-1 ring-line transition-colors hover:bg-surface-alt focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </div>
+        <RecentSearches />
       </section>
 
       <section

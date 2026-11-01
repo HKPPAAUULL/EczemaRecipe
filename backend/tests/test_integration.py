@@ -817,6 +817,12 @@ def test_recipe_list_endpoint(recipe_api_db):
         assert first_two == [recipe_api_db["stp"], recipe_api_db["ok"]]
         top = body["recipes"][0]
         assert top["likes"] == 2 and top["dislikes"] == 0
+        # random sort: same visible set, honours limit
+        r = c.get("/api/recipes?sort=random&limit=2")
+        assert r.status_code == 200
+        body = r.json()
+        assert len(body["recipes"]) == 2
+        assert {x["id"] for x in body["recipes"]} <= ids
         r = c.get("/api/recipes?sort=bogus")
         assert r.status_code == 422
         # ingredient filter: egg → only ok (hid unmatched, drf pending)

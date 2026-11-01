@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { buildSearchHref } from "@/lib/navigation";
+import { pushRecentSearch } from "@/lib/recentSearches";
 
 export default function SearchBox({
   initialValue = "",
@@ -17,7 +18,10 @@ export default function SearchBox({
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     const trimmed = q.trim();
-    if (trimmed) router.push(buildSearchHref(trimmed));
+    if (trimmed) {
+      pushRecentSearch(trimmed);
+      router.push(buildSearchHref(trimmed));
+    }
   }
 
   return (

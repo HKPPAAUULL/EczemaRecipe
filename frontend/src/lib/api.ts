@@ -196,7 +196,7 @@ export function getRecipes(
   opts: {
     limit?: number;
     offset?: number;
-    sort?: "newest" | "popular";
+    sort?: "newest" | "popular" | "random";
     ingredient?: number;
   } = {}
 ) {
