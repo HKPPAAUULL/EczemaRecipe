@@ -131,6 +131,6 @@ def test_import_unmatched_reported_not_fatal():
 
 def test_real_csv_validates_and_tags_allowed():
     rows = parse_tradition_csv(TRADITION_CSV)
-    assert len(rows) == 34
+    assert len(rows) == 69
     assert {r.tag for r in rows} <= ALLOWED_TAGS
     assert all(r.source_url.startswith("https://") for r in rows)

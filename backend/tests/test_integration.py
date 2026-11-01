@@ -355,7 +355,7 @@ def test_tradition_import_idempotent_and_keeps_review(tradition_db):
         n = conn.execute(
             "SELECT count(*) FROM ingredient_tradition_note"
         ).fetchone()[0]
-        assert n == 34
+        assert n == 69
         conn.execute(
             "UPDATE ingredient_tradition_note SET reviewed = true WHERE id = "
             "(SELECT id FROM ingredient_tradition_note LIMIT 1)"
@@ -369,7 +369,7 @@ def test_tradition_import_idempotent_and_keeps_review(tradition_db):
         kept = conn.execute(
             "SELECT count(*) FROM ingredient_tradition_note WHERE reviewed"
         ).fetchone()[0]
-    assert n2 == 34
+    assert n2 == 69
     assert kept == 1  # re-import never un-reviews
 
 
