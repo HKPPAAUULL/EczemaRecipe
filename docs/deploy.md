@@ -9,7 +9,7 @@
 ## 0. 你要達成的終態
 
 - `docker compose ps`：`db`、`api`、`web` 全部 `healthy/running`；
-  `cloudflared`（profile `tunnel`）運行中。
+  tunnel 由既有主機 cloudflared（`pockettcm`）或 dockerized tunnel 提供，視 §3.4 路徑。
 - `https://<用戶網域>` 公開可訪問，顯示「濕疹食堂」。
 - `http://127.0.0.1:8000/admin` 只能本機進入；**公網訪問必須失敗**。
 - 資料庫已有資料（新部署＝種子＋爬蟲匯入；遷移＝舊機 dump 已還原）。
@@ -23,7 +23,7 @@
 |---|---|---|
 | 部署目標電腦確認 | 確認你正身處部署機 | Windows 常駐機，見 §2 |
 | 公開網域 | `SITE_URL`、Tunnel hostname | 例：`eczema.example.com` |
-| Cloudflare 接入方式 | Tunnel token 或既有 tunnel | token 寫 `.env`，不入版控 |
+| Cloudflare 接入方式 | 見 §3.4 三條路 | 本機已有 named tunnel `pockettcm`（PocketTCM）— 首選共用 |
 | 資料庫密碼、ADMIN_TOKEN | `.env` | 可主動提議由你產生（`secrets.token_urlsafe(32)`） |
 | 是否遷移 | 有冇舊機 `.dump` 備份要還原 | 有 → §3 步驟 4a；冇 → 4b |
 
@@ -38,6 +38,7 @@ Get-NetTCPConnection -LocalPort 5432,8000,3000 -State Listen -ErrorAction Silent
 ```
 
 - 5432／8000／3000 被佔用 → 列出 PID 報告用戶，**不要**擅自 `Stop-Process`。
+- **本機已知佔用**：`localhost:8081` 係 PocketTCM Flask、`cloudflared` 進程係 PocketTCM tunnel——正常運行中，**唔准停**。
 - 未 clone：`git clone https://github.com/HKPPAAUULL/EczemaRecipe`（或用戶提供的 fork）。
 - `cd backend && pip install -r requirements.txt`（匯入器依賴，只需一次）。
 
@@ -90,11 +91,47 @@ docker compose ps                # api/web 應出現 (healthy)
 
 ### 3.4 Cloudflare Tunnel 對外
 
-1. 既有 tunnel：Zero Trust 後台為該 tunnel 新增 Public Hostname `<網域> → http://web:3000`；
-   新 token tunnel：token 寫入 `.env`。
-2. `docker compose -f docker-compose.yml -f docker-compose.prod.yml --profile tunnel up -d`
-   （既有 tunnel 已在主機以其他方式運行的話，此步可省略，只需加 hostname）。
-3. **閘口——公網驗證**：
+本機已有一條**本地管理嘅 named tunnel `pockettcm`**（服務 PocketTCM，`tcm.paulli09.xyz`），
+config 喺 `C:\Users\pl960\.cloudflared\config.yml`。三條路揀一：
+
+#### 路徑 A（首選）：共用既有 tunnel，加一個 hostname
+
+一個 cloudflared 可以服務多個 hostname。改 `config.yml`，**新規則必須放喺
+catch-all `http_status:404` 之前**：
+
+```yaml
+ingress:
+  - hostname: pocket-tcm.paulli09.xyz
+    service: http://localhost:8081
+  - hostname: <濕疹食堂網域>            # 例：eczema.paulli09.xyz
+    service: http://localhost:3000
+  - service: http_status:404
+```
+
+然後：
+
+```powershell
+cloudflared tunnel route dns pockettcm <濕疹食堂網域>   # 建 DNS CNAME
+```
+
+重啟 tunnel 先生效：PocketTCM 嘅 cloudflared 係 `start_local.bat` 開嘅
+console 窗口——閂咗「PocketTCM Tunnel」窗再重開（`cloudflared tunnel run pockettcm`），
+**會令 PocketTCM 斷幾秒**，做之前同用戶講一聲。
+
+此路徑下：**唔使** `--profile tunnel`、`CLOUDFLARE_TUNNEL_TOKEN` 留空。
+
+#### 路徑 B：Zero Trust 後台加 hostname（dashboard 管理）
+
+若 tunnel 係 dashboard 遠端管理：Zero Trust → Networks → Tunnels → `pockettcm` →
+Public Hostnames → 加 `<網域> → http://localhost:3000`，DNS 自動建。
+
+#### 路徑 C：獨立 dockerized tunnel
+
+如要完全分開：新 token tunnel，token 寫 `.env`，
+`docker compose -f docker-compose.yml -f docker-compose.prod.yml --profile tunnel up -d`。
+多數情況唔使——A 已夠。
+
+**閘口——公網驗證**：
    - `https://<網域>` 回 200，顯示網站。
    - `https://<網域>/admin` 與 `https://<網域>:8000` 之類的 API 路徑**必須 404/被拒**；
      後台程式亦會拒絕帶 `Cf-Connecting-Ip`/`Cf-Ray` 的請求。
