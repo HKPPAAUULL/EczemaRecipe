@@ -61,3 +61,11 @@ input:disabled,
 [aria-disabled="true"] {
   cursor: not-allowed;
 }
+
+/* sentence-embedded links stay whole on narrow screens instead of
+   splitting mid-text; overflow-wrap still lets very long link text
+   (e.g. raw URLs) break at the line edge to avoid overflow */
+p a {
+  white-space: nowrap;
+  overflow-wrap: anywhere;
+}

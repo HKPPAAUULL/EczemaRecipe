@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.7] - 2026-11-01
+
+### Fixed
+
+- Mobile 跳行原則：句中 inline 連結（如食譜配對「修改忌口」、「清除」篩選、「按分類瀏覽」）不再被逐字斷行剪開——`p a` 設 `white-space: nowrap` 令整個連結一齊換行，並以 `overflow-wrap: anywhere` 兜底，極長連結文字（如原始 URL）仍可於行尾斷開避免溢出。
+
 ## [0.21.6] - 2026-11-01
 
 ### Changed
