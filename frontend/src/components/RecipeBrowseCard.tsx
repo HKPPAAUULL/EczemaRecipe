@@ -4,7 +4,7 @@ import type { RecipeListItem } from "@/lib/recipes";
 
 export default function RecipeBrowseCard({ r }: { r: RecipeListItem }) {
   return (
-    <article className="relative rounded-2xl bg-surface p-4 shadow-card ring-1 ring-line transition-shadow hover:shadow-lift md:p-5">
+    <article className="relative flex h-full flex-col rounded-2xl bg-surface p-4 shadow-card ring-1 ring-line transition-shadow hover:shadow-lift md:p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="text-base font-bold text-ink">
           <Link
@@ -66,9 +66,9 @@ export default function RecipeBrowseCard({ r }: { r: RecipeListItem }) {
         </p>
       )}
       {r.is_original ? (
-        <p className="mt-3 text-xs text-ink-muted">原創食譜（站方整理）</p>
+        <p className="mt-auto pt-3 text-xs text-ink-muted">原創食譜（站方整理）</p>
       ) : (
-        <p className="mt-3 text-xs text-ink-muted">
+        <p className="mt-auto pt-3 text-xs text-ink-muted">
           來源：
           {r.source_url ? (
             <a

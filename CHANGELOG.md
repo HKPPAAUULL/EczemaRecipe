@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.1] - 2026-11-01
+
+### Changed
+
+- 食譜卡片高度統一：`RecipeBrowseCard` 同 `RecipeCard` 改 `h-full flex-col`，來源／原創行 `mt-auto` 推落底部——同一行嘅卡片而家齊高、底部對齊（首頁推薦、配對結果、所有食譜、相關食譜全部生效）。
+
 ## [0.21.0] - 2026-11-01
 
 ### Changed
