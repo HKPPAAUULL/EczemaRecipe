@@ -3,7 +3,7 @@ import ShoppingListView from "@/components/ShoppingListView";
 
 export const metadata: Metadata = {
   title: "買餸清單",
-  description: "你的買餸清單（只儲存於瀏覽器，可複製或列印）。",
+  description: "你的買餸清單（只儲存於瀏覽器，可複製為文字）。",
 };
 
 export default function ShoppingPage() {

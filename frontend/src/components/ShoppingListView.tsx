@@ -53,7 +53,7 @@ export default function ShoppingListView() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2 print:hidden">
+      <div className="flex flex-wrap gap-2">
         <button
           type="button"
           onClick={copyAll}
@@ -77,20 +77,13 @@ export default function ShoppingListView() {
         >
           清空
         </button>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="min-h-[44px] rounded-full border border-line px-4 text-sm text-ink-muted hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        >
-          列印
-        </button>
       </div>
       {copied && (
-        <p aria-live="polite" className="text-xs text-suitable print:hidden">
+        <p aria-live="polite" className="text-xs text-suitable">
           已複製到剪貼簿
         </p>
       )}
-      <div className="flex gap-2 print:hidden">
+      <div className="flex gap-2">
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -121,7 +114,7 @@ export default function ShoppingListView() {
                   type="checkbox"
                   checked={i.checked}
                   onChange={() => setList(toggleItem(items, i.id))}
-                  className="h-5 w-5 accent-primary print:hidden"
+                  className="h-5 w-5 accent-primary"
                   aria-label={`勾選 ${i.label}`}
                 />
                 <span
@@ -145,7 +138,7 @@ export default function ShoppingListView() {
                   type="button"
                   onClick={() => setList(removeItem(items, i.id))}
                   aria-label={`刪除 ${i.label}`}
-                  className="min-h-[44px] min-w-[44px] text-ink-muted hover:text-trigger focus:outline-none focus-visible:ring-2 focus-visible:ring-primary print:hidden"
+                  className="min-h-[44px] min-w-[44px] text-ink-muted hover:text-trigger focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   ✕
                 </button>
@@ -154,7 +147,7 @@ export default function ShoppingListView() {
           })}
         </ul>
       )}
-      <p className="text-xs text-ink-muted print:hidden">
+      <p className="text-xs text-ink-muted">
         清單只儲存於你的瀏覽器（localStorage），最多 200 項。
       </p>
     </div>

@@ -51,7 +51,7 @@ const ENTRIES = [
   {
     href: "/shopping",
     title: "買餸清單",
-    desc: "記低要買的食材，可複製或列印（只存於你的瀏覽器）。",
+    desc: "記低要買的食材，可一鍵複製為文字（只存於你的瀏覽器）。",
     icon: (
       <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
         <path
