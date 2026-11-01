@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.6] - 2026-11-01
+
+### Changed
+
+- 搜尋欄 UI 全站統一：新增共用 `SearchField` 元件（pill 圓角、左 icon、focus-within 綠框、可內嵌行動掣），食譜配對選材欄（放大鏡 icon、保留自動完成下拉）、食材庫與首頁搜尋框（內嵌「搜尋」掣）、買餸清單手動加入欄（加號 icon＋內嵌「加入」掣）全部改用同一外觀。
+
 ## [0.21.5] - 2026-11-01
 
 ### Changed

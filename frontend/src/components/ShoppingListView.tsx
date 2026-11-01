@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import SearchField, {
+  pillActionClass,
+  PlusIcon,
+} from "@/components/SearchField";
 import {
   ALLERGEN_KEY,
   SHOPPING_KEY,
@@ -83,23 +87,24 @@ export default function ShoppingListView() {
           已複製到剪貼簿
         </p>
       )}
-      <div className="flex gap-2">
-        <input
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && addFreeText()}
-          placeholder="手動加入項目（如：秋葵）"
-          maxLength={80}
-          className="min-h-[44px] flex-1 rounded-xl border border-line bg-surface px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-        />
-        <button
-          type="button"
-          onClick={addFreeText}
-          className="min-h-[44px] rounded-full bg-primary px-4 text-sm font-medium text-white hover:bg-primary-dark"
-        >
-          加入
-        </button>
-      </div>
+      <SearchField
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && addFreeText()}
+        placeholder="手動加入項目（如：秋葵）"
+        aria-label="手動加入清單項目"
+        maxLength={80}
+        icon={<PlusIcon />}
+        trailing={
+          <button
+            type="button"
+            onClick={addFreeText}
+            className={pillActionClass}
+          >
+            加入
+          </button>
+        }
+      />
       {items.length === 0 ? (
         <p className="rounded-xl bg-surface-alt px-4 py-6 text-center text-sm text-ink-muted">
           清單是空的。到食譜配對或食材頁面按「+ 買餸清單」加入食材。

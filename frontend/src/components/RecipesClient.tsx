@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import RecipeCard from "@/components/RecipeCard";
+import SearchField, { SearchIcon } from "@/components/SearchField";
 import WarningBanner from "@/components/WarningBanner";
 import type { IngredientListItem } from "@/lib/api";
 import {
@@ -157,7 +158,7 @@ export default function RecipesClient({
           你手上有什麼食材？
         </h2>
         <div className="relative">
-          <input
+          <SearchField
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="搜尋食材並加入（如：雞蛋、南瓜）"
@@ -166,7 +167,7 @@ export default function RecipesClient({
             aria-autocomplete="list"
             aria-expanded={visibleHits.length > 0}
             aria-label="搜尋食材"
-            className="min-h-[44px] w-full rounded-xl border border-line bg-surface px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            icon={<SearchIcon />}
           />
           {visibleHits.length > 0 && (
             <ul
