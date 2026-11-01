@@ -95,9 +95,7 @@ async function SearchArea({
   const query = (q ?? "").trim();
   return (
     <>
-      <div className="max-w-xl">
-        <SearchBox initialValue={query} />
-      </div>
+      <SearchBox initialValue={query} />
       {query ? <Results q={query} /> : <CategoryGrid />}
     </>
   );

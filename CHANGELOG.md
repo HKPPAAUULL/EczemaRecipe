@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.5] - 2026-11-01
+
+### Changed
+
+- 前台搜尋欄統一全寬：移除食材庫搜尋框、食譜配對「搜尋食材並加入」欄、首頁主搜尋框的 `max-w-xl` 限制，三處皆拉滿內容區可用闊度。
+
 ## [0.21.4] - 2026-11-01
 
 ### Changed

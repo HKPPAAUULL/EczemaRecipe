@@ -156,7 +156,7 @@ export default function RecipesClient({
         <h2 id="sel-h" className="text-lg font-bold text-ink">
           你手上有什麼食材？
         </h2>
-        <div className="relative max-w-xl">
+        <div className="relative">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}

@@ -105,7 +105,7 @@ export default function Home() {
         <p className="mt-2 text-base text-ink-muted md:text-lg">
           查食材，安心煮 —— 濕疹人士的食材適合度參考
         </p>
-        <div className="mx-auto mt-6 max-w-xl">
+        <div className="mt-6">
           <SearchBox large />
         </div>
         <RecentSearches />
