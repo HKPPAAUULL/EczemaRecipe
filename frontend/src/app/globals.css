@@ -40,3 +40,24 @@ main {
     padding-bottom: 2.5rem;
   }
 }
+
+/* pointer cursor on every interactive element (Tailwind preflight
+   defaults buttons to cursor:default) */
+button,
+[role="button"],
+select,
+summary,
+label,
+input[type="checkbox"],
+input[type="radio"],
+input[type="submit"],
+input[type="button"],
+input[type="range"] {
+  cursor: pointer;
+}
+button:disabled,
+select:disabled,
+input:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
