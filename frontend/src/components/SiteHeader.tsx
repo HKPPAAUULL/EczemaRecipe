@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ExclusionBadge from "@/components/ExclusionBadge";
+import ShoppingBadge from "@/components/ShoppingBadge";
 
 export const NAV_ITEMS = [
   { href: "/recipes", label: "食譜配對" },
@@ -24,9 +25,10 @@ export default function SiteHeader() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-lg px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-alt hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-alt hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   {item.label}
+                  {item.href === "/shopping" && <ShoppingBadge />}
                 </Link>
               </li>
             ))}

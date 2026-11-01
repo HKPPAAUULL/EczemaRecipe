@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.0] - 2026-11-01
+
+### Added
+
+- 導航「買餸清單」tab 加入數量 badge（同「我的忌口」一致）：顯示清單內**未勾選（未買）項目**數目；desktop 頂部導航顯示喺標籤旁，mobile bottom nav 顯示喺 icon 右上角。壞儲存資料下安全唔顯示；附單元測試。
+
 ## [0.15.5] - 2026-11-01
 
 ### Fixed

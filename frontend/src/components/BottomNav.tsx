@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ShoppingBadge from "@/components/ShoppingBadge";
 
 const ITEMS = [
   {
@@ -52,7 +53,12 @@ export default function BottomNav() {
               href={item.href}
               className="flex min-h-[56px] flex-col items-center justify-center gap-0.5 py-1.5 text-xs text-ink-muted transition-colors hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
             >
-              {item.icon}
+              <span className="relative">
+                {item.icon}
+                {item.href === "/shopping" && (
+                  <ShoppingBadge className="absolute -top-1.5 -right-2.5" />
+                )}
+              </span>
               {item.label}
             </Link>
           </li>

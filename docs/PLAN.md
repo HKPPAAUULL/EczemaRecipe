@@ -209,6 +209,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-31 | v0.10.4 | 批量處理客家食譜未配對食材，新增 46 項食材草稿；未配對歸零 |
 | 2026-10-31 | v0.10.5 | 為新建食材提出評級（附來源與過敏原連結），待人審 |
 | 2026-10-31 | v0.10.6 | 修後台致敏提示漏顯示已配對食材過敏原 |
+| 2026-11-01 | v0.16.0 | 導航「買餸清單」tab 顯示未買項數目 badge（desktop header＋mobile bottom nav icon 右上角，`ShoppingBadge` 元件） |
 | 2026-11-01 | v0.15.0 | 食材詳情頁「相關食譜」連結使用該食材的食譜；`GET /api/recipes?ingredient=` 篩選；`/recipes?ingredient=` 頁面篩選橫額 |
 | 2026-11-01 | v0.14.0 | 首頁「推薦食譜」按讚好排序＋配對頁捷徑；`GET /api/recipes?sort=popular`，列表項附票數 |
 | 2026-11-01 | v0.13.0 | 食譜匿名讚好投票（`recipe_vote` 表、`GET/POST /api/recipes/{id}/votes`、食譜頁 LikeButtons、BFF 代理）；後台 `/admin/trending` 食譜趨勢頁 |
