@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.7] - 2026-11-01
+
+### Added
+
+- 傳統說法標註擴充 35 條（`scripts/append_tradition_notes.py`）：發物新增竹筍、筍乾（消委會明列）及 15 項魚類海產（衞生署「腥膻發物」服藥忌口）；燥熱新增辣椒、辣味露；另補消委會食療清單的平性（淮山、枸杞、紅豆、節瓜、豬瘦肉、三文魚）及涼性（綠豆、西洋菜、芥蘭、青瓜、荸薺、火龍果、西瓜、梨、鴨肉）標註。三文魚同時有發物與平性兩說，忠實並列供審核。全部待審核，不影響評級。
+
 ## [0.10.6] - 2026-10-31
 
 ### Fixed
