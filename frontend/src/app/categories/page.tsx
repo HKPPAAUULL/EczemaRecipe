@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import SearchBox from "@/components/SearchBox";
+import IngredientCard from "@/components/IngredientCard";
 import WarningBanner from "@/components/WarningBanner";
-import { ApiError, getCategories } from "@/lib/api";
+import { ApiError, getCategories, searchIngredients } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "食材庫",
-  description: "按食物分類瀏覽食材，可按濕疹適合度評級篩選。",
+  description: "搜尋或按食物分類瀏覽食材的濕疹適合度評級、致敏原與營養成分。",
 };
 
 async function CategoryGrid() {
@@ -42,17 +44,80 @@ async function CategoryGrid() {
   );
 }
 
-export default function CategoriesPage() {
+async function Results({ q }: { q: string }) {
+  let data;
+  try {
+    data = await searchIngredients(q);
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return (
+        <WarningBanner title="暫時無法載入搜尋結果">
+          {err.message}，請稍後再試。
+        </WarningBanner>
+      );
+    }
+    throw err;
+  }
+  if (!data.items.length) {
+    return (
+      <p className="rounded-xl bg-surface-alt px-4 py-6 text-center text-ink-muted">
+        找不到「{data.query}」相關食材，請試試其他關鍵字，或
+        <Link
+          href="/categories"
+          className="mx-1 font-medium text-primary hover:underline"
+        >
+          按分類瀏覽
+        </Link>
+        。
+      </p>
+    );
+  }
+  return (
+    <>
+      <p className="text-sm text-ink-muted">
+        「{data.query}」共 {data.count} 項結果
+      </p>
+      <ul className="mt-3 grid gap-3 md:grid-cols-2">
+        {data.items.map((item) => (
+          <IngredientCard key={item.id} item={item} />
+        ))}
+      </ul>
+    </>
+  );
+}
+
+async function SearchArea({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const query = (q ?? "").trim();
+  return (
+    <>
+      <div className="max-w-xl">
+        <SearchBox initialValue={query} />
+      </div>
+      {query ? <Results q={query} /> : <CategoryGrid />}
+    </>
+  );
+}
+
+export default function CategoriesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
   return (
     <div className="space-y-5">
       <h1 className="text-2xl font-bold text-ink">食材庫</h1>
       <p className="text-sm text-ink-muted">
-        按食物種類瀏覽，買餸前快速查閱食材適合度。
+        搜尋食材名稱，或按食物種類瀏覽，買餸前快速查閱食材適合度。
       </p>
       <Suspense
         fallback={<p className="py-8 text-center text-ink-muted">載入中…</p>}
       >
-        <CategoryGrid />
+        <SearchArea searchParams={searchParams} />
       </Suspense>
     </div>
   );

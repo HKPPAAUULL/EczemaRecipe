@@ -6,7 +6,7 @@ const SITE_URL = (
 ).replace(/\/+$/, "");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPages = ["", "/ingredients", "/categories", "/recipes",
+  const staticPages = ["", "/categories", "/recipes",
     "/about", "/privacy"].map((p) => ({
     url: `${SITE_URL}${p}`,
     lastModified: new Date(),

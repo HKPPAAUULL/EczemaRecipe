@@ -209,6 +209,7 @@ review_queue(id, entity_type, entity_id, status, reviewer_note)
 | 2026-10-31 | v0.10.4 | 批量處理客家食譜未配對食材，新增 46 項食材草稿；未配對歸零 |
 | 2026-10-31 | v0.10.5 | 為新建食材提出評級（附來源與過敏原連結），待人審 |
 | 2026-10-31 | v0.10.6 | 修後台致敏提示漏顯示已配對食材過敏原 |
+| 2026-11-01 | v0.11.0 | 食材查詢合併入食材庫頁（`/categories` 頂部搜尋，`?q=` 顯示結果）；`/ingredients` 308 重定向至 `/categories`；導航、首頁、sitemap 同步 |
 | 2026-11-01 | v0.10.7 | 傳統說法標註擴充 35 條（發物、燥熱、平性、涼性） |
 | 2026-10-31 | v0.10.0 | 「傳統說法（中醫）」功能：`ingredient_tradition_note` 表＋migration 0007、`import-tradition` 匯入器（34 條、全部待審核）、詳情 API 回傳 reviewed 說法、/admin 逐條審核、前端 `TraditionNotes` 卡（非實證標示、不影響評級）＋ `InsufficientDataNotice`（unrated）；私隱頁移除聯絡方式 |
 | 2026-10-30 | v0.2.2 | v0.6.0：`POST /api/recipes/suggest`、`GET /api/recipes/{id}`（覆蓋率不計常備調味料、未配對項計入分母、過敏原硬排除並回報剔除數、排序＝覆蓋率×友善分數）；常備調味料未配對不再阻擋發佈（致敏改由關鍵字掃描覆蓋）；配對率 66.3% |

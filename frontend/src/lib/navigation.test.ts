@@ -2,17 +2,17 @@ import { describe, expect, it } from "vitest";
 import { buildSearchHref, pageWindow } from "@/lib/navigation";
 
 describe("buildSearchHref", () => {
-  it("builds an encoded ingredients query URL", () => {
+  it("builds an encoded categories query URL", () => {
     expect(buildSearchHref("雞蛋")).toBe(
-      `/ingredients?q=${encodeURIComponent("雞蛋")}`
+      `/categories?q=${encodeURIComponent("雞蛋")}`
     );
-    expect(buildSearchHref("牛奶")).toContain("/ingredients?q=");
+    expect(buildSearchHref("牛奶")).toContain("/categories?q=");
     // CJK must be percent-encoded, not raw
     expect(buildSearchHref("雞蛋")).not.toContain("雞蛋");
   });
 
   it("trims whitespace and encodes reserved characters", () => {
-    expect(buildSearchHref("  a&b ")).toBe("/ingredients?q=a%26b");
+    expect(buildSearchHref("  a&b ")).toBe("/categories?q=a%26b");
   });
 });
 

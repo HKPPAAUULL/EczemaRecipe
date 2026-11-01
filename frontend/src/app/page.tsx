@@ -18,14 +18,9 @@ const ENTRIES = [
     desc: "選擇手上食材，配對合適食譜並按你的忌口排除。",
   },
   {
-    href: "/ingredients",
-    title: "食材查詢",
-    desc: "搜尋食材的濕疹適合度評級、致敏原與營養成分。",
-  },
-  {
     href: "/categories",
     title: "食材庫",
-    desc: "按分類瀏覽食材，可按評級篩選，買餸前快速查閱。",
+    desc: "搜尋或按分類瀏覽食材的濕疹適合度評級、致敏原與營養成分。",
   },
   {
     href: "/settings",

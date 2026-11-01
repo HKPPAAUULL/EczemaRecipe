@@ -3,7 +3,6 @@ import ExclusionBadge from "@/components/ExclusionBadge";
 
 export const NAV_ITEMS = [
   { href: "/recipes", label: "食譜配對" },
-  { href: "/ingredients", label: "食材查詢" },
   { href: "/categories", label: "食材庫" },
   { href: "/shopping", label: "買餸清單" },
 ] as const;

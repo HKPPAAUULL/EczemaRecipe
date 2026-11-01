@@ -14,18 +14,6 @@ const ITEMS = [
     ),
   },
   {
-    href: "/ingredients",
-    label: "食材查詢",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
-        <path
-          fill="currentColor"
-          d="M10.5 3a7.5 7.5 0 1 0 4.6 13.4l4 4a.9.9 0 0 0 1.3-1.3l-4-4A7.5 7.5 0 0 0 10.5 3Zm0 1.8a5.7 5.7 0 1 1 0 11.4 5.7 5.7 0 0 1 0-11.4Z"
-        />
-      </svg>
-    ),
-  },
-  {
     href: "/categories",
     label: "食材庫",
     icon: (
@@ -57,7 +45,7 @@ export default function BottomNav() {
       aria-label="底部導航"
       className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-surface md:hidden"
     >
-      <ul className="grid grid-cols-4">
+      <ul className="grid grid-cols-3">
         {ITEMS.map((item) => (
           <li key={item.href}>
             <Link

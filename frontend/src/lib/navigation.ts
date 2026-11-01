@@ -1,5 +1,5 @@
 export function buildSearchHref(q: string): string {
-  return `/ingredients?q=${encodeURIComponent(q.trim())}`;
+  return `/categories?q=${encodeURIComponent(q.trim())}`;
 }
 
 export interface PageWindow {

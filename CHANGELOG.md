@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2026-11-01
+
+### Changed
+
+- 「食材查詢」合併入「食材庫」頁：`/categories` 上方加搜尋框，帶 `?q=` 時顯示搜尋結果，否則顯示分類網格；`/ingredients` 永久重定向（308）至 `/categories`（保留 `q` 參數）；頂部導航、手機底部導航（3 格）、首頁卡片、sitemap 移除獨立「食材查詢」入口。
+
 ## [0.10.7] - 2026-11-01
 
 ### Added
