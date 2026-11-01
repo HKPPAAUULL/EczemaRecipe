@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.5] - 2026-11-01
+
+### Fixed
+
+- 修復 `/shopping` 頁面崩潰（「出了點問題」）：`allergenHitIds` 直接對 `item.allergenIds` 呼叫 `.filter`，舊資料或壞資料項目缺此欄位時 TypeError 令整頁掛上 error boundary；現以 `?? []` 防禦，渲染永不因儲存資料缺欄位而擲錯誤。新增元件層級回歸測試（缺 `allergenIds` 的項目不再令頁面崩潰）。
+
 ## [0.15.4] - 2026-11-01
 
 ### Fixed

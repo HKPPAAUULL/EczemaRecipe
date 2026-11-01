@@ -74,7 +74,9 @@ export function allergenHitIds(
   item: ShoppingItem,
   exclusions: number[]
 ): number[] {
-  return item.allergenIds.filter((id) => exclusions.includes(id));
+  // stored items may predate the allergenIds field (or be corrupt) —
+  // never throw during render
+  return (item.allergenIds ?? []).filter((id) => exclusions.includes(id));
 }
 
 export function toPlainText(list: ShoppingItem[]): string {
