@@ -9,12 +9,41 @@ import {
   useLocalStorage,
 } from "@/lib/storage";
 
-const TYPE_LABELS: Record<string, string> = {
-  major_allergen: "九大過敏原",
-  histamine: "組織胺",
-  salicylate: "水楊酸",
-  nickel: "鎳",
-  other: "其他",
+const TYPE_META: Record<
+  string,
+  { label: string; desc: string; chip: string }
+> = {
+  major_allergen: {
+    label: "九大過敏原",
+    desc: "常見致敏食物類別（奶、蛋、花生、木本堅果、大豆、小麥、魚、甲殼類、芝麻）",
+    chip: "bg-trigger-bg text-trigger",
+  },
+  histamine: {
+    label: "組織胺",
+    desc: "醃製、發酵等組織胺含量較高的食物類別",
+    chip: "bg-caution-bg text-caution",
+  },
+  salicylate: {
+    label: "水楊酸",
+    desc: "天然水楊酸含量較高的食物類別",
+    chip: "bg-surface-alt text-ink",
+  },
+  nickel: {
+    label: "鎳",
+    desc: "鎳含量較高的食物類別",
+    chip: "bg-surface-alt text-ink",
+  },
+  other: {
+    label: "其他",
+    desc: "其他致敏相關類別",
+    chip: "bg-surface-alt text-ink",
+  },
+};
+
+const FALLBACK_META = {
+  label: "其他",
+  desc: "其他致敏相關類別",
+  chip: "bg-surface-alt text-ink",
 };
 
 export default function AllergenExclusionEditor({
@@ -32,7 +61,7 @@ export default function AllergenExclusionEditor({
   const groups = useMemo(() => {
     const g = new Map<string, AllergenItem[]>();
     for (const a of allergens) {
-      const k = TYPE_LABELS[a.type] ?? "其他";
+      const k = (TYPE_META[a.type] ?? FALLBACK_META).label;
       g.set(k, [...(g.get(k) ?? []), a]);
     }
     return g;
@@ -67,11 +96,27 @@ export default function AllergenExclusionEditor({
           有 {staleCount} 項舊忌口已不在最新資料中，已自動忽略。
         </p>
       )}
-      {[...groups.entries()].map(([label, items]) => (
+      {[...groups.entries()].map(([label, items]) => {
+        const meta =
+          Object.values(TYPE_META).find((m) => m.label === label) ??
+          FALLBACK_META;
+        const picked = items.filter((a) => valid.includes(a.id)).length;
+        return (
         <fieldset key={label} className="rounded-2xl bg-surface p-4 ring-1 ring-line">
-          <legend className="px-1 text-sm font-semibold text-ink">
-            {label}
-          </legend>
+          <legend className="sr-only">{label}</legend>
+          <div className="mb-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 border-b border-line pb-3">
+            <span
+              className={`rounded-full px-3 py-1 text-sm font-bold ${meta.chip}`}
+            >
+              {label}
+            </span>
+            <span className="text-xs text-ink-muted">{meta.desc}</span>
+            {picked > 0 && (
+              <span className="ml-auto rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                已選 {picked}/{items.length}
+              </span>
+            )}
+          </div>
           <div className="grid gap-1.5 sm:grid-cols-2 md:grid-cols-3">
             {items.map((a) => (
               <label
@@ -92,7 +137,8 @@ export default function AllergenExclusionEditor({
             ))}
           </div>
         </fieldset>
-      ))}
+        );
+      })}
       <div className="flex items-center gap-3">
         <button
           type="button"
