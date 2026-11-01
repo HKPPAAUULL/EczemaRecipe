@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.3] - 2026-11-01
+
+### Changed
+
+- 「+ 買餸清單」按鈕移入食材卡片內：`IngredientCard` 改為 stretched-link 結構（整卡可點入詳情，按鈕以 z-index 保持獨立可點），卡片外不再多出一行按鈕。
+
 ## [0.15.2] - 2026-11-01
 
 ### Fixed

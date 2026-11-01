@@ -14,20 +14,22 @@ export default function IngredientCard({
   const shown = item.allergens.slice(0, MAX_TAGS);
   const extra = item.allergens.length - shown.length;
   return (
-    <li className="list-none">
-      <Link
-        href={`/ingredients/${item.id}`}
-        className="block rounded-xl bg-surface p-4 shadow-card ring-1 ring-line transition-shadow hover:shadow-lift focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-      >
+    <li className="relative list-none rounded-xl bg-surface shadow-card ring-1 ring-line transition-shadow hover:shadow-lift">
+      <div className="p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h3 className="text-lg font-semibold text-ink">
-              {item.name_zh}
-              {item.name_en ? (
-                <span className="ml-2 text-sm font-normal text-ink-muted">
-                  {item.name_en}
-                </span>
-              ) : null}
+              <Link
+                href={`/ingredients/${item.id}`}
+                className="after:absolute after:inset-0 after:rounded-xl after:content-[''] hover:text-primary focus:outline-none focus-visible:after:ring-2 focus-visible:after:ring-primary"
+              >
+                {item.name_zh}
+                {item.name_en ? (
+                  <span className="ml-2 text-sm font-normal text-ink-muted">
+                    {item.name_en}
+                  </span>
+                ) : null}
+              </Link>
             </h3>
             {item.category ? (
               <p className="mt-0.5 text-sm text-ink-muted">
@@ -59,14 +61,14 @@ export default function IngredientCard({
             ) : null}
           </div>
         ) : null}
-      </Link>
-      <div className="mt-1.5">
-        <AddToShoppingListButton
-          ingredientId={item.id}
-          name={item.name_zh}
-          category={item.category?.name_zh}
-          small
-        />
+        <div className="relative z-10 mt-3">
+          <AddToShoppingListButton
+            ingredientId={item.id}
+            name={item.name_zh}
+            category={item.category?.name_zh}
+            small
+          />
+        </div>
       </div>
     </li>
   );
