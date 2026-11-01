@@ -3,7 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import RecipeCard from "@/components/RecipeCard";
-import SearchField, { SearchIcon } from "@/components/SearchField";
+import SearchField, {
+  pillActionClass,
+  SearchIcon,
+} from "@/components/SearchField";
 import WarningBanner from "@/components/WarningBanner";
 import type { IngredientListItem } from "@/lib/api";
 import {
@@ -168,6 +171,16 @@ export default function RecipesClient({
             aria-expanded={visibleHits.length > 0}
             aria-label="搜尋食材"
             icon={<SearchIcon />}
+            trailing={
+              <button
+                type="button"
+                onClick={() => suggest(0)}
+                disabled={!chips.length || loading}
+                className={pillActionClass}
+              >
+                {loading ? "配對中…" : "找食譜"}
+              </button>
+            }
           />
           {visibleHits.length > 0 && (
             <ul
@@ -216,14 +229,6 @@ export default function RecipesClient({
             ))}
           </ul>
         )}
-        <button
-          type="button"
-          onClick={() => suggest(0)}
-          disabled={!chips.length || loading}
-          className="min-h-[44px] rounded-full bg-primary px-6 text-sm font-medium text-white hover:bg-primary-dark disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        >
-          {loading ? "配對中…" : "找食譜"}
-        </button>
       </section>
 
       {!canStore && (

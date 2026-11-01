@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.8] - 2026-11-01
+
+### Changed
+
+- 食譜配對「找食譜」掣由搜尋欄下方獨立按鈕改為搜尋欄內嵌行動掣（`SearchField` trailing），同其他搜尋欄設計統一；無已選食材或配對中時維持 disabled，`pillActionClass` 補 disabled 樣式。
+
 ## [0.21.7] - 2026-11-01
 
 ### Fixed
