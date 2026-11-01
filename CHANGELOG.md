@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.19.1] - 2026-11-01
+
+### Changed
+
+- 私隱政策頁重寫為結構化文件：分八節（概述、不收集的資料、瀏覽器儲存資料表、伺服器處理資料、Cookie 與第三方、伺服器日誌、政策變更、相關文件）＋最後更新日期；補齊遺漏項目——最近查詢、配對選擇與匿名投票識別碼嘅儲存方式、投票資料會寫入伺服器資料庫。
+
 ## [0.19.0] - 2026-11-01
 
 ### Changed
